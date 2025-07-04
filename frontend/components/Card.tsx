@@ -1,5 +1,6 @@
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { View, Text, Image, StyleSheet, Pressable, ImageSourcePropType, Linking } from 'react-native';
+import { Image, ImageSourcePropType, Pressable, StyleSheet, Text, View } from 'react-native';
 
 type ProductCardProps = {
   image: ImageSourcePropType; // bisa string (URL) atau require()
@@ -9,10 +10,18 @@ type ProductCardProps = {
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ image, judul, desc, harga }) => {
+  const router = useRouter();
+  
   const handleCheckout = () => {
-    const waMessage = `Saya tertarik membeli produk ${judul} seharga Rp ${harga.toLocaleString('id-ID')}`;
-    const waURL = `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`;
-    Linking.openURL(waURL);
+    router.push({
+      pathname: '/checkout',
+      params: {
+        name: judul,
+        price: harga.toString(),
+        description: desc,
+        image: typeof image === 'string' ? image : 'local_image'
+      }
+    });
   };
 
   return (

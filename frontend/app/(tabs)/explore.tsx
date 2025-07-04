@@ -1,13 +1,8 @@
-import { ScrollView, Image, StyleSheet, Platform, Pressable, View, Text } from 'react-native';
-import { useRouter } from 'expo-router';
 import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-
-import { Collapsible } from '@/components/Collapsible';
-import { ExternalLink } from '@/components/ExternalLink';
 import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
 
 // Import komponen Card dari folder components
 import ProductCard from '@/components/Card';
@@ -19,6 +14,10 @@ export default function TabTwoScreen() {
     router.replace('/');
   };
 
+  const navigateTo = (path: any) => {
+    router.push(path);
+  };
+
   return (
     
     <LinearGradient
@@ -26,7 +25,34 @@ export default function TabTwoScreen() {
         style={styles.container}
       >
       <ScrollView style={styles.container}>
-        <ThemedText type="title">Lyana Bottle Studio</ThemedText>
+        {/* Header Section */}
+        <View style={styles.headerSection}>
+          <ThemedText type="title" style={styles.brandTitle}>Lyana Bottle Studio</ThemedText>
+          
+          {/* Navigation Menu */}
+          <View style={styles.menuSection}>
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/brand')}
+            >
+              <Text style={styles.menuButtonText}>🏢 Tentang Brand</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/about')}
+            >
+              <Text style={styles.menuButtonText}>📱 Tentang App</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/support')}
+            >
+              <Text style={styles.menuButtonText}>🎧 Support</Text>
+            </Pressable>
+          </View>
+        </View>
 
 
         {/* Produk E-Commerce */}
@@ -105,21 +131,66 @@ export default function TabTwoScreen() {
         </View>
     
 
-        {/* Collapsible sections */}
-
-        <Collapsible title="Product Description">
-          <ThemedText>
-            Efek animasi diatur lewat <ThemedText type="defaultSemiBold">HelloWave.tsx</ThemedText>.
-          </ThemedText>
-          {Platform.select({
-            ios: (
-              <ThemedText>
-                Komponen <ThemedText type="defaultSemiBold">ParallaxScrollView.tsx</ThemedText>{' '}
-                memberikan efek parallax.
+        {/* Store Information Section */}
+        <View style={styles.storeInfoSection}>
+          <ThemedText style={styles.storeInfoTitle}>✨ Mengapa Memilih Lyana Bottle Studio?</ThemedText>
+          
+          <View style={styles.featuresList}>
+            <View style={styles.featureItem}>
+              <ThemedText style={styles.featureIcon}>🌟</ThemedText>
+              <ThemedText style={styles.featureText}>
+                Material Premium - Stainless steel berkualitas tinggi
               </ThemedText>
-            ),
-          })}
-        </Collapsible>
+            </View>
+            
+            <View style={styles.featureItem}>
+              <ThemedText style={styles.featureIcon}>🌡️</ThemedText>
+              <ThemedText style={styles.featureText}>
+                Tahan suhu hingga 12 jam dingin, 6 jam panas
+              </ThemedText>
+            </View>
+            
+            <View style={styles.featureItem}>
+              <ThemedText style={styles.featureIcon}>🎨</ThemedText>
+              <ThemedText style={styles.featureText}>
+                Desain eksklusif yang aesthetic dan instagramable
+              </ThemedText>
+            </View>
+            
+            <View style={styles.featureItem}>
+              <ThemedText style={styles.featureIcon}>♻️</ThemedText>
+              <ThemedText style={styles.featureText}>
+                Ramah lingkungan - Kurangi sampah plastik
+              </ThemedText>
+            </View>
+            
+            <View style={styles.featureItem}>
+              <ThemedText style={styles.featureIcon}>🚚</ThemedText>
+              <ThemedText style={styles.featureText}>
+                Free ongkir untuk pembelian di atas Rp 500.000
+              </ThemedText>
+            </View>
+          </View>
+        </View>
+
+        {/* Customer Reviews Section */}
+        <View style={styles.reviewSection}>
+          <ThemedText style={styles.reviewTitle}>💬 Kata Pelanggan Kami</ThemedText>
+          
+          <View style={styles.reviewCard}>
+            <ThemedText style={styles.reviewText}>
+              "Tumbler Luna Frost sangat cantik! Warnanya soft banget dan beneran awet dinginnya. Recommended!"
+            </ThemedText>
+            <ThemedText style={styles.reviewAuthor}>- Sarah K. ⭐⭐⭐⭐⭐</ThemedText>
+          </View>
+          
+          <View style={styles.reviewCard}>
+            <ThemedText style={styles.reviewText}>
+              "Packaging rapih, kualitas premium. Pink Reverie jadi tumbler favorit aku sekarang 💕"
+            </ThemedText>
+            <ThemedText style={styles.reviewAuthor}>- Mia R. ⭐⭐⭐⭐⭐</ThemedText>
+          </View>
+        </View>
 
         <br />
 
@@ -138,6 +209,36 @@ const styles = StyleSheet.create({
     padding: 30,
     // Ganti background jadi satu warna saja:
     // backgroundColor: '#fff',
+  },
+  headerSection: {
+    marginBottom: 20,
+    alignItems: 'center',
+  },
+  brandTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#fff',
+    marginBottom: 20,
+    textAlign: 'center',
+  },
+  menuSection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 10,
+    marginBottom: 20,
+  },
+  menuButton: {
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingVertical: 8,
+    paddingHorizontal: 15,
+    borderRadius: 20,
+    marginHorizontal: 5,
+  },
+  menuButtonText: {
+    color: '#333',
+    fontSize: 14,
+    fontWeight: '600',
   },
 
   titleContainer: {
@@ -165,6 +266,75 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 16,
     paddingTop:12,
+  },
+  storeInfoSection: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 15,
+    padding: 20,
+    marginHorizontal: 16,
+    marginVertical: 20,
+  },
+  storeInfoTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  featuresList: {
+    gap: 12,
+  },
+  featureItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  featureIcon: {
+    fontSize: 20,
+    marginRight: 12,
+    width: 30,
+  },
+  featureText: {
+    fontSize: 14,
+    color: '#555',
+    flex: 1,
+    lineHeight: 20,
+  },
+  reviewSection: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 15,
+    padding: 20,
+    marginHorizontal: 16,
+    marginVertical: 10,
+    marginBottom: 30,
+  },
+  reviewTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  reviewCard: {
+    backgroundColor: '#f8f8f8',
+    borderRadius: 12,
+    padding: 15,
+    marginBottom: 12,
+    borderLeftWidth: 4,
+    borderLeftColor: '#DE8389',
+  },
+  reviewText: {
+    fontSize: 14,
+    color: '#555',
+    lineHeight: 20,
+    marginBottom: 8,
+    fontStyle: 'italic',
+  },
+  reviewAuthor: {
+    fontSize: 12,
+    color: '#888',
+    textAlign: 'right',
+    fontWeight: '600',
   },
   logoutContainer: {
     marginTop: 30,
