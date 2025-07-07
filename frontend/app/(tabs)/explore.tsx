@@ -33,6 +33,48 @@ export default function TabTwoScreen() {
           <View style={styles.menuSection}>
             <Pressable 
               style={styles.menuButton}
+              onPress={() => navigateTo('/categories')}
+            >
+              <Text style={styles.menuButtonText}>📂 Kategori</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/cart')}
+            >
+              <Text style={styles.menuButtonText}>🛒 Keranjang</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/promo')}
+            >
+              <Text style={styles.menuButtonText}>🎉 Promo</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/bundling')}
+            >
+              <Text style={styles.menuButtonText}>📦 Bundling</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/custom-tumbler')}
+            >
+              <Text style={styles.menuButtonText}>🎨 Custom</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/event')}
+            >
+              <Text style={styles.menuButtonText}>🌟 Event</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
               onPress={() => navigateTo('/brand')}
             >
               <Text style={styles.menuButtonText}>🏢 Tentang Brand</Text>
@@ -51,6 +93,41 @@ export default function TabTwoScreen() {
             >
               <Text style={styles.menuButtonText}>🎧 Support</Text>
             </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/blog')}
+            >
+              <Text style={styles.menuButtonText}>📝 Blog</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/contact')}
+            >
+              <Text style={styles.menuButtonText}>📞 Kontak</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/shipping')}
+            >
+              <Text style={styles.menuButtonText}>🚚 Pengiriman</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/return')}
+            >
+              <Text style={styles.menuButtonText}>↩️ Return</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
+              onPress={() => navigateTo('/terms')}
+            >
+              <Text style={styles.menuButtonText}>📋 S&K</Text>
+            </Pressable>
           </View>
         </View>
 
@@ -60,6 +137,12 @@ export default function TabTwoScreen() {
         <Text style={styles.productHeading}>PRODUCT</Text>
         <View style={styles.productSection}>
 
+        <ProductCard
+          image={require('@/assets/images/tumbler oren.jpg')}
+          judul="Blush Aura"
+          desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
+          harga={299000}
+        />
         <ProductCard
           image={require('@/assets/images/tumbler oren.jpg')}
           judul="Blush Aura"
@@ -93,9 +176,14 @@ export default function TabTwoScreen() {
           harga={279000}
         />
         </View>
-        <Text style={styles.productHeading}>PRODUCTS</Text>
         <View style={styles.productSection}>
 
+        <ProductCard
+          image={require('@/assets/images/gantungan1.jpg')}
+          judul="Rose Glow"
+          desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
+          harga={299000}
+        />
         <ProductCard
           image={require('@/assets/images/gantungan1.jpg')}
           judul="Rose Glow"
