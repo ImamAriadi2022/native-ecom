@@ -1,33 +1,22 @@
 import { ThemedText } from '@/components/ThemedText';
 import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
-import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EventScreen() {
+  const [selectedProducts, setSelectedProducts] = useState<{[eventId: string]: {[productId: string]: number}}>({});
+
   // Image mapping untuk static imports
   const getImageSource = (imageName: string) => {
     const imageMap: { [key: string]: any } = {
-      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
-      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
-      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
-      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
-      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
-      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
-      'kupu.png': require('../assets/images/kupu.png'),
-      'monyet.png': require('../assets/images/monyet.png'),
-      'meong.png': require('../assets/images/meong.png'),
-      'jerapah.png': require('../assets/images/jerapah.png'),
+      'disney1.jpeg': require('../assets/images/disney1.jpeg'),
+      'disney2.jpeg': require('../assets/images/disney2.jpeg'),
+      'disney3.jpeg': require('../assets/images/disney3.jpeg'),
+      'disney4.jpeg': require('../assets/images/disney4.jpeg'),
+      'disney5.jpeg': require('../assets/images/disney5.jpeg'),
+      'disney6.jpeg': require('../assets/images/disney6.jpeg'),
       'react-logo.png': require('../assets/images/react-logo.png'),
-      // Fallback untuk Disney images
-      'disney1.jpeg': require('../assets/images/kupu.png'),
-      'disney2.jpeg': require('../assets/images/monyet.png'),
-      'disney3.jpeg': require('../assets/images/meong.png'),
-      'disney4.jpeg': require('../assets/images/jerapah.png'),
-      'disney5.jpeg': require('../assets/images/kupu.png'),
-      'disney6.jpeg': require('../assets/images/monyet.png'),
-      'tumbler biru tua.jpeg': require('../assets/images/tumbler cream.jpg'),
-      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu.jpg'),
     };
     return imageMap[imageName] || imageMap['react-logo.png'];
   };
@@ -40,30 +29,32 @@ export default function EventScreen() {
       description: 'Dapatkan tumbler dengan karakter Disney favorit kamu! Limited edition hanya untuk bulan ini.',
       image: 'disney1.jpeg',
       startDate: '1 Januari 2025',
-      endDate: '31 Januari 2025',
+      endDate: '31 Maret 2025',
       status: 'active',
       discount: '25%',
       products: [
-        { name: 'Tumbler Mickey Mouse', price: 89000, image: 'disney2.jpeg' },
-        { name: 'Tumbler Princess Collection', price: 95000, image: 'disney3.jpeg' },
-        { name: 'Tumbler Toy Story', price: 85000, image: 'disney4.jpeg' }
+        { id: 'mickey', name: 'Tumbler Mickey Mouse', price: 89000, image: 'disney2.jpeg' },
+        { id: 'princess', name: 'Tumbler Princess Collection', price: 95000, image: 'disney3.jpeg' },
+        { id: 'toystory', name: 'Tumbler Toy Story', price: 85000, image: 'disney4.jpeg' },
+        { id: 'frozen', name: 'Tumbler Frozen Special', price: 92000, image: 'disney5.jpeg' },
+        { id: 'marvel', name: 'Tumbler Marvel Heroes', price: 98000, image: 'disney6.jpeg' }
       ],
       badge: 'TRENDING'
     },
     {
       id: '2',
-      title: 'Hot Wheels Speed Collection',
-      subtitle: 'Tumbler untuk Para Pecinta Otomotif',
-      description: 'Koleksi spesial untuk fans Hot Wheels! Design eksklusif dengan tema racing.',
-      image: 'tumbler biru tua.jpeg',
-      startDate: '15 Januari 2025',
-      endDate: '28 Februari 2025',
+      title: 'Disney Spring Festival',
+      subtitle: 'Koleksi Musim Semi Disney',
+      description: 'Rayakan musim semi dengan tumbler Disney bertema bunga dan alam! Koleksi terbatas dengan design eksklusif.',
+      image: 'disney2.jpeg',
+      startDate: '15 Maret 2025',
+      endDate: '30 Juni 2025',
       status: 'active',
-      discount: '30%',
+      discount: '20%',
       products: [
-        { name: 'Tumbler Racing Edition', price: 92000, image: 'tumbler oren.jpg' },
-        { name: 'Tumbler Classic Cars', price: 88000, image: 'tumbler khaki.jpg' },
-        { name: 'Tumbler Speed Demon', price: 96000, image: 'tumbler ungu pink.jpeg' }
+        { id: 'bambi', name: 'Tumbler Bambi Garden', price: 87000, image: 'disney1.jpeg' },
+        { id: 'tinkerbell', name: 'Tumbler Tinker Bell', price: 91000, image: 'disney3.jpeg' },
+        { id: 'moana', name: 'Tumbler Moana Ocean', price: 94000, image: 'disney5.jpeg' }
       ],
       badge: 'NEW'
     }
@@ -74,17 +65,17 @@ export default function EventScreen() {
       id: '3',
       title: 'Disney Summer Special',
       description: 'Koleksi musim panas dengan karakter Disney terbaru',
-      startDate: '1 Juni 2025',
+      startDate: '1 Juli 2025',
       teaser: 'Frozen, Moana, dan karakter summer lainnya!',
-      image: 'disney5.jpeg'
+      image: 'disney4.jpeg'
     },
     {
       id: '4',
-      title: 'Hot Wheels Vintage Series',
-      description: 'Tumbler dengan design retro Hot Wheels klasik',
-      startDate: '15 Juli 2025',
-      teaser: 'Classic cars dari era 70-80an!',
-      image: 'tumbler ungu pink.jpeg'
+      title: 'Disney Halloween Magic',
+      description: 'Tumbler Disney dengan tema Halloween yang magis',
+      startDate: '15 Oktober 2025',
+      teaser: 'Villains collection dan karakter spooky!',
+      image: 'disney6.jpeg'
     }
   ];
 
@@ -94,18 +85,70 @@ export default function EventScreen() {
       title: 'Disney Christmas 2024',
       description: 'Koleksi natal dengan karakter Disney dalam suasana winter',
       endDate: '25 Desember 2024',
-      image: 'disney6.jpeg',
+      image: 'disney5.jpeg',
       status: 'completed'
     },
     {
       id: '6',
-      title: 'Hot Wheels Halloween Edition',
-      description: 'Tumbler dengan tema mobil-mobil spooky Hot Wheels',
-      endDate: '31 Oktober 2024',
-      image: 'tumbler biru tua.jpeg',
+      title: 'Disney Valentine Special',
+      description: 'Tumbler Disney bertema cinta dan valentine',
+      endDate: '14 Februari 2025',
+      image: 'disney3.jpeg',
       status: 'completed'
     }
   ];
+
+  const updateProductQuantity = (eventId: string, productId: string, quantity: number) => {
+    setSelectedProducts(prev => ({
+      ...prev,
+      [eventId]: {
+        ...prev[eventId],
+        [productId]: Math.max(0, quantity)
+      }
+    }));
+  };
+
+  const getSelectedProductsForEvent = (eventId: string) => {
+    return selectedProducts[eventId] || {};
+  };
+
+  const getTotalSelectedForEvent = (eventId: string) => {
+    const products = getSelectedProductsForEvent(eventId);
+    return Object.values(products).reduce((sum, qty) => sum + qty, 0);
+  };
+
+  const proceedToCheckout = (event: any) => {
+    const selected = getSelectedProductsForEvent(event.id);
+    const selectedItems = Object.entries(selected)
+      .filter(([_, qty]) => qty > 0)
+      .map(([productId, qty]) => {
+        const product = event.products.find((p: any) => p.id === productId);
+        return { ...product, quantity: qty };
+      });
+
+    if (selectedItems.length === 0) {
+      Alert.alert('Pilih Produk', 'Silakan pilih minimal 1 produk untuk checkout');
+      return;
+    }
+
+    const totalPrice = selectedItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const discountedPrice = Math.round(totalPrice * (1 - parseInt(event.discount) / 100));
+    const savings = totalPrice - discountedPrice;
+
+    router.push({
+      pathname: '/checkout',
+      params: {
+        name: `Event ${event.title}`,
+        price: discountedPrice.toString(),
+        image: event.image,
+        description: `${selectedItems.length} produk dari event ${event.title} dengan diskon ${event.discount}`,
+        type: 'event',
+        originalPrice: totalPrice.toString(),
+        savings: savings.toString(),
+        items: JSON.stringify(selectedItems)
+      }
+    });
+  };
 
   return (
     <LinearGradient
@@ -122,9 +165,9 @@ export default function EventScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.heroSection}>
           <Text style={styles.heroEmoji}>🎉</Text>
-          <ThemedText style={styles.heroTitle}>Event Koleksi Spesial</ThemedText>
+          <ThemedText style={styles.heroTitle}>Event Koleksi Disney</ThemedText>
           <Text style={styles.heroDesc}>
-            Dapatkan tumbler limited edition Disney & Hot Wheels dengan tema-tema eksklusif
+            Dapatkan tumbler limited edition Disney dengan karakter favorit dan tema-tema eksklusif sepanjang tahun
           </Text>
         </View>
 
@@ -161,36 +204,49 @@ export default function EventScreen() {
               <View style={styles.productsContainer}>
                 <Text style={styles.productsTitle}>🛍️ Produk Tersedia:</Text>
                 {event.products.map((product, index) => (
-                  <View key={index} style={styles.productItem}>
+                  <View key={product.id} style={styles.productItem}>
                     <Image 
                       source={getImageSource(product.image)} 
                       style={styles.productImage}
                     />
                     <View style={styles.productInfo}>
-                      <Text style={styles.productName}>• {product.name}</Text>
+                      <Text style={styles.productName}>{product.name}</Text>
                       <Text style={styles.productPrice}>Rp {product.price.toLocaleString()}</Text>
+                    </View>
+                    <View style={styles.quantityControls}>
+                      <TouchableOpacity 
+                        style={styles.quantityButton}
+                        onPress={() => updateProductQuantity(event.id, product.id, (getSelectedProductsForEvent(event.id)[product.id] || 0) - 1)}
+                      >
+                        <Text style={styles.quantityButtonText}>-</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.quantityText}>
+                        {getSelectedProductsForEvent(event.id)[product.id] || 0}
+                      </Text>
+                      <TouchableOpacity 
+                        style={styles.quantityButton}
+                        onPress={() => updateProductQuantity(event.id, product.id, (getSelectedProductsForEvent(event.id)[product.id] || 0) + 1)}
+                      >
+                        <Text style={styles.quantityButtonText}>+</Text>
+                      </TouchableOpacity>
                     </View>
                   </View>
                 ))}
               </View>
               
-              <TouchableOpacity 
-                style={styles.shopButton}
-                onPress={() => router.push({
-                  pathname: '/checkout',
-                  params: {
-                    name: `Event ${event.title}`,
-                    price: event.products[0].price.toString(),
-                    image: event.products[0].image,
-                    description: `Produk special dari event ${event.title} dengan diskon ${event.discount}`,
-                    type: 'event',
-                    originalPrice: Math.round(event.products[0].price / (1 - parseInt(event.discount) / 100)).toString(),
-                    savings: (Math.round(event.products[0].price / (1 - parseInt(event.discount) / 100)) - event.products[0].price).toString()
-                  }
-                })}
-              >
-                <Text style={styles.shopButtonText}>🛒 Belanja Sekarang</Text>
-              </TouchableOpacity>
+              <View style={styles.checkoutSection}>
+                <Text style={styles.totalSelected}>
+                  Total dipilih: {getTotalSelectedForEvent(event.id)} produk
+                </Text>
+                <TouchableOpacity 
+                  style={[styles.shopButton, getTotalSelectedForEvent(event.id) === 0 && styles.shopButtonDisabled]}
+                  onPress={() => proceedToCheckout(event)}
+                >
+                  <Text style={styles.shopButtonText}>
+                    🛒 {getTotalSelectedForEvent(event.id) > 0 ? 'Checkout Sekarang' : 'Pilih Produk Dulu'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
             </View>
           ))}
         </View>
@@ -406,25 +462,67 @@ const styles = StyleSheet.create({
   },
   productInfo: {
     flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   productName: {
     fontSize: 12,
     color: '#555',
-    flex: 1,
+    marginBottom: 2,
   },
   productPrice: {
     fontSize: 12,
     fontWeight: 'bold',
     color: '#DE8389',
   },
+  quantityControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+    borderRadius: 8,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  quantityButton: {
+    backgroundColor: '#DE8389',
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  quantityButtonText: {
+    color: '#fff',
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  quantityText: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#333',
+    marginHorizontal: 12,
+    minWidth: 20,
+    textAlign: 'center',
+  },
+  checkoutSection: {
+    backgroundColor: 'rgba(222, 131, 137, 0.1)',
+    borderRadius: 10,
+    padding: 12,
+    marginTop: 10,
+  },
+  totalSelected: {
+    fontSize: 13,
+    color: '#666',
+    textAlign: 'center',
+    marginBottom: 8,
+  },
   shopButton: {
     backgroundColor: '#DE8389',
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: 'center',
+  },
+  shopButtonDisabled: {
+    backgroundColor: '#ccc',
+    opacity: 0.6,
   },
   shopButtonText: {
     color: '#fff',

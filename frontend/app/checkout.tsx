@@ -51,6 +51,10 @@ export default function CheckoutScreen() {
   // Parse cart data jika ada
   const cartData = params.cartData ? JSON.parse(params.cartData as string) : null;
   const isCartCheckout = params.type === 'cart' && cartData;
+  
+  // Parse event items jika ada
+  const eventItems = params.items ? JSON.parse(params.items as string) : null;
+  const isEventCheckout = params.type === 'event' && eventItems;
 
   // Data produk dari params atau default
   const productData = {
@@ -72,6 +76,12 @@ export default function CheckoutScreen() {
     shippingCost = cartData.shipping;
     serviceCost = cartData.service;
     total = cartData.total;
+  } else if (isEventCheckout) {
+    // Untuk checkout dari event, gunakan data yang sudah dihitung
+    subtotal = productData.originalPrice || productData.price;
+    total = productData.price;
+    shippingCost = 15000;
+    serviceCost = 0;
   } else {
     // Untuk checkout produk individual
     subtotal = productData.price * quantity;
@@ -142,6 +152,36 @@ export default function CheckoutScreen() {
                   </View>
                 ))}
               </View>
+            ) : isEventCheckout ? (
+              // Tampilkan event items
+              <View>
+                <ThemedText style={styles.eventTitle}>{productData.name}</ThemedText>
+                <ThemedText style={styles.eventDescription}>{productData.description}</ThemedText>
+                {eventItems.map((item: any, index: number) => (
+                  <View key={`${item.id}-${index}`} style={styles.eventItemCard}>
+                    <Image 
+                      source={getImageSource(item.image)} 
+                      style={styles.eventItemImage}
+                    />
+                    <View style={styles.eventItemInfo}>
+                      <ThemedText style={styles.eventItemName}>{item.name}</ThemedText>
+                      <ThemedText style={styles.eventItemPrice}>
+                        Rp {item.price.toLocaleString('id-ID')} x {item.quantity}
+                      </ThemedText>
+                    </View>
+                    <ThemedText style={styles.eventItemTotal}>
+                      Rp {(item.price * item.quantity).toLocaleString('id-ID')}
+                    </ThemedText>
+                  </View>
+                ))}
+                {productData.savings && (
+                  <View style={styles.eventSavingsCard}>
+                    <ThemedText style={styles.eventSavings}>
+                      💰 Total Hemat: Rp {productData.savings.toLocaleString('id-ID')}
+                    </ThemedText>
+                  </View>
+                )}
+              </View>
             ) : (
               // Tampilkan produk individual
               <View style={styles.productCard}>
@@ -174,7 +214,7 @@ export default function CheckoutScreen() {
             )}
 
             {/* Quantity Selector - hanya untuk checkout produk individual */}
-            {!isCartCheckout && (
+            {!isCartCheckout && !isEventCheckout && (
               <View style={styles.quantitySection}>
                 <ThemedText style={styles.quantityLabel}>Jumlah:</ThemedText>
                 <View style={styles.quantityControls}>
@@ -471,5 +511,63 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     color: '#DE8389',
+  },
+  // Styles untuk event items
+  eventTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 8,
+  },
+  eventDescription: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 12,
+  },
+  eventItemCard: {
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 8,
+    borderLeftWidth: 3,
+    borderLeftColor: '#4ecdc4',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  eventItemImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  eventItemInfo: {
+    flex: 1,
+  },
+  eventItemName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 4,
+  },
+  eventItemPrice: {
+    fontSize: 12,
+    color: '#555',
+  },
+  eventItemTotal: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4ecdc4',
+  },
+  eventSavingsCard: {
+    backgroundColor: 'rgba(76, 205, 196, 0.1)',
+    borderRadius: 8,
+    padding: 10,
+    marginTop: 8,
+  },
+  eventSavings: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#4ecdc4',
+    textAlign: 'center',
   },
 });
