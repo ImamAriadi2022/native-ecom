@@ -37,6 +37,10 @@ export default function CheckoutScreen() {
   const params = useLocalSearchParams();
   const [quantity, setQuantity] = useState(1);
 
+  // Parse cart data jika ada
+  const cartData = params.cartData ? JSON.parse(params.cartData as string) : null;
+  const isCartCheckout = params.type === 'cart' && cartData;
+
   // Data produk dari params atau default
   const productData = {
     name: params.name as string || 'Produk',
@@ -48,9 +52,22 @@ export default function CheckoutScreen() {
     savings: params.savings ? parseInt(params.savings as string) : null
   };
 
-  const subtotal = productData.price * quantity;
-  const shippingCost = 15000;
-  const total = subtotal + shippingCost;
+  // Perhitungan harga berdasarkan tipe checkout
+  let subtotal, shippingCost, serviceCost, total;
+  
+  if (isCartCheckout) {
+    // Untuk checkout dari cart, gunakan data cart
+    subtotal = cartData.subtotal;
+    shippingCost = cartData.shipping;
+    serviceCost = cartData.service;
+    total = cartData.total;
+  } else {
+    // Untuk checkout produk individual
+    subtotal = productData.price * quantity;
+    shippingCost = 15000;
+    serviceCost = 0;
+    total = subtotal + shippingCost + serviceCost;
+  }
 
   const handleQuantityChange = (change: number) => {
     const newQuantity = quantity + change;
@@ -92,53 +109,80 @@ export default function CheckoutScreen() {
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Ringkasan Pesanan</ThemedText>
             
-            <View style={styles.productCard}>
-              {productData.image && (
-                <Image 
-                  source={getImageSource(productData.image)} 
-                  style={styles.productImage}
-                />
-              )}
-              <View style={styles.productInfo}>
-                <ThemedText style={styles.productName}>{productData.name}</ThemedText>
-                <ThemedText style={styles.productDesc}>{productData.description}</ThemedText>
-                
-                {productData.originalPrice && productData.savings && (
-                  <View style={styles.priceContainer}>
-                    <ThemedText style={styles.originalPrice}>
-                      Rp {productData.originalPrice.toLocaleString('id-ID')}
-                    </ThemedText>
-                    <ThemedText style={styles.savingsText}>
-                      Hemat Rp {productData.savings.toLocaleString('id-ID')}
+            {isCartCheckout ? (
+              // Tampilkan semua item dari cart
+              <View>
+                {cartData.items.map((item: any) => (
+                  <View key={item.id} style={styles.cartItemCard}>
+                    <Image 
+                      source={getImageSource(item.image)} 
+                      style={styles.cartItemImage}
+                    />
+                    <View style={styles.cartItemInfo}>
+                      <ThemedText style={styles.cartItemName}>{item.name}</ThemedText>
+                      <ThemedText style={styles.cartItemVariant}>{item.variant}</ThemedText>
+                      <ThemedText style={styles.cartItemPrice}>
+                        Rp {item.price.toLocaleString('id-ID')} x {item.quantity}
+                      </ThemedText>
+                    </View>
+                    <ThemedText style={styles.cartItemTotal}>
+                      Rp {(item.price * item.quantity).toLocaleString('id-ID')}
                     </ThemedText>
                   </View>
+                ))}
+              </View>
+            ) : (
+              // Tampilkan produk individual
+              <View style={styles.productCard}>
+                {productData.image && (
+                  <Image 
+                    source={getImageSource(productData.image)} 
+                    style={styles.productImage}
+                  />
                 )}
-                
-                <ThemedText style={styles.productPrice}>
-                  Rp {productData.price.toLocaleString('id-ID')}
-                </ThemedText>
+                <View style={styles.productInfo}>
+                  <ThemedText style={styles.productName}>{productData.name}</ThemedText>
+                  <ThemedText style={styles.productDesc}>{productData.description}</ThemedText>
+                  
+                  {productData.originalPrice && productData.savings && (
+                    <View style={styles.priceContainer}>
+                      <ThemedText style={styles.originalPrice}>
+                        Rp {productData.originalPrice.toLocaleString('id-ID')}
+                      </ThemedText>
+                      <ThemedText style={styles.savingsText}>
+                        Hemat Rp {productData.savings.toLocaleString('id-ID')}
+                      </ThemedText>
+                    </View>
+                  )}
+                  
+                  <ThemedText style={styles.productPrice}>
+                    Rp {productData.price.toLocaleString('id-ID')}
+                  </ThemedText>
+                </View>
               </View>
-            </View>
+            )}
 
-            {/* Quantity Selector */}
-            <View style={styles.quantitySection}>
-              <ThemedText style={styles.quantityLabel}>Jumlah:</ThemedText>
-              <View style={styles.quantityControls}>
-                <Pressable 
-                  style={styles.quantityButton}
-                  onPress={() => handleQuantityChange(-1)}
-                >
-                  <ThemedText style={styles.quantityButtonText}>-</ThemedText>
-                </Pressable>
-                <ThemedText style={styles.quantityText}>{quantity}</ThemedText>
-                <Pressable 
-                  style={styles.quantityButton}
-                  onPress={() => handleQuantityChange(1)}
-                >
-                  <ThemedText style={styles.quantityButtonText}>+</ThemedText>
-                </Pressable>
+            {/* Quantity Selector - hanya untuk checkout produk individual */}
+            {!isCartCheckout && (
+              <View style={styles.quantitySection}>
+                <ThemedText style={styles.quantityLabel}>Jumlah:</ThemedText>
+                <View style={styles.quantityControls}>
+                  <Pressable 
+                    style={styles.quantityButton}
+                    onPress={() => handleQuantityChange(-1)}
+                  >
+                    <ThemedText style={styles.quantityButtonText}>-</ThemedText>
+                  </Pressable>
+                  <ThemedText style={styles.quantityText}>{quantity}</ThemedText>
+                  <Pressable 
+                    style={styles.quantityButton}
+                    onPress={() => handleQuantityChange(1)}
+                  >
+                    <ThemedText style={styles.quantityButtonText}>+</ThemedText>
+                  </Pressable>
+                </View>
               </View>
-            </View>
+            )}
           </View>
 
           {/* Order Summary */}
@@ -147,7 +191,7 @@ export default function CheckoutScreen() {
             
             <View style={styles.summaryRow}>
               <ThemedText style={styles.summaryLabel}>
-                Subtotal ({quantity} item)
+                Subtotal ({isCartCheckout ? cartData.itemCount : quantity} item)
               </ThemedText>
               <ThemedText style={styles.summaryValue}>
                 Rp {subtotal.toLocaleString('id-ID')}
@@ -160,6 +204,15 @@ export default function CheckoutScreen() {
                 Rp {shippingCost.toLocaleString('id-ID')}
               </ThemedText>
             </View>
+
+            {isCartCheckout && serviceCost > 0 && (
+              <View style={styles.summaryRow}>
+                <ThemedText style={styles.summaryLabel}>Biaya Layanan</ThemedText>
+                <ThemedText style={styles.summaryValue}>
+                  Rp {serviceCost.toLocaleString('id-ID')}
+                </ThemedText>
+              </View>
+            )}
 
             <View style={styles.divider} />
 
@@ -367,5 +420,45 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  // Styles untuk cart items
+  cartItemCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f8f9fa',
+    borderRadius: 12,
+    padding: 12,
+    marginBottom: 10,
+    borderLeftWidth: 3,
+    borderLeftColor: '#DE8389',
+  },
+  cartItemImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  cartItemInfo: {
+    flex: 1,
+  },
+  cartItemName: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#333',
+    marginBottom: 2,
+  },
+  cartItemVariant: {
+    fontSize: 12,
+    color: '#666',
+    marginBottom: 4,
+  },
+  cartItemPrice: {
+    fontSize: 12,
+    color: '#555',
+  },
+  cartItemTotal: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#DE8389',
   },
 });

@@ -198,7 +198,28 @@ export default function CartScreen() {
           </View>
           <TouchableOpacity 
             style={styles.checkoutButton}
-            onPress={() => router.push('/checkout')}
+            onPress={() => {
+              // Kirim data cart lengkap ke checkout
+              const cartData = {
+                items: cartItems,
+                subtotal: totalPrice,
+                shipping: 15000,
+                service: 2000,
+                total: totalPrice + 15000 + 2000,
+                itemCount: totalItems
+              };
+              
+              router.push({
+                pathname: '/checkout',
+                params: {
+                  type: 'cart',
+                  cartData: JSON.stringify(cartData),
+                  name: `${totalItems} Item Keranjang`,
+                  price: (totalPrice + 15000 + 2000).toString(),
+                  description: `Checkout ${totalItems} item dari keranjang belanja`
+                }
+              });
+            }}
           >
             <Text style={styles.checkoutText}>Checkout</Text>
           </TouchableOpacity>
