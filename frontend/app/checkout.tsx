@@ -7,40 +7,49 @@ import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 export default function CheckoutScreen() {
   // Image mapping untuk static imports
   const getImageSource = (imageName: string) => {
+    console.log('Looking for image:', imageName); // Debug log
+    
     const imageMap: { [key: string]: any } = {
-      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
-      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
-      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
-      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
-      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
-      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
-      'tumbler biru tua.jpeg': require('../assets/images/tumbler biru tua.jpeg'),
-      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu pink.jpeg'),
-      'masseto.jpg': require('../assets/images/masseto.jpg'),
-      'gantungan1.jpg': require('../assets/images/gantungan1.jpg'),
-      'gantungan2.jpg': require('../assets/images/gantungan2.jpg'),
-      'gantungan3.jpg': require('../assets/images/gantungan3.jpg'),
-      'gantungan4.jpg': require('../assets/images/gantungan4.jpg'),
-      'gantungan5.jpg': require('../assets/images/gantungan5.jpg'),
-      'bundling1.jpg': require('../assets/images/bundling1.jpg'),
-      'bundling2.jpg': require('../assets/images/bundling2.jpg'),
-      'bundling3.jpg': require('../assets/images/bundling3.jpg'),
-      'custom1.jpeg': require('../assets/images/custom1.jpeg'),
-      'custom2.jpeg': require('../assets/images/custom2.jpeg'),
-      'custom3.jpeg': require('../assets/images/custom3.jpeg'),
-      'disney1.jpeg': require('../assets/images/disney1.jpeg'),
-      'disney2.jpeg': require('../assets/images/disney2.jpeg'),
-      'disney3.jpeg': require('../assets/images/disney3.jpeg'),
-      'disney4.jpeg': require('../assets/images/disney4.jpeg'),
-      'disney5.jpeg': require('../assets/images/disney5.jpeg'),
-      'disney6.jpeg': require('../assets/images/disney6.jpeg'),
-      'kupu.png': require('../assets/images/kupu.png'),
-      'monyet.png': require('../assets/images/monyet.png'),
-      'meong.png': require('../assets/images/meong.png'),
-      'jerapah.png': require('../assets/images/jerapah.png'),
-      'react-logo.png': require('../assets/images/react-logo.png'),
+      'tumbler cream.jpg': require('@/assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('@/assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('@/assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('@/assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('@/assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('@/assets/images/tumbler khaki.jpg'),
+      'tumbler biru tua.jpeg': require('@/assets/images/tumbler biru tua.jpeg'),
+      'tumbler ungu pink.jpeg': require('@/assets/images/tumbler ungu pink.jpeg'),
+      'masseto.jpg': require('@/assets/images/masseto.jpg'),
+      'gantungan1.jpg': require('@/assets/images/gantungan1.jpg'),
+      'gantungan2.jpg': require('@/assets/images/gantungan2.jpg'),
+      'gantungan3.jpg': require('@/assets/images/gantungan3.jpg'),
+      'gantungan4.jpg': require('@/assets/images/gantungan4.jpg'),
+      'gantungan5.jpg': require('@/assets/images/gantungan5.jpg'),
+      'bundling1.jpg': require('@/assets/images/bundling1.jpg'),
+      'bundling2.jpg': require('@/assets/images/bundling2.jpg'),
+      'bundling3.jpg': require('@/assets/images/bundling3.jpg'),
+      'custom1.jpeg': require('@/assets/images/custom1.jpeg'),
+      'custom2.jpeg': require('@/assets/images/custom2.jpeg'),
+      'custom3.jpeg': require('@/assets/images/custom3.jpeg'),
+      'disney1.jpeg': require('@/assets/images/disney1.jpeg'),
+      'disney2.jpeg': require('@/assets/images/disney2.jpeg'),
+      'disney3.jpeg': require('@/assets/images/disney3.jpeg'),
+      'disney4.jpeg': require('@/assets/images/disney4.jpeg'),
+      'disney5.jpeg': require('@/assets/images/disney5.jpeg'),
+      'disney6.jpeg': require('@/assets/images/disney6.jpeg'),
+      'kupu.png': require('@/assets/images/kupu.png'),
+      'monyet.png': require('@/assets/images/monyet.png'),
+      'meong.png': require('@/assets/images/meong.png'),
+      'jerapah.png': require('@/assets/images/jerapah.png'),
+      'react-logo.png': require('@/assets/images/react-logo.png'),
     };
-    return imageMap[imageName] || imageMap['react-logo.png'];
+    
+    const result = imageMap[imageName] || imageMap['react-logo.png'];
+    console.log('Image mapping result:', {
+      requested: imageName,
+      found: result !== imageMap['react-logo.png'] ? 'SUCCESS' : 'FALLBACK',
+      result: result
+    }); // Enhanced debug log
+    return result;
   };
 
   const router = useRouter();

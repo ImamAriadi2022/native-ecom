@@ -9,6 +9,52 @@ export default function PaymentTestScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Payment Test Navigation</Text>
       
+      {/* Test checkout dengan image produk */}
+      <Pressable 
+        style={styles.button}
+        onPress={() => router.push({
+          pathname: '/checkout',
+          params: {
+            name: 'Blush Aura Tumbler',
+            price: '299000',
+            image: 'tumbler oren.jpg',
+            description: 'Tumbler dengan warna orange yang cantik'
+          }
+        })}
+      >
+        <Text style={styles.buttonText}>Test Checkout - Tumbler Oren</Text>
+      </Pressable>
+
+      <Pressable 
+        style={styles.button}
+        onPress={() => router.push({
+          pathname: '/checkout',
+          params: {
+            name: 'Luna Frost Tumbler',
+            price: '249000',
+            image: 'tumbler ungu.jpg',
+            description: 'Tumbler dengan warna ungu yang elegan'
+          }
+        })}
+      >
+        <Text style={styles.buttonText}>Test Checkout - Tumbler Ungu</Text>
+      </Pressable>
+
+      <Pressable 
+        style={styles.button}
+        onPress={() => router.push({
+          pathname: '/checkout',
+          params: {
+            name: 'Rose Glow Keychain',
+            price: '199000',
+            image: 'gantungan1.jpg',
+            description: 'Gantungan kunci dengan warna rose yang cantik'
+          }
+        })}
+      >
+        <Text style={styles.buttonText}>Test Checkout - Gantungan</Text>
+      </Pressable>
+      
       <Pressable 
         style={styles.button}
         onPress={() => router.push({
