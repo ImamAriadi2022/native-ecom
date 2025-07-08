@@ -14,33 +14,36 @@ export default function CustomTumblerScreen() {
       'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
       'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
       'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
-      'tumbler biru tua.jpeg': require('../assets/images/tumbler cream.jpg'), // fallback
-      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu.jpg'), // fallback
+      'tumbler biru tua.jpeg': require('../assets/images/tumbler biru tua.jpeg'),
+      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu pink.jpeg'),
+      'custom1.jpeg': require('../assets/images/custom1.jpeg'),
+      'custom2.jpeg': require('../assets/images/custom2.jpeg'),
+      'custom3.jpeg': require('../assets/images/custom3.jpeg'),
     };
-    return imageMap[imageName] || imageMap['tumbler cream.jpg'];
+    return imageMap[imageName] || imageMap['custom1.jpeg'];
   };
 
   const [selectedSize, setSelectedSize] = useState('500ml');
-  const [selectedColor, setSelectedColor] = useState('cream');
+  const [selectedColor, setSelectedColor] = useState('custom1');
   const [selectedDesign, setSelectedDesign] = useState('plain');
   const [customText, setCustomText] = useState('');
   const [selectedFont, setSelectedFont] = useState('modern');
 
   const sizes = [
-    { id: '350ml', name: '350ml', price: 0, description: 'Compact size' },
-    { id: '500ml', name: '500ml', price: 10000, description: 'Standard size' },
-    { id: '750ml', name: '750ml', price: 20000, description: 'Large size' }
+    { id: '500ml', name: '500ml', price: 0, description: 'Standard size' },
+    { id: '750ml', name: '750ml', price: 15000, description: 'Large size' },
+    { id: '1000ml', name: '1000ml', price: 25000, description: 'Extra large size' }
   ];
 
   const colors = [
+    { id: 'custom1', name: 'Custom Design 1', hex: '#f5f5dc', image: 'custom1.jpeg' },
+    { id: 'custom2', name: 'Custom Design 2', hex: '#ffc0cb', image: 'custom2.jpeg' },
+    { id: 'custom3', name: 'Custom Design 3', hex: '#90ee90', image: 'custom3.jpeg' },
     { id: 'cream', name: 'Cream', hex: '#f5f5dc', image: 'tumbler cream.jpg' },
     { id: 'pink', name: 'Pink', hex: '#ffc0cb', image: 'tumbler pink1.jpg' },
     { id: 'green', name: 'Green', hex: '#90ee90', image: 'tumbler hijau2.jpg' },
     { id: 'purple', name: 'Purple', hex: '#dda0dd', image: 'tumbler ungu.jpg' },
-    { id: 'orange', name: 'Orange', hex: '#ffa500', image: 'tumbler oren.jpg' },
-    { id: 'khaki', name: 'Khaki', hex: '#f0e68c', image: 'tumbler khaki.jpg' },
-    { id: 'navy', name: 'Navy Blue', hex: '#1e3a8a', image: 'tumbler biru tua.jpeg' },
-    { id: 'purplepink', name: 'Purple Pink', hex: '#9333ea', image: 'tumbler ungu pink.jpeg' }
+    { id: 'orange', name: 'Orange', hex: '#ffa500', image: 'tumbler oren.jpg' }
   ];
 
   const designs = [
@@ -88,7 +91,7 @@ export default function CustomTumblerScreen() {
           <ThemedText style={styles.sectionTitle}>Preview</ThemedText>
           <View style={styles.previewContainer}>
             <Image 
-              source={getImageSource(getSelectedColor()?.image || 'tumbler cream.jpg')} 
+              source={getImageSource(getSelectedColor()?.image || 'custom1.jpeg')} 
               style={styles.previewImage}
             />
             <View style={styles.previewOverlay}>
@@ -283,7 +286,7 @@ export default function CustomTumblerScreen() {
             params: {
               name: `Custom Tumbler ${getSelectedColor()?.name} ${selectedSize}`,
               price: calculatePrice().toString(),
-              image: getSelectedColor()?.image || 'tumbler cream.jpg',
+              image: getSelectedColor()?.image || 'custom1.jpeg',
               description: `Custom tumbler warna ${getSelectedColor()?.name}, ukuran ${selectedSize}, design ${getSelectedDesign()?.name}${customText ? `, text: "${customText}"` : ''}`,
               type: 'custom'
             }
@@ -393,7 +396,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   selectedOption: {
-    backgroundColor: 'rgba(222, 131, 137, 0.3)',
+    backgroundColor: 'rgba(222, 131, 137, 0.8)',
+    borderWidth: 2,
+    borderColor: '#DE8389',
   },
   optionName: {
     fontSize: 14,
@@ -424,8 +429,10 @@ const styles = StyleSheet.create({
     minWidth: 65,
   },
   selectedColor: {
-    backgroundColor: 'rgba(222, 131, 137, 0.3)',
+    backgroundColor: 'rgba(222, 131, 137, 0.8)',
     borderRadius: 10,
+    borderWidth: 2,
+    borderColor: '#DE8389',
   },
   colorCircle: {
     width: 40,
@@ -478,7 +485,9 @@ const styles = StyleSheet.create({
     minWidth: 80,
   },
   selectedFont: {
-    backgroundColor: 'rgba(222, 131, 137, 0.3)',
+    backgroundColor: 'rgba(222, 131, 137, 0.8)',
+    borderWidth: 2,
+    borderColor: '#DE8389',
   },
   fontPreview: {
     fontSize: 20,
