@@ -14,6 +14,23 @@ interface CartItem {
 }
 
 export default function CartScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'jerapah.png': require('../assets/images/jerapah.png'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'kupu.png': require('../assets/images/kupu.png'),
+      'monyet.png': require('../assets/images/monyet.png'),
+      'meong.png': require('../assets/images/meong.png'),
+      'react-logo.png': require('../assets/images/react-logo.png'),
+    };
+    return imageMap[imageName] || imageMap['react-logo.png'];
+  };
+
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: '1',
@@ -102,9 +119,8 @@ export default function CartScreen() {
             {cartItems.map((item) => (
               <View key={item.id} style={styles.cartItem}>
                 <Image 
-                  source={{ uri: `../assets/images/${item.image}` }} 
+                  source={getImageSource(item.image)} 
                   style={styles.itemImage}
-                  defaultSource={require('../assets/images/react-logo.png')}
                 />
                 <View style={styles.itemInfo}>
                   <ThemedText style={styles.itemName}>{item.name}</ThemedText>

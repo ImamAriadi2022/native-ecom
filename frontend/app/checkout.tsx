@@ -3,9 +3,36 @@ import { ThemedView } from '@/components/ThemedView';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function CheckoutScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'masseto.jpg': require('../assets/images/masseto.jpg'),
+      'gantungan1.jpg': require('../assets/images/gantungan1.jpg'),
+      'gantungan2.jpg': require('../assets/images/gantungan2.jpg'),
+      'kupu.png': require('../assets/images/kupu.png'),
+      'monyet.png': require('../assets/images/monyet.png'),
+      'meong.png': require('../assets/images/meong.png'),
+      'jerapah.png': require('../assets/images/jerapah.png'),
+      'react-logo.png': require('../assets/images/react-logo.png'),
+      'disney1.jpeg': require('../assets/images/kupu.png'), // fallback
+      'disney2.jpeg': require('../assets/images/monyet.png'), // fallback
+      'disney3.jpeg': require('../assets/images/meong.png'), // fallback
+      'disney4.jpeg': require('../assets/images/jerapah.png'), // fallback
+      'tumbler biru tua.jpeg': require('../assets/images/tumbler cream.jpg'), // fallback
+      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu.jpg'), // fallback
+    };
+    return imageMap[imageName] || imageMap['react-logo.png'];
+  };
+
   const router = useRouter();
   const params = useLocalSearchParams();
   const [quantity, setQuantity] = useState(1);
@@ -14,8 +41,11 @@ export default function CheckoutScreen() {
   const productData = {
     name: params.name as string || 'Produk',
     price: parseInt(params.price as string) || 299000,
-    image: params.image as string || '',
-    description: params.description as string || 'Deskripsi produk'
+    image: params.image as string || 'react-logo.png',
+    description: params.description as string || 'Deskripsi produk',
+    type: params.type as string || 'regular',
+    originalPrice: params.originalPrice ? parseInt(params.originalPrice as string) : null,
+    savings: params.savings ? parseInt(params.savings as string) : null
   };
 
   const subtotal = productData.price * quantity;
@@ -63,9 +93,27 @@ export default function CheckoutScreen() {
             <ThemedText style={styles.sectionTitle}>Ringkasan Pesanan</ThemedText>
             
             <View style={styles.productCard}>
+              {productData.image && (
+                <Image 
+                  source={getImageSource(productData.image)} 
+                  style={styles.productImage}
+                />
+              )}
               <View style={styles.productInfo}>
                 <ThemedText style={styles.productName}>{productData.name}</ThemedText>
                 <ThemedText style={styles.productDesc}>{productData.description}</ThemedText>
+                
+                {productData.originalPrice && productData.savings && (
+                  <View style={styles.priceContainer}>
+                    <ThemedText style={styles.originalPrice}>
+                      Rp {productData.originalPrice.toLocaleString('id-ID')}
+                    </ThemedText>
+                    <ThemedText style={styles.savingsText}>
+                      Hemat Rp {productData.savings.toLocaleString('id-ID')}
+                    </ThemedText>
+                  </View>
+                )}
+                
                 <ThemedText style={styles.productPrice}>
                   Rp {productData.price.toLocaleString('id-ID')}
                 </ThemedText>
@@ -156,7 +204,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 20,
+    padding: 16,
     backgroundColor: 'transparent',
     paddingTop: 50,
   },
@@ -178,8 +226,8 @@ const styles = StyleSheet.create({
   section: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
+    padding: 16,
+    marginBottom: 16,
   },
   sectionTitle: {
     fontSize: 18,
@@ -190,7 +238,13 @@ const styles = StyleSheet.create({
   productCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
+  },
+  productImage: {
+    width: 70,
+    height: 70,
+    borderRadius: 10,
+    marginRight: 12,
   },
   productInfo: {
     flex: 1,
@@ -205,6 +259,22 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginBottom: 8,
+  },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 5,
+    gap: 10,
+  },
+  originalPrice: {
+    fontSize: 14,
+    color: '#999',
+    textDecorationLine: 'line-through',
+  },
+  savingsText: {
+    fontSize: 12,
+    color: '#28a745',
+    fontWeight: '600',
   },
   productPrice: {
     fontSize: 16,
@@ -282,11 +352,11 @@ const styles = StyleSheet.create({
   },
   checkoutButton: {
     backgroundColor: '#DE8389',
-    paddingVertical: 18,
+    paddingVertical: 16,
     borderRadius: 25,
     alignItems: 'center',
-    marginTop: 20,
-    marginBottom: 40,
+    marginTop: 16,
+    marginBottom: 30,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,

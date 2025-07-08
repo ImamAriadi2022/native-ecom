@@ -5,15 +5,42 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function PromoScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'jerapah.png': require('../assets/images/jerapah.png'),
+      'kupu.png': require('../assets/images/kupu.png'),
+      'monyet.png': require('../assets/images/monyet.png'),
+      'meong.png': require('../assets/images/meong.png'),
+      'gantungan1.jpg': require('../assets/images/gantungan1.jpg'),
+      'gantungan2.jpg': require('../assets/images/gantungan2.jpg'),
+      'gantungan3.jpg': require('../assets/images/gantungan3.jpg'),
+      'gantungan4.jpg': require('../assets/images/gantungan4.jpg'),
+      'gantungan5.jpg': require('../assets/images/gantungan5.jpg'),
+      'bundling1.jpg': require('../assets/images/bundling1.jpg'),
+      'bundling2.jpg': require('../assets/images/bundling2.jpg'),
+      'bundling3.jpg': require('../assets/images/bundling3.jpg'),
+      'masseto.jpg': require('../assets/images/masseto.jpg'),
+      'react-logo.png': require('../assets/images/react-logo.png'),
+    };
+    return imageMap[imageName] || imageMap['react-logo.png'];
+  };
+
   const promos = [
     {
       id: '1',
       title: 'Flash Sale Weekend',
       description: 'Diskon hingga 50% untuk semua tumbler premium!',
       discount: '50%',
-      validUntil: '31 Desember 2024',
+      validUntil: '31 Juli 2025',
       code: 'WEEKEND50',
-      image: 'tumbler cream.jpg',
+      image: 'tumbler cream.jpg', // Tumbler premium untuk flash sale
       terms: ['Berlaku untuk semua produk tumbler', 'Minimal pembelian Rp 100.000', 'Tidak dapat digabung dengan promo lain']
     },
     {
@@ -21,9 +48,9 @@ export default function PromoScreen() {
       title: 'Buy 2 Get 1 Free',
       description: 'Beli 2 gantungan kunci, gratis 1 gantungan kunci pilihan!',
       discount: 'B2G1',
-      validUntil: '15 Januari 2025',
+      validUntil: '15 Agustus 2025',
       code: 'BUY2GET1',
-      image: 'jerapah.png',
+      image: 'gantungan5.jpg', // Set gantungan kunci untuk promo B2G1
       terms: ['Berlaku untuk semua gantungan kunci', 'Produk gratis sesuai stok tersedia', 'Promo terbatas']
     },
     {
@@ -31,9 +58,9 @@ export default function PromoScreen() {
       title: 'Bundling Hemat',
       description: 'Paket 3 tumbler + 2 gantungan kunci cuma Rp 199.000!',
       discount: 'Rp 199K',
-      validUntil: '28 Februari 2025',
+      validUntil: '30 September 2025',
       code: 'BUNDLE199',
-      image: 'tumbler hijau2.jpg',
+      image: 'bundling1.jpg', // Gambar bundling yang menunjukkan paket produk
       terms: ['Hemat hingga Rp 50.000', 'Warna dan motif sesuai ketersediaan', 'Gratis ongkir Jabodetabek']
     },
     {
@@ -41,9 +68,9 @@ export default function PromoScreen() {
       title: 'New Member Special',
       description: 'Diskon 30% untuk pembelian pertama member baru!',
       discount: '30%',
-      validUntil: '31 Maret 2025',
+      validUntil: '31 Oktober 2025',
       code: 'NEWBIE30',
-      image: 'tumbler pink1.jpg',
+      image: 'tumbler pink1.jpg', // Tumbler cantik untuk member baru
       terms: ['Khusus member baru', 'Berlaku untuk semua produk', 'Maksimal diskon Rp 75.000']
     },
     {
@@ -51,25 +78,25 @@ export default function PromoScreen() {
       title: 'Custom Tumbler Promo',
       description: 'Gratis custom nama untuk pembelian tumbler premium!',
       discount: 'GRATIS',
-      validUntil: '30 April 2025',
+      validUntil: '30 November 2025',
       code: 'CUSTOMFREE',
-      image: 'tumbler ungu.jpg',
+      image: 'tumbler khaki.jpg', // Tumbler warna khaki untuk variasi custom
       terms: ['Berlaku untuk tumbler premium', 'Maksimal 10 karakter', 'Design sesuai template tersedia']
     }
   ];
 
   const upcomingPromos = [
     {
-      title: 'Valentine Special',
-      description: 'Tumbler couple dengan desain romantis',
-      startDate: '10 Februari 2025',
-      teaser: 'Coming Soon! 💕'
+      title: 'Back to School',
+      description: 'Promo spesial tumbler untuk pelajar dan mahasiswa',
+      startDate: '1 Agustus 2025',
+      teaser: 'Coming Soon! 🎒'
     },
     {
-      title: 'Ramadan Sale',
-      description: 'Diskon spesial selama bulan suci',
-      startDate: 'Maret 2025',
-      teaser: 'Stay Tuned! 🌙'
+      title: 'Independence Day Sale',
+      description: 'Diskon kemerdekaan untuk semua produk lokal',
+      startDate: '17 Agustus 2025',
+      teaser: 'Stay Tuned! 🇮�'
     }
   ];
 
@@ -98,9 +125,8 @@ export default function PromoScreen() {
             <View key={promo.id} style={styles.promoCard}>
               <View style={styles.promoHeader}>
                 <Image 
-                  source={{ uri: `../assets/images/${promo.image}` }} 
+                  source={getImageSource(promo.image)} 
                   style={styles.promoImage}
-                  defaultSource={require('../assets/images/react-logo.png')}
                 />
                 <View style={styles.promoInfo}>
                   <View style={styles.discountBadge}>

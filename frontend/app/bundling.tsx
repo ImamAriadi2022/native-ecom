@@ -5,6 +5,29 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function BundlingScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'masseto.jpg': require('../assets/images/masseto.jpg'),
+      'gantungan1.jpg': require('../assets/images/gantungan1.jpg'),
+      'gantungan2.jpg': require('../assets/images/gantungan2.jpg'),
+      'gantungan3.jpg': require('../assets/images/gantungan3.jpg'),
+      'gantungan4.jpg': require('../assets/images/gantungan4.jpg'),
+      'gantungan5.jpg': require('../assets/images/gantungan5.jpg'),
+      'bundling1.jpg': require('../assets/images/masseto.jpg'), // fallback
+      'bundling2.jpg': require('../assets/images/gantungan2.jpg'), // fallback
+      'bundling3.jpg': require('../assets/images/gantungan3.jpg'), // fallback
+      'react-logo.png': require('../assets/images/react-logo.png'),
+    };
+    return imageMap[imageName] || imageMap['react-logo.png'];
+  };
+
   const bundlePackages = [
     {
       id: '1',
@@ -14,8 +37,8 @@ export default function BundlingScreen() {
       bundlePrice: 99000,
       savings: 51000,
       items: [
-        { name: 'Tumbler 500ml', image: 'tumbler cream.jpg', quantity: 1 },
-        { name: 'Gantungan Kunci', image: 'jerapah.png', quantity: 1 }
+        { name: 'Tumbler 500ml', image: 'bundling1.jpg', quantity: 1 },
+        { name: 'Gantungan Kunci', image: 'gantungan1.jpg', quantity: 1 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -28,9 +51,9 @@ export default function BundlingScreen() {
       bundlePrice: 199000,
       savings: 101000,
       items: [
-        { name: 'Tumbler 500ml', image: 'tumbler hijau2.jpg', quantity: 2 },
+        { name: 'Tumbler 500ml', image: 'bundling2.jpg', quantity: 2 },
         { name: 'Tumbler 350ml', image: 'tumbler pink1.jpg', quantity: 1 },
-        { name: 'Gantungan Kunci', image: 'kupu.png', quantity: 2 }
+        { name: 'Gantungan Kunci', image: 'gantungan2.jpg', quantity: 2 }
       ],
       badge: 'HEMAT 34%',
       popular: true
@@ -43,9 +66,9 @@ export default function BundlingScreen() {
       bundlePrice: 249000,
       savings: 126000,
       items: [
-        { name: 'Tumbler Premium 500ml', image: 'tumbler ungu.jpg', quantity: 3 },
+        { name: 'Tumbler Premium 500ml', image: 'bundling3.jpg', quantity: 3 },
         { name: 'Tumbler Premium 350ml', image: 'tumbler khaki.jpg', quantity: 2 },
-        { name: 'Gantungan Kunci Set', image: 'monyet.png', quantity: 1 }
+        { name: 'Gantungan Kunci Set', image: 'gantungan3.jpg', quantity: 1 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -60,8 +83,8 @@ export default function BundlingScreen() {
       items: [
         { name: 'Tumbler Premium 500ml', image: 'tumbler cream.jpg', quantity: 3 },
         { name: 'Tumbler Premium 350ml', image: 'tumbler oren.jpg', quantity: 2 },
-        { name: 'Custom Tumbler', image: 'tumbler pink1.jpg', quantity: 1 },
-        { name: 'Gantungan Kunci Premium Set', image: 'jerapah.png', quantity: 3 }
+        { name: 'Custom Tumbler', image: 'custom1.jpeg', quantity: 1 },
+        { name: 'Gantungan Kunci Premium Set', image: 'gantungan4.jpg', quantity: 3 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -75,7 +98,7 @@ export default function BundlingScreen() {
       description: 'Tumbler dengan karakter Disney favorit',
       price: 179000,
       items: ['Tumbler Disney 500ml', 'Gantungan Mickey', 'Sticker Set'],
-      image: 'tumbler pink1.jpg',
+      image: 'disney1.jpeg',
       theme: 'Disney'
     },
     {
@@ -84,7 +107,7 @@ export default function BundlingScreen() {
       description: 'Koleksi tumbler dengan tema otomotif',
       price: 189000,
       items: ['Tumbler Hot Wheels 500ml', 'Gantungan Mobil', 'Miniatur'],
-      image: 'tumbler hijau2.jpg',
+      image: 'tumbler biru tua.jpeg',
       theme: 'Hot Wheels'
     }
   ];
@@ -96,7 +119,7 @@ export default function BundlingScreen() {
       description: 'Paket tumbler couple dengan nama dan tanggal spesial',
       basePrice: 149000,
       customOptions: ['Nama Custom', 'Tanggal Spesial', 'Warna Pilihan'],
-      image: 'tumbler cream.jpg'
+      image: 'custom2.jpeg'
     },
     {
       id: 'custom2',
@@ -152,9 +175,8 @@ export default function BundlingScreen() {
                 {bundle.items.map((item, index) => (
                   <View key={index} style={styles.itemRow}>
                     <Image 
-                      source={{ uri: `../assets/images/${item.image}` }} 
+                      source={getImageSource(item.image)} 
                       style={styles.itemImage}
-                      defaultSource={require('../assets/images/react-logo.png')}
                     />
                     <Text style={styles.itemName}>{item.name}</Text>
                     <Text style={styles.itemQuantity}>x{item.quantity}</Text>
@@ -178,7 +200,18 @@ export default function BundlingScreen() {
 
               <TouchableOpacity 
                 style={[styles.buyButton, bundle.popular && styles.popularButton]}
-                onPress={() => router.push('/checkout')}
+                onPress={() => router.push({
+                  pathname: '/checkout',
+                  params: {
+                    name: bundle.name,
+                    price: bundle.bundlePrice.toString(),
+                    image: bundle.items[0]?.image || 'bundling1.jpg',
+                    description: bundle.description,
+                    type: 'bundle',
+                    originalPrice: bundle.originalPrice.toString(),
+                    savings: bundle.savings.toString()
+                  }
+                })}
               >
                 <Text style={styles.buyButtonText}>Beli Paket Ini</Text>
               </TouchableOpacity>
@@ -191,9 +224,8 @@ export default function BundlingScreen() {
           {themePackages.map((theme) => (
             <View key={theme.id} style={styles.themeCard}>
               <Image 
-                source={{ uri: `../assets/images/${theme.image}` }} 
+                source={getImageSource(theme.image)} 
                 style={styles.themeImage}
-                defaultSource={require('../assets/images/react-logo.png')}
               />
               <View style={styles.themeInfo}>
                 <View style={styles.themeBadge}>
@@ -225,9 +257,8 @@ export default function BundlingScreen() {
           {customizablePackages.map((custom) => (
             <View key={custom.id} style={styles.customCard}>
               <Image 
-                source={{ uri: `../assets/images/${custom.image}` }} 
+                source={getImageSource(custom.image)} 
                 style={styles.customImage}
-                defaultSource={require('../assets/images/react-logo.png')}
               />
               <View style={styles.customInfo}>
                 <ThemedText style={styles.customName}>{custom.name}</ThemedText>
@@ -296,7 +327,7 @@ export default function BundlingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
@@ -350,7 +381,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   section: {
-    marginBottom: 30,
+    marginBottom: 24,
   },
   sectionTitle: {
     fontSize: 18,
@@ -361,8 +392,8 @@ const styles = StyleSheet.create({
   bundleCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
+    padding: 16,
+    marginBottom: 16,
     position: 'relative',
   },
   popularBadge: {

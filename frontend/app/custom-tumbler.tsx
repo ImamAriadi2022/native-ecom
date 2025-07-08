@@ -5,6 +5,21 @@ import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 
 export default function CustomTumblerScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'tumbler biru tua.jpeg': require('../assets/images/tumbler cream.jpg'), // fallback
+      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu.jpg'), // fallback
+    };
+    return imageMap[imageName] || imageMap['tumbler cream.jpg'];
+  };
+
   const [selectedSize, setSelectedSize] = useState('500ml');
   const [selectedColor, setSelectedColor] = useState('cream');
   const [selectedDesign, setSelectedDesign] = useState('plain');
@@ -23,7 +38,9 @@ export default function CustomTumblerScreen() {
     { id: 'green', name: 'Green', hex: '#90ee90', image: 'tumbler hijau2.jpg' },
     { id: 'purple', name: 'Purple', hex: '#dda0dd', image: 'tumbler ungu.jpg' },
     { id: 'orange', name: 'Orange', hex: '#ffa500', image: 'tumbler oren.jpg' },
-    { id: 'khaki', name: 'Khaki', hex: '#f0e68c', image: 'tumbler khaki.jpg' }
+    { id: 'khaki', name: 'Khaki', hex: '#f0e68c', image: 'tumbler khaki.jpg' },
+    { id: 'navy', name: 'Navy Blue', hex: '#1e3a8a', image: 'tumbler biru tua.jpeg' },
+    { id: 'purplepink', name: 'Purple Pink', hex: '#9333ea', image: 'tumbler ungu pink.jpeg' }
   ];
 
   const designs = [
@@ -71,9 +88,8 @@ export default function CustomTumblerScreen() {
           <ThemedText style={styles.sectionTitle}>Preview</ThemedText>
           <View style={styles.previewContainer}>
             <Image 
-              source={{ uri: `../assets/images/${getSelectedColor()?.image}` }} 
+              source={getImageSource(getSelectedColor()?.image || 'tumbler cream.jpg')} 
               style={styles.previewImage}
-              defaultSource={require('../assets/images/tumbler cream.jpg')}
             />
             <View style={styles.previewOverlay}>
               <Text style={styles.previewText}>{customText || 'Your Text Here'}</Text>
@@ -262,7 +278,16 @@ export default function CustomTumblerScreen() {
         </View>
         <TouchableOpacity 
           style={styles.orderButton}
-          onPress={() => router.push('/checkout')}
+          onPress={() => router.push({
+            pathname: '/checkout',
+            params: {
+              name: `Custom Tumbler ${getSelectedColor()?.name} ${selectedSize}`,
+              price: calculatePrice().toString(),
+              image: getSelectedColor()?.image || 'tumbler cream.jpg',
+              description: `Custom tumbler warna ${getSelectedColor()?.name}, ukuran ${selectedSize}, design ${getSelectedDesign()?.name}${customText ? `, text: "${customText}"` : ''}`,
+              type: 'custom'
+            }
+          })}
         >
           <Text style={styles.orderText}>Pesan Custom</Text>
         </TouchableOpacity>
@@ -274,7 +299,7 @@ export default function CustomTumblerScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
@@ -350,19 +375,21 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   section: {
-    marginBottom: 25,
+    marginBottom: 20,
   },
   optionsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
+    gap: 8,
+    justifyContent: 'space-between',
   },
   optionCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 10,
-    padding: 15,
+    padding: 10,
     flex: 1,
     minWidth: '30%',
+    maxWidth: '32%',
     alignItems: 'center',
   },
   selectedOption: {
@@ -388,11 +415,13 @@ const styles = StyleSheet.create({
   colorGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 15,
+    gap: 10,
+    justifyContent: 'center',
   },
   colorOption: {
     alignItems: 'center',
-    padding: 10,
+    padding: 6,
+    minWidth: 65,
   },
   selectedColor: {
     backgroundColor: 'rgba(222, 131, 137, 0.3)',
@@ -529,19 +558,17 @@ const styles = StyleSheet.create({
     color: '#DE8389',
   },
   bottomSpace: {
-    height: 100,
+    height: 20,
   },
   footer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    flexDirection: 'row',
-    alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 20,
+    paddingHorizontal: 16,
+    paddingVertical: 12,
     borderTopWidth: 1,
     borderTopColor: '#e9ecef',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
   footerInfo: {
     flex: 1,

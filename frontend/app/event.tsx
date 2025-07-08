@@ -5,21 +5,48 @@ import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EventScreen() {
+  // Image mapping untuk static imports
+  const getImageSource = (imageName: string) => {
+    const imageMap: { [key: string]: any } = {
+      'tumbler cream.jpg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler pink1.jpg': require('../assets/images/tumbler pink1.jpg'),
+      'tumbler hijau2.jpg': require('../assets/images/tumbler hijau2.jpg'),
+      'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'kupu.png': require('../assets/images/kupu.png'),
+      'monyet.png': require('../assets/images/monyet.png'),
+      'meong.png': require('../assets/images/meong.png'),
+      'jerapah.png': require('../assets/images/jerapah.png'),
+      'react-logo.png': require('../assets/images/react-logo.png'),
+      // Fallback untuk Disney images
+      'disney1.jpeg': require('../assets/images/kupu.png'),
+      'disney2.jpeg': require('../assets/images/monyet.png'),
+      'disney3.jpeg': require('../assets/images/meong.png'),
+      'disney4.jpeg': require('../assets/images/jerapah.png'),
+      'disney5.jpeg': require('../assets/images/kupu.png'),
+      'disney6.jpeg': require('../assets/images/monyet.png'),
+      'tumbler biru tua.jpeg': require('../assets/images/tumbler cream.jpg'),
+      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu.jpg'),
+    };
+    return imageMap[imageName] || imageMap['react-logo.png'];
+  };
+
   const currentEvents = [
     {
       id: '1',
       title: 'Disney Collection Launch',
       subtitle: 'Koleksi Tumbler Disney Eksklusif',
       description: 'Dapatkan tumbler dengan karakter Disney favorit kamu! Limited edition hanya untuk bulan ini.',
-      image: 'tumbler pink1.jpg',
+      image: 'disney1.jpeg',
       startDate: '1 Januari 2025',
       endDate: '31 Januari 2025',
       status: 'active',
       discount: '25%',
       products: [
-        { name: 'Tumbler Mickey Mouse', price: 89000 },
-        { name: 'Tumbler Princess Collection', price: 95000 },
-        { name: 'Tumbler Toy Story', price: 85000 }
+        { name: 'Tumbler Mickey Mouse', price: 89000, image: 'disney2.jpeg' },
+        { name: 'Tumbler Princess Collection', price: 95000, image: 'disney3.jpeg' },
+        { name: 'Tumbler Toy Story', price: 85000, image: 'disney4.jpeg' }
       ],
       badge: 'TRENDING'
     },
@@ -28,15 +55,15 @@ export default function EventScreen() {
       title: 'Hot Wheels Speed Collection',
       subtitle: 'Tumbler untuk Para Pecinta Otomotif',
       description: 'Koleksi spesial untuk fans Hot Wheels! Design eksklusif dengan tema racing.',
-      image: 'tumbler hijau2.jpg',
+      image: 'tumbler biru tua.jpeg',
       startDate: '15 Januari 2025',
       endDate: '28 Februari 2025',
       status: 'active',
       discount: '30%',
       products: [
-        { name: 'Tumbler Racing Edition', price: 92000 },
-        { name: 'Tumbler Classic Cars', price: 88000 },
-        { name: 'Tumbler Speed Demon', price: 96000 }
+        { name: 'Tumbler Racing Edition', price: 92000, image: 'tumbler oren.jpg' },
+        { name: 'Tumbler Classic Cars', price: 88000, image: 'tumbler khaki.jpg' },
+        { name: 'Tumbler Speed Demon', price: 96000, image: 'tumbler ungu pink.jpeg' }
       ],
       badge: 'NEW'
     }
@@ -49,7 +76,7 @@ export default function EventScreen() {
       description: 'Koleksi musim panas dengan karakter Disney terbaru',
       startDate: '1 Juni 2025',
       teaser: 'Frozen, Moana, dan karakter summer lainnya!',
-      image: 'tumbler ungu.jpg'
+      image: 'disney5.jpeg'
     },
     {
       id: '4',
@@ -57,7 +84,7 @@ export default function EventScreen() {
       description: 'Tumbler dengan design retro Hot Wheels klasik',
       startDate: '15 Juli 2025',
       teaser: 'Classic cars dari era 70-80an!',
-      image: 'tumbler khaki.jpg'
+      image: 'tumbler ungu pink.jpeg'
     }
   ];
 
@@ -67,7 +94,7 @@ export default function EventScreen() {
       title: 'Disney Christmas 2024',
       description: 'Koleksi natal dengan karakter Disney dalam suasana winter',
       endDate: '25 Desember 2024',
-      image: 'tumbler cream.jpg',
+      image: 'disney6.jpeg',
       status: 'completed'
     },
     {
@@ -75,7 +102,7 @@ export default function EventScreen() {
       title: 'Hot Wheels Halloween Edition',
       description: 'Tumbler dengan tema mobil-mobil spooky Hot Wheels',
       endDate: '31 Oktober 2024',
-      image: 'tumbler oren.jpg',
+      image: 'tumbler biru tua.jpeg',
       status: 'completed'
     }
   ];
@@ -108,7 +135,7 @@ export default function EventScreen() {
             <View key={event.id} style={styles.eventCard}>
               <View style={styles.eventHeader}>
                 <Image
-                  source={require('@/assets/images/tumbler pink1.jpg')}
+                  source={getImageSource(event.image)}
                   style={styles.eventImage}
                 />
                 <View style={styles.eventInfo}>
@@ -135,13 +162,33 @@ export default function EventScreen() {
                 <Text style={styles.productsTitle}>🛍️ Produk Tersedia:</Text>
                 {event.products.map((product, index) => (
                   <View key={index} style={styles.productItem}>
-                    <Text style={styles.productName}>• {product.name}</Text>
-                    <Text style={styles.productPrice}>Rp {product.price.toLocaleString()}</Text>
+                    <Image 
+                      source={getImageSource(product.image)} 
+                      style={styles.productImage}
+                    />
+                    <View style={styles.productInfo}>
+                      <Text style={styles.productName}>• {product.name}</Text>
+                      <Text style={styles.productPrice}>Rp {product.price.toLocaleString()}</Text>
+                    </View>
                   </View>
                 ))}
               </View>
               
-              <TouchableOpacity style={styles.shopButton}>
+              <TouchableOpacity 
+                style={styles.shopButton}
+                onPress={() => router.push({
+                  pathname: '/checkout',
+                  params: {
+                    name: `Event ${event.title}`,
+                    price: event.products[0].price.toString(),
+                    image: event.products[0].image,
+                    description: `Produk special dari event ${event.title} dengan diskon ${event.discount}`,
+                    type: 'event',
+                    originalPrice: Math.round(event.products[0].price / (1 - parseInt(event.discount) / 100)).toString(),
+                    savings: (Math.round(event.products[0].price / (1 - parseInt(event.discount) / 100)) - event.products[0].price).toString()
+                  }
+                })}
+              >
                 <Text style={styles.shopButtonText}>🛒 Belanja Sekarang</Text>
               </TouchableOpacity>
             </View>
@@ -154,7 +201,7 @@ export default function EventScreen() {
           {upcomingEvents.map((event) => (
             <View key={event.id} style={styles.upcomingCard}>
               <Image
-                source={require('@/assets/images/tumbler ungu.jpg')}
+                source={getImageSource(event.image)}
                 style={styles.upcomingImage}
               />
               <View style={styles.upcomingInfo}>
@@ -173,7 +220,7 @@ export default function EventScreen() {
           {pastEvents.map((event) => (
             <View key={event.id} style={styles.pastEventCard}>
               <Image
-                source={require('@/assets/images/tumbler cream.jpg')}
+                source={getImageSource(event.image)}
                 style={styles.pastEventImage}
               />
               <View style={styles.pastEventInfo}>
@@ -192,12 +239,12 @@ export default function EventScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 16,
   },
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingBottom: 20,
+    paddingBottom: 16,
     backgroundColor: 'transparent',
   },
   backButton: {
@@ -225,8 +272,8 @@ const styles = StyleSheet.create({
   heroSection: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 15,
-    padding: 20,
-    marginBottom: 20,
+    padding: 16,
+    marginBottom: 16,
     alignItems: 'center',
   },
   heroEmoji: {
@@ -247,7 +294,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   section: {
-    marginBottom: 25,
+    marginBottom: 20,
   },
   sectionTitle: {
     fontSize: 18,
@@ -259,20 +306,20 @@ const styles = StyleSheet.create({
   eventCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
     borderRadius: 15,
-    padding: 20,
-    marginBottom: 15,
+    padding: 16,
+    marginBottom: 12,
     borderLeftWidth: 4,
     borderLeftColor: '#DE8389',
   },
   eventHeader: {
     flexDirection: 'row',
-    marginBottom: 15,
+    marginBottom: 12,
   },
   eventImage: {
-    width: 80,
-    height: 80,
+    width: 70,
+    height: 70,
     borderRadius: 12,
-    marginRight: 15,
+    marginRight: 12,
   },
   eventInfo: {
     flex: 1,
@@ -347,9 +394,21 @@ const styles = StyleSheet.create({
   },
   productItem: {
     flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 8,
+    marginBottom: 8,
+  },
+  productImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 8,
+    marginRight: 12,
+  },
+  productInfo: {
+    flex: 1,
+    flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 4,
   },
   productName: {
     fontSize: 12,
@@ -375,8 +434,8 @@ const styles = StyleSheet.create({
   upcomingCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',
     borderRadius: 15,
-    padding: 15,
-    marginBottom: 12,
+    padding: 12,
+    marginBottom: 10,
     flexDirection: 'row',
     borderLeftWidth: 4,
     borderLeftColor: '#4ecdc4',
@@ -414,8 +473,8 @@ const styles = StyleSheet.create({
   pastEventCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 15,
-    padding: 15,
-    marginBottom: 12,
+    padding: 12,
+    marginBottom: 10,
     flexDirection: 'row',
     opacity: 0.8,
   },
