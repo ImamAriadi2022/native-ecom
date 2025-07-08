@@ -14,15 +14,30 @@ export default function BundlingScreen() {
       'tumbler ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
       'tumbler oren.jpg': require('../assets/images/tumbler oren.jpg'),
       'tumbler khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'tumbler biru tua.jpeg': require('../assets/images/tumbler biru tua.jpeg'),
+      'tumbler ungu pink.jpeg': require('../assets/images/tumbler ungu pink.jpeg'),
       'masseto.jpg': require('../assets/images/masseto.jpg'),
       'gantungan1.jpg': require('../assets/images/gantungan1.jpg'),
       'gantungan2.jpg': require('../assets/images/gantungan2.jpg'),
       'gantungan3.jpg': require('../assets/images/gantungan3.jpg'),
       'gantungan4.jpg': require('../assets/images/gantungan4.jpg'),
       'gantungan5.jpg': require('../assets/images/gantungan5.jpg'),
-      'bundling1.jpg': require('../assets/images/masseto.jpg'), // fallback
-      'bundling2.jpg': require('../assets/images/gantungan2.jpg'), // fallback
-      'bundling3.jpg': require('../assets/images/gantungan3.jpg'), // fallback
+      'bundling1.jpg': require('../assets/images/bundling1.jpg'),
+      'bundling2.jpg': require('../assets/images/bundling2.jpg'),
+      'bundling3.jpg': require('../assets/images/bundling3.jpg'),
+      'custom1.jpeg': require('../assets/images/custom1.jpeg'),
+      'custom2.jpeg': require('../assets/images/custom2.jpeg'),
+      'custom3.jpeg': require('../assets/images/custom3.jpeg'),
+      'disney1.jpeg': require('../assets/images/disney1.jpeg'),
+      'disney2.jpeg': require('../assets/images/disney2.jpeg'),
+      'disney3.jpeg': require('../assets/images/disney3.jpeg'),
+      'disney4.jpeg': require('../assets/images/disney4.jpeg'),
+      'disney5.jpeg': require('../assets/images/disney5.jpeg'),
+      'disney6.jpeg': require('../assets/images/disney6.jpeg'),
+      'jerapah.png': require('../assets/images/jerapah.png'),
+      'kupu.png': require('../assets/images/kupu.png'),
+      'monyet.png': require('../assets/images/monyet.png'),
+      'meong.png': require('../assets/images/meong.png'),
       'react-logo.png': require('../assets/images/react-logo.png'),
     };
     return imageMap[imageName] || imageMap['react-logo.png'];
@@ -38,7 +53,7 @@ export default function BundlingScreen() {
       savings: 51000,
       items: [
         { name: 'Tumbler 500ml', image: 'bundling1.jpg', quantity: 1 },
-        { name: 'Gantungan Kunci', image: 'gantungan1.jpg', quantity: 1 }
+        { name: 'Gantungan Kunci', image: 'jerapah.png', quantity: 1 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -53,7 +68,7 @@ export default function BundlingScreen() {
       items: [
         { name: 'Tumbler 500ml', image: 'bundling2.jpg', quantity: 2 },
         { name: 'Tumbler 350ml', image: 'tumbler pink1.jpg', quantity: 1 },
-        { name: 'Gantungan Kunci', image: 'gantungan2.jpg', quantity: 2 }
+        { name: 'Gantungan Kunci', image: 'kupu.png', quantity: 2 }
       ],
       badge: 'HEMAT 34%',
       popular: true
@@ -68,7 +83,7 @@ export default function BundlingScreen() {
       items: [
         { name: 'Tumbler Premium 500ml', image: 'bundling3.jpg', quantity: 3 },
         { name: 'Tumbler Premium 350ml', image: 'tumbler khaki.jpg', quantity: 2 },
-        { name: 'Gantungan Kunci Set', image: 'gantungan3.jpg', quantity: 1 }
+        { name: 'Gantungan Kunci Set', image: 'monyet.png', quantity: 1 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -84,7 +99,7 @@ export default function BundlingScreen() {
         { name: 'Tumbler Premium 500ml', image: 'tumbler cream.jpg', quantity: 3 },
         { name: 'Tumbler Premium 350ml', image: 'tumbler oren.jpg', quantity: 2 },
         { name: 'Custom Tumbler', image: 'custom1.jpeg', quantity: 1 },
-        { name: 'Gantungan Kunci Premium Set', image: 'gantungan4.jpg', quantity: 3 }
+        { name: 'Gantungan Kunci Premium Set', image: 'meong.png', quantity: 3 }
       ],
       badge: 'HEMAT 34%',
       popular: false
@@ -100,15 +115,6 @@ export default function BundlingScreen() {
       items: ['Tumbler Disney 500ml', 'Gantungan Mickey', 'Sticker Set'],
       image: 'disney1.jpeg',
       theme: 'Disney'
-    },
-    {
-      id: 'hotwheels',
-      name: 'Hot Wheels Pack',
-      description: 'Koleksi tumbler dengan tema otomotif',
-      price: 189000,
-      items: ['Tumbler Hot Wheels 500ml', 'Gantungan Mobil', 'Miniatur'],
-      image: 'tumbler biru tua.jpeg',
-      theme: 'Hot Wheels'
     }
   ];
 
