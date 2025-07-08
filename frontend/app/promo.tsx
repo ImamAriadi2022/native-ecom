@@ -1,5 +1,4 @@
 import { ThemedText } from '@/components/ThemedText';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React from 'react';
 import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -101,10 +100,7 @@ export default function PromoScreen() {
   ];
 
   return (
-    <LinearGradient
-      colors={['#DE8389', '#B488BF']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Kembali</Text>
@@ -217,7 +213,7 @@ export default function PromoScreen() {
           </View>
         </View>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -225,6 +221,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   header: {
     flexDirection: 'row',

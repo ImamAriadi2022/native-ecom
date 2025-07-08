@@ -1,4 +1,3 @@
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
@@ -19,12 +18,8 @@ export default function TabTwoScreen() {
   };
 
   return (
-    
-    <LinearGradient
-        colors={['#DE8389', '#B488BF']} // pink ke ungu
-        style={styles.container}
-      >
-      <ScrollView style={styles.container}>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
         {/* Header Section */}
         <View style={styles.headerSection}>
           <ThemedText type="title" style={styles.brandTitle}>Lyana Bottle Studio</ThemedText>
@@ -287,16 +282,18 @@ export default function TabTwoScreen() {
             <ThemedText style={styles.logoutText}>Logout</ThemedText>
           </Pressable>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#DE8389', // Solid color instead of gradient
+  },
+  scrollContainer: {
+    flex: 1,
     padding: 30,
-    // Ganti background jadi satu warna saja:
-    // backgroundColor: '#fff',
   },
   headerSection: {
     marginBottom: 20,

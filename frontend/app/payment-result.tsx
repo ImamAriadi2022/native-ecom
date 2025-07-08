@@ -1,6 +1,5 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
@@ -29,10 +28,7 @@ export default function PaymentResultScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={isSuccess ? ['#4CAF50', '#45a049'] : ['#f44336', '#d32f2f']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <ThemedView style={styles.content}>
         {/* Result Icon & Status */}
         <View style={styles.resultSection}>
@@ -164,13 +160,16 @@ export default function PaymentResultScreen() {
           </ThemedText>
         </View>
       </ThemedView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   content: {
     flex: 1,

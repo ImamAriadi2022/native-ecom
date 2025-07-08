@@ -1,6 +1,5 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -45,10 +44,7 @@ export default function PaymentProcessScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={['#DE8389', '#B488BF']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <ScrollView 
         style={styles.scrollContainer}
         contentContainerStyle={styles.scrollContent}
@@ -166,13 +162,16 @@ export default function PaymentProcessScreen() {
           </Pressable>
         </ThemedView>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   scrollContainer: {
     flex: 1,

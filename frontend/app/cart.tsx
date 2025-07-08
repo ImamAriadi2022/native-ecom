@@ -1,5 +1,4 @@
 import { ThemedText } from '@/components/ThemedText';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
@@ -110,10 +109,7 @@ export default function CartScreen() {
   const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
-    <LinearGradient
-      colors={['#DE8389', '#B488BF']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Kembali</Text>
@@ -246,7 +242,7 @@ export default function CartScreen() {
           </TouchableOpacity>
         </View>
       )}
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -254,6 +250,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   header: {
     flexDirection: 'row',

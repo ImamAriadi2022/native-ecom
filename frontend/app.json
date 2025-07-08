@@ -1,21 +1,31 @@
 {
   "expo": {
-    "name": "belajar_devi",
+    "name": "Lyana Bottle Studio",
     "slug": "belajar_devi",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/images/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.imam33.lyanabottlestudio"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.imam33.lyanabottlestudio",
+      "permissions": []
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +46,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fb43914b-28c1-40cf-98ca-eed733314cb7"
+      }
+    },
+    "owner": "imam33"
   }
 }

@@ -1,5 +1,4 @@
 import { ThemedText } from '@/components/ThemedText';
-import { LinearGradient } from 'expo-linear-gradient';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
@@ -75,10 +74,7 @@ export default function CustomTumblerScreen() {
   const getSelectedSize = () => sizes.find(s => s.id === selectedSize);
 
   return (
-    <LinearGradient
-      colors={['#DE8389', '#B488BF']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Text style={styles.backText}>← Kembali</Text>
@@ -295,7 +291,7 @@ export default function CustomTumblerScreen() {
           <Text style={styles.orderText}>Pesan Custom</Text>
         </TouchableOpacity>
       </View>
-    </LinearGradient>
+    </View>
   );
 }
 
@@ -303,6 +299,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   header: {
     flexDirection: 'row',

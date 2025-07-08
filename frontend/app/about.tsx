@@ -1,6 +1,5 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import React from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -17,10 +16,7 @@ export default function AboutScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={['#DE8389', '#B488BF']}
-      style={styles.container}
-    >
+    <View style={[styles.container, styles.gradientBackground]}>
       <ScrollView style={styles.scrollContainer}>
         <ThemedView style={styles.content}>
           {/* Header */}
@@ -179,13 +175,16 @@ export default function AboutScreen() {
           </View>
         </ThemedView>
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  gradientBackground: {
+    backgroundColor: '#DE8389',
   },
   scrollContainer: {
     flex: 1,

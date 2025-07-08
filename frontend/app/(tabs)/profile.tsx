@@ -1,4 +1,5 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, Pressable } from 'react-native';
+import { useRouter } from 'expo-router';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -6,23 +7,38 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 
 export default function HomeScreen() {
+  const router = useRouter();
+
+  const handleLogout = () => {
+    // Navigasi kembali ke halaman login
+    router.replace('/'); // Ganti '/' dengan '/login' jika login ada di rute tersebut
+  };
+
   return (
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#EFE4D2', dark: '#954C2E' }}
+      headerBackgroundColor={{ light: '#FF90BB', dark: '#641B2E' }}
       headerImage={
         <Image
-          source={require('@/assets/images/jerapah.png')}
+          source={require('@/assets/images/meong.png')}
           style={styles.reactLogo}
         />
       }>
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Hello Jerapah!</ThemedText>
+        <ThemedText type="title">23040414 Juliana Permata Devi</ThemedText>
         <HelloWave />
       </ThemedView>
+
+      <ThemedView style={styles.logoutContainer}>
+        <Pressable onPress={handleLogout} style={styles.logoutButton}>
+          <ThemedText style={styles.logoutText}>Logout</ThemedText>
+        </Pressable>
+      </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Nama Lengkap</ThemedText>
+        <ThemedText type="subtitle">Tentang Devi</ThemedText>
         <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">Giraffa camelopardalis</ThemedText> to see changes.
+          Edit <ThemedText type="defaultSemiBold">Halo, aku Devi.
+Aku adalah seseorang yang percaya bahwa setiap langkah kecil bisa membawa perubahan besar baik dalam hidup pribadi, pekerjaan, maupun hubungan dengan orang lain.</ThemedText> to see changes.
           Press{' '}
           <ThemedText type="defaultSemiBold">
             {Platform.select({
@@ -34,16 +50,18 @@ export default function HomeScreen() {
           to open developer tools.
         </ThemedText>
       </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Deskripsi</ThemedText>
+        <ThemedText type="subtitle">Prinsip Hidup</ThemedText>
         <ThemedText>
-          Jerapah dikenal sebagai hewan tertinggi di dunia, dengan leher yang sangat panjang dan kaki jenjang. Lehernya bisa mencapai 2 meter, meskipun hanya memiliki tujuh ruas tulang leher jumlah yang sama dengan manusia. Jerapah adalah hewan pemakan tumbuhan dan cenderung hidup berkelompok dalam kawanan kecil.
+          Aku percaya bahwa Kebaikan tidak pernah sia-sia. Tumbuh itu tidak selalu terlihat, tapi pasti terjadi. Menjadi versi terbaik dari diri sendiri adalah perjalanan, bukan tujuan akhir
         </ThemedText>
       </ThemedView>
+
       <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Ciri ciri Jerapah</ThemedText>
+        <ThemedText type="subtitle">Fakta Unik Devi</ThemedText>
         <ThemedText>
-          Tinggi dan Bercorak unik{' '}
+          Devi adalah sosok yang suka berpetualang, jatuh cinta pada senja dan laut, dan selalu mencari sambal di setiap hidangan. Hidup baginya adalah tentang mencoba hal baru, menikmati momen kecil, dan menemukan rasa di setiap perjalanan.{' '}
           <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
           <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
@@ -65,10 +83,25 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   reactLogo: {
-    height: 240,
-    width: 250,
-    bottom: 5,
+    height: 220,
+    width: 290,
+    bottom: 0,
     left: 500,
     position: 'absolute',
+  },
+  logoutContainer: {
+    marginTop: 10,
+    alignItems: 'flex-end',
+    paddingRight: 20,
+  },
+  logoutButton: {
+    backgroundColor: '#641B2E',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 8,
+  },
+  logoutText: {
+    color: '#fff',
+    fontWeight: '600',
   },
 });
