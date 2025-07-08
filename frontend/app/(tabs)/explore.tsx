@@ -98,6 +98,13 @@ export default function TabTwoScreen() {
             
             <Pressable 
               style={styles.menuButton}
+              onPress={() => navigateTo('/payment-test')}
+            >
+              <Text style={styles.menuButtonText}>🧪 Test Payment</Text>
+            </Pressable>
+            
+            <Pressable 
+              style={styles.menuButton}
               onPress={() => navigateTo('/contact')}
             >
               <Text style={styles.menuButtonText}>📞 Kontak</Text>

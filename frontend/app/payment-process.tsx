@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 
 export default function PaymentProcessScreen() {
   const router = useRouter();
@@ -44,10 +44,12 @@ export default function PaymentProcessScreen() {
   };
 
   return (
-    <View style={[styles.container, styles.gradientBackground]}>
-      <ScrollView 
-        style={styles.scrollContainer}
-        contentContainerStyle={styles.scrollContent}
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
+      <View style={[styles.container, styles.gradientBackground]}>
+        <ScrollView 
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
         <ThemedView style={styles.content}>
@@ -163,6 +165,7 @@ export default function PaymentProcessScreen() {
         </ThemedView>
       </ScrollView>
     </View>
+    </SafeAreaView>
   );
 }
 
@@ -184,11 +187,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'transparent',
-    paddingTop: 50,
+    paddingTop: 20,
+    minHeight: '100%',
   },
   header: {
     alignItems: 'center',
     marginBottom: 20,
+    paddingTop: 20,
   },
   title: {
     fontSize: 24,

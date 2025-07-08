@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 
 type PaymentMethod = {
   id: string;
@@ -79,9 +79,11 @@ export default function PaymentMethodScreen() {
   };
 
   return (
-    <View style={[styles.container, styles.gradientBackground]}>
-      <ScrollView style={styles.scrollContainer}>
-        <ThemedView style={styles.content}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
+      <View style={[styles.container, styles.gradientBackground]}>
+        <ScrollView style={styles.scrollContainer}>
+          <ThemedView style={styles.content}>
           {/* Header */}
           <View style={styles.header}>
             <Pressable onPress={() => router.back()} style={styles.backButton}>
@@ -170,6 +172,7 @@ export default function PaymentMethodScreen() {
         </ThemedView>
       </ScrollView>
     </View>
+    </SafeAreaView>
   );
 }
 
@@ -186,13 +189,15 @@ const styles = StyleSheet.create({
   content: {
     padding: 20,
     backgroundColor: 'transparent',
-    paddingTop: 50,
+    paddingTop: 20,
+    minHeight: '100%',
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 20,
+    paddingTop: 20,
   },
   backButton: {
     padding: 10,

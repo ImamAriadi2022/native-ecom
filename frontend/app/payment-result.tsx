@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
 
 export default function PaymentResultScreen() {
   const router = useRouter();
@@ -28,8 +28,10 @@ export default function PaymentResultScreen() {
   };
 
   return (
-    <View style={[styles.container, styles.gradientBackground]}>
-      <ThemedView style={styles.content}>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
+      <View style={[styles.container, styles.gradientBackground]}>
+        <ThemedView style={styles.content}>
         {/* Result Icon & Status */}
         <View style={styles.resultSection}>
           <ThemedText style={styles.resultIcon}>
@@ -161,6 +163,7 @@ export default function PaymentResultScreen() {
         </View>
       </ThemedView>
     </View>
+    </SafeAreaView>
   );
 }
 
@@ -175,11 +178,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'transparent',
-    paddingTop: 60,
+    paddingTop: 20,
+    minHeight: '100%',
   },
   resultSection: {
     alignItems: 'center',
     marginBottom: 30,
+    paddingTop: 40,
   },
   resultIcon: {
     fontSize: 64,
