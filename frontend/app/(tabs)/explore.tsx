@@ -130,87 +130,121 @@ export default function TabTwoScreen() {
         {/* Produk E-Commerce */}
         <Text style={styles.productHeading}>Temani Harimu, Setiap Tegukan Penuh Cerita</Text>
         <Text style={styles.productHeading}>PRODUCT</Text>
-        <View style={styles.productSection}>
+        <View style={styles.productContainer}>
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler oren.jpg')}
+                judul="Blush Aura"
+                desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
+                harga={299000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler oren.jpg')}
+                judul="Blush Aura"
+                desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
+                harga={299000}
+              />
+            </View>
+          </View>
 
-        <ProductCard
-          image={require('@/assets/images/tumbler oren.jpg')}
-          judul="Blush Aura"
-          desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
-          harga={299000}
-        />
-        <ProductCard
-          image={require('@/assets/images/tumbler oren.jpg')}
-          judul="Blush Aura"
-          desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
-          harga={299000}
-        />
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler ungu.jpg')}
+                judul="Luna Frost"
+                desc="Tumbler deangan warna lilac lembut dengan aksen ungu pastel, memberi kesan tenang dan elegan. Ccock untuk gaya hidup simple"
+                harga={249000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler pink1.jpg')}
+                judul="Pink Reverie"
+                desc="paduan warna pastel yang menggambarkan impian dan kelembutan, Teman setia momen manis harimu dan jauh lebih berwarna."
+                harga={299000}
+              />
+            </View>
+          </View>
 
-        <ProductCard
-          image={require('@/assets/images/tumbler ungu.jpg')}
-          judul="Luna Frost"
-          desc="Tumbler deangan warna lilac lembut dengan aksen ungu pastel, memberi kesan tenang dan elegan. Ccock untuk gaya hidup simple"
-          harga={249000}
-        />
-        <ProductCard
-          image={require('@/assets/images/tumbler pink1.jpg')}
-          judul="Pink Reverie"
-          desc="paduan warna pastel yang menggambarkan impian dan kelembutan, Teman setia momen manis harimu dan jauh lebih berwarna."
-          harga={299000}
-        />
-
-        <ProductCard
-          image={require('@/assets/images/tumbler hijau2.jpg')}
-          judul="Sage Calm"
-          desc="Desain simple dan bernuansa alami, cocok untuk kamu yang menyukai kesegaran dan ketenangan dalam setiap aktivitas"
-          harga={279000}
-        />
-        <ProductCard
-          image={require('@/assets/images/tumbler khaki.jpg')}
-          judul="Dusk Mocha"
-          desc="Hangat dan netral, dusk mocha hadir dengan warna kopi susu yang elegan. Teman sempurna untuk hari-hari produktifmu"
-          harga={279000}
-        />
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler hijau2.jpg')}
+                judul="Sage Calm"
+                desc="Desain simple dan bernuansa alami, cocok untuk kamu yang menyukai kesegaran dan ketenangan dalam setiap aktivitas"
+                harga={279000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/tumbler khaki.jpg')}
+                judul="Dusk Mocha"
+                desc="Hangat dan netral, dusk mocha hadir dengan warna kopi susu yang elegan. Teman sempurna untuk hari-hari produktifmu"
+                harga={279000}
+              />
+            </View>
+          </View>
         </View>
-        <View style={styles.productSection}>
+        <View style={styles.productContainer}>
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan1.jpg')}
+                judul="Rose Glow"
+                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
+                harga={299000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan1.jpg')}
+                judul="Rose Glow"
+                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
+                harga={299000}
+              />
+            </View>
+          </View>
 
-        <ProductCard
-          image={require('@/assets/images/gantungan1.jpg')}
-          judul="Rose Glow"
-          desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-          harga={299000}
-        />
-        <ProductCard
-          image={require('@/assets/images/gantungan1.jpg')}
-          judul="Rose Glow"
-          desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-          harga={299000}
-        />
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan2.jpg')}
+                judul="Amber Pop"
+                desc="Enak dan manis"
+                harga={299000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan3.jpg')}
+                judul="Mist Blue"
+                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
+                harga={299000}
+              />
+            </View>
+          </View>
 
-        <ProductCard
-          image={require('@/assets/images/gantungan2.jpg')}
-          judul="Amber Pop"
-          desc="Enak dan manis"
-          harga={299000}
-        />
-        <ProductCard
-          image={require('@/assets/images/gantungan3.jpg')}
-          judul="Mist Blue"
-          desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-          harga={299000}
-        />
-
-        <ProductCard
-          image={require('@/assets/images/gantungan4.jpg')}
-          judul="Cotton Pink"
-          desc="Enak dan manis"
-          harga={299000}
-        />
-        <ProductCard
-          image={require('@/assets/images/gantungan5.jpg')}
-          judul="Milky Cloud"
-          desc="Enak dan manis"
-          harga={299000}
-        />
+          <View style={styles.productRow}>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan4.jpg')}
+                judul="Cotton Pink"
+                desc="Enak dan manis"
+                harga={299000}
+              />
+            </View>
+            <View style={styles.cardWrapper}>
+              <ProductCard
+                image={require('@/assets/images/gantungan5.jpg')}
+                judul="Milky Cloud"
+                desc="Enak dan manis"
+                harga={299000}
+              />
+            </View>
+          </View>
         </View>
     
 
@@ -274,8 +308,6 @@ export default function TabTwoScreen() {
             <ThemedText style={styles.reviewAuthor}>- Mia R. ⭐⭐⭐⭐⭐</ThemedText>
           </View>
         </View>
-
-        <br />
 
         {/* Logout Button */}
           <Pressable onPress={handleLogout} style={styles.logoutButton}>
@@ -344,6 +376,21 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     flexDirection: 'row',
     gap: 10, // untuk React Native >= 0.71
+  },
+  productContainer: {
+    paddingHorizontal: 16,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  productRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 15,
+    gap: 10,
+  },
+  cardWrapper: {
+    flex: 1,
+    maxWidth: '48%',
   },
 
   productHeading: {

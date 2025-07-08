@@ -28,7 +28,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, judul, desc, harga }) 
     <View style={styles.card}>
       <Image source={image} style={styles.image} />
       <Text style={styles.title}>{judul}</Text>
-      <Text style={styles.desc}>{desc}</Text>
+      <Text style={styles.desc} numberOfLines={2} ellipsizeMode="tail">{desc}</Text>
       <Text style={styles.price}>Rp {harga.toLocaleString('id-ID')}</Text>
       <Pressable style={styles.button} onPress={handleCheckout}>
         <Text style={styles.buttonText}>Checkout</Text>
@@ -42,8 +42,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     padding: 12,
-    width: 180,
-    marginRight: 10,
+    flex: 1,
+    marginRight: 0,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -52,33 +52,40 @@ const styles = StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 180,
     borderRadius: 8,
     marginBottom: 8,
+    resizeMode: 'cover',
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: 'bold',
+    marginBottom: 4,
+    color: '#333',
   },
   desc: {
-    fontSize: 12,
+    fontSize: 11,
     color: '#666',
     marginBottom: 6,
+    lineHeight: 16,
   },
   price: {
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
+    color: '#e74c3c',
   },
   button: {
     backgroundColor: '#eca8bb',
-    paddingVertical: 6,
+    paddingVertical: 8,
     borderRadius: 8,
+    alignItems: 'center',
   },
   buttonText: {
     color: '#fff5e4',
     textAlign: 'center',
     fontWeight: '600',
+    fontSize: 13,
   },
 });
 
