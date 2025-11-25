@@ -1,18 +1,42 @@
+import { useCart } from '@/app/CartContext';
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Image, ImageSourcePropType, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Alert, Image, ImageSourcePropType, Pressable, StyleSheet, Text, View } from 'react-native';
 
 type ProductCardProps = {
+  id?: number;
   image: ImageSourcePropType; // bisa string (URL) atau require()
   judul: string;
   desc: string;
   harga: number;
+  kategori?: string;
 };
 
-const ProductCard: React.FC<ProductCardProps> = ({ image, judul, desc, harga }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, image, judul, desc, harga, kategori = 'Tumbler' }) => {
   const router = useRouter();
+  const { addToCart } = useCart();
   
-  const handleCheckout = () => {
+  const handleAddToCart = () => {
+    // Generate unique ID if not provided
+    const productId = id || Date.now() + Math.random();
+    
+    const product = {
+      id: productId,
+      image,
+      judul,
+      desc,
+      harga,
+      kategori
+    };
+    addToCart(product);
+    Alert.alert(
+      'Berhasil!', 
+      `${judul} telah ditambahkan ke keranjang`,
+      [{ text: 'OK', style: 'default' }]
+    );
+  };
+
+  const handleBuyNow = () => {
     // Create mapping of require() IDs to filenames
     let imageName = 'react-logo.png';
     
@@ -75,9 +99,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ image, judul, desc, harga }) 
       <Text style={styles.title}>{judul}</Text>
       <Text style={styles.desc} numberOfLines={2} ellipsizeMode="tail">{desc}</Text>
       <Text style={styles.price}>Rp {harga.toLocaleString('id-ID')}</Text>
-      <Pressable style={styles.button} onPress={handleCheckout}>
-        <Text style={styles.buttonText}>Checkout</Text>
-      </Pressable>
+      <View style={styles.buttonContainer}>
+        <Pressable style={styles.addToCartButton} onPress={handleAddToCart}>
+          <Text style={styles.addToCartButtonText}>+ Keranjang</Text>
+        </Pressable>
+        <Pressable style={styles.buyNowButton} onPress={handleBuyNow}>
+          <Text style={styles.buyNowButtonText}>Beli Sekarang</Text>
+        </Pressable>
+      </View>
     </View>
   );
 };
@@ -120,17 +149,37 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#e74c3c',
   },
-  button: {
-    backgroundColor: '#eca8bb',
+  buttonContainer: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  addToCartButton: {
+    flex: 1,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#DE8389',
     paddingVertical: 8,
+    paddingHorizontal: 8,
     borderRadius: 8,
     alignItems: 'center',
   },
-  buttonText: {
-    color: '#fff5e4',
-    textAlign: 'center',
+  addToCartButtonText: {
+    color: '#DE8389',
+    fontSize: 10,
     fontWeight: '600',
-    fontSize: 13,
+  },
+  buyNowButton: {
+    flex: 1,
+    backgroundColor: '#DE8389',
+    paddingVertical: 8,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buyNowButtonText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: '600',
   },
 });
 

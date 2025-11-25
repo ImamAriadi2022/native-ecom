@@ -2,16 +2,57 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Platform } from 'react-native';
 
+import { useCart } from '@/app/CartContext';
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import TabBarBackground from '@/components/ui/TabBarBackground';
 import { useAuth } from '@/contexts/AuthContext';
+import { StyleSheet, Text, View } from 'react-native';
+
+const CartIcon = ({ color }: { color: string }) => {
+  const { getTotalItems } = useCart();
+  const totalItems = getTotalItems();
+
+  return (
+    <View style={styles.cartIconContainer}>
+      <IconSymbol size={26} name="bag.fill" color={color} />
+      {totalItems > 0 && (
+        <View style={styles.badge}>
+          <Text style={styles.badgeText}>{totalItems > 99 ? '99+' : totalItems}</Text>
+        </View>
+      )}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  cartIconContainer: {
+    position: 'relative',
+  },
+  badge: {
+    position: 'absolute',
+    right: -6,
+    top: -3,
+    backgroundColor: '#ff4444',
+    borderRadius: 10,
+    minWidth: 18,
+    height: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 4,
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+});
 
 export default function TabLayout() {
   const { isAuthenticated } = useAuth();
 
   return (
-    <Tabs
+      <Tabs
       screenOptions={{
         tabBarActiveTintColor: '#DE8389',
         tabBarInactiveTintColor: '#666',
@@ -60,8 +101,8 @@ export default function TabLayout() {
         name="cart"
         options={{
           title: 'Cart',
-          tabBarIcon: ({ color }) => <IconSymbol size={26} name="bag.fill" color={color} />,
-          href: isAuthenticated ? '/(tabs)/cart' : null, // Show only when authenticated
+          tabBarIcon: ({ color }) => <CartIcon color={color} />,
+          href: isAuthenticated ? '/cart' : null, // Show only when authenticated
         }}
       />
       <Tabs.Screen

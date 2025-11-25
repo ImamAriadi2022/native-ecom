@@ -15,7 +15,7 @@ export default function PaymentProcessScreen() {
     quantity: parseInt(params.quantity as string) || 1,
     total: parseInt(params.total as string) || 299000,
     paymentMethod: params.paymentMethod as string || 'Transfer Bank',
-    paymentIcon: params.paymentIcon as string || '🏦'
+    paymentIcon: params.paymentIcon as string || 'BANK'
   };
 
   const currentTime = new Date().toLocaleString('id-ID', {
@@ -65,7 +65,14 @@ export default function PaymentProcessScreen() {
             <ThemedText style={styles.sectionTitle}>Detail Pembayaran</ThemedText>
             
             <View style={styles.paymentInfo}>
-              <ThemedText style={styles.paymentIcon}>{orderData.paymentIcon}</ThemedText>
+              <ThemedText style={[
+                styles.paymentIcon,
+                orderData.paymentIcon === 'BANK' && { backgroundColor: '#4f46e5' },
+                orderData.paymentIcon === 'GOPAY' && { backgroundColor: '#00aa13' },
+                orderData.paymentIcon === 'OVO' && { backgroundColor: '#4c3d9f' },
+                orderData.paymentIcon === 'DANA' && { backgroundColor: '#118ed8' },
+                orderData.paymentIcon === 'SPAY' && { backgroundColor: '#ff5722' }
+              ]}>{orderData.paymentIcon}</ThemedText>
               <ThemedText style={styles.paymentMethod}>{orderData.paymentMethod}</ThemedText>
             </View>
 
@@ -217,13 +224,21 @@ const styles = StyleSheet.create({
   paymentInfo: {
     alignItems: 'center',
     marginBottom: 20,
-    paddingBottom: 15,
+    paddingBottom: 20,
     borderBottomWidth: 1,
     borderBottomColor: '#eee',
   },
   paymentIcon: {
-    fontSize: 32,
-    marginBottom: 8,
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#fff',
+    backgroundColor: '#DE8389',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
+    marginBottom: 12,
+    minWidth: 60,
+    textAlign: 'center',
   },
   paymentMethod: {
     fontSize: 18,

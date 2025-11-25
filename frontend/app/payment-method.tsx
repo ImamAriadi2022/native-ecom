@@ -16,31 +16,31 @@ const paymentMethods: PaymentMethod[] = [
     id: 'bank_transfer',
     name: 'Transfer Bank',
     description: 'BCA, Mandiri, BNI, BRI',
-    icon: '🏦'
+    icon: 'BANK'
   },
   {
     id: 'gopay',
     name: 'GoPay',
     description: 'Bayar dengan GoPay',
-    icon: '💚'
+    icon: 'GOPAY'
   },
   {
     id: 'ovo',
     name: 'OVO',
     description: 'Bayar dengan OVO',
-    icon: '💜'
+    icon: 'OVO'
   },
   {
     id: 'dana',
     name: 'DANA',
     description: 'Bayar dengan DANA',
-    icon: '💙'
+    icon: 'DANA'
   },
   {
     id: 'shopeepay',
     name: 'ShopeePay',
     description: 'Bayar dengan ShopeePay',
-    icon: '🧡'
+    icon: 'SPAY'
   },
 ];
 
@@ -73,7 +73,7 @@ export default function PaymentMethodScreen() {
       params: {
         ...orderData,
         paymentMethod: selectedPayment?.name || 'Transfer Bank',
-        paymentIcon: selectedPayment?.icon || '🏦'
+        paymentIcon: selectedPayment?.icon || 'BANK'
       }
     });
   };
@@ -134,7 +134,14 @@ export default function PaymentMethodScreen() {
               >
                 <View style={styles.methodContent}>
                   <View style={styles.methodLeft}>
-                    <ThemedText style={styles.methodIcon}>{method.icon}</ThemedText>
+                    <ThemedText style={[
+                      styles.methodIcon,
+                      method.id === 'bank_transfer' && { backgroundColor: '#4f46e5' },
+                      method.id === 'gopay' && { backgroundColor: '#00aa13' },
+                      method.id === 'ovo' && { backgroundColor: '#4c3d9f' },
+                      method.id === 'dana' && { backgroundColor: '#118ed8' },
+                      method.id === 'shopeepay' && { backgroundColor: '#ff5722' }
+                    ]}>{method.icon}</ThemedText>
                     <View style={styles.methodInfo}>
                       <ThemedText style={styles.methodName}>{method.name}</ThemedText>
                       <ThemedText style={styles.methodDesc}>{method.description}</ThemedText>
@@ -289,8 +296,16 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   methodIcon: {
-    fontSize: 24,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#fff',
+    backgroundColor: '#DE8389',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
     marginRight: 15,
+    minWidth: 50,
+    textAlign: 'center',
   },
   methodInfo: {
     flex: 1,

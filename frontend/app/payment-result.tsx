@@ -1,12 +1,14 @@
+import { useCart } from '@/app/CartContext';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React from 'react';
-import { Pressable, SafeAreaView, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
 
 export default function PaymentResultScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
+  const { clearCart } = useCart();
 
   const isSuccess = params.isSuccess === 'true';
   const orderData = {
@@ -15,8 +17,16 @@ export default function PaymentResultScreen() {
     quantity: parseInt(params.quantity as string) || 1,
     total: parseInt(params.total as string) || 299000,
     paymentMethod: params.paymentMethod as string || 'Transfer Bank',
+    paymentIcon: params.paymentIcon as string || 'BANK',
     transactionTime: params.transactionTime as string || new Date().toLocaleString('id-ID')
   };
+
+  // Clear cart when payment is successful
+  useEffect(() => {
+    if (isSuccess) {
+      clearCart();
+    }
+  }, [isSuccess, clearCart]);
 
   const handleBackToHome = () => {
     router.replace('/(tabs)/explore');
@@ -31,12 +41,22 @@ export default function PaymentResultScreen() {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
       <View style={[styles.container, styles.gradientBackground]}>
-        <ThemedView style={styles.content}>
+        <ScrollView 
+          style={styles.scrollContainer}
+          contentContainerStyle={styles.scrollContent}
+          showsVerticalScrollIndicator={false}
+        >
+          <ThemedView style={styles.content}>
         {/* Result Icon & Status */}
         <View style={styles.resultSection}>
-          <ThemedText style={styles.resultIcon}>
-            {isSuccess ? '✅' : '❌'}
-          </ThemedText>
+          <View style={[
+            styles.resultIconContainer,
+            isSuccess ? styles.successIcon : styles.failureIcon
+          ]}>
+            <ThemedText style={styles.resultIconText}>
+              {isSuccess ? '✔' : '✖'}
+            </ThemedText>
+          </View>
           <ThemedText style={styles.resultTitle}>
             {isSuccess ? 'Pembayaran Berhasil!' : 'Pembayaran Gagal!'}
           </ThemedText>
@@ -50,7 +70,7 @@ export default function PaymentResultScreen() {
 
         {/* Transaction Details */}
         <View style={styles.detailsSection}>
-          <ThemedText style={styles.sectionTitle}>Detail Transaksi</ThemedText>
+          <ThemedText style={styles.sectionTitle}>📄 Detail Transaksi</ThemedText>
           
           <View style={styles.detailCard}>
             <View style={styles.detailRow}>
@@ -70,7 +90,17 @@ export default function PaymentResultScreen() {
             
             <View style={styles.detailRow}>
               <ThemedText style={styles.detailLabel}>Metode Pembayaran:</ThemedText>
-              <ThemedText style={styles.detailValue}>{orderData.paymentMethod}</ThemedText>
+              <View style={styles.paymentMethodContainer}>
+                <ThemedText style={[
+                  styles.paymentMethodIcon,
+                  orderData.paymentIcon === 'BANK' && { backgroundColor: '#4f46e5' },
+                  orderData.paymentIcon === 'GOPAY' && { backgroundColor: '#00aa13' },
+                  orderData.paymentIcon === 'OVO' && { backgroundColor: '#4c3d9f' },
+                  orderData.paymentIcon === 'DANA' && { backgroundColor: '#118ed8' },
+                  orderData.paymentIcon === 'SPAY' && { backgroundColor: '#ff5722' }
+                ]}>{orderData.paymentIcon}</ThemedText>
+                <ThemedText style={styles.paymentMethodText}>{orderData.paymentMethod}</ThemedText>
+              </View>
             </View>
             
             <View style={styles.detailRow}>
@@ -161,8 +191,9 @@ export default function PaymentResultScreen() {
             Temani Harimu, Setiap Tegukan Penuh Cerita
           </ThemedText>
         </View>
-      </ThemedView>
-    </View>
+          </ThemedView>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -174,8 +205,14 @@ const styles = StyleSheet.create({
   gradientBackground: {
     backgroundColor: '#DE8389',
   },
-  content: {
+  scrollContainer: {
     flex: 1,
+  },
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 30,
+  },
+  content: {
     padding: 20,
     backgroundColor: 'transparent',
     paddingTop: 20,
@@ -184,18 +221,45 @@ const styles = StyleSheet.create({
   resultSection: {
     alignItems: 'center',
     marginBottom: 30,
-    paddingTop: 40,
+    paddingTop: 60,
   },
-  resultIcon: {
-    fontSize: 64,
-    marginBottom: 15,
+  resultIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  successIcon: {
+    backgroundColor: '#4CAF50',
+  },
+  failureIcon: {
+    backgroundColor: '#f44336',
+  },
+  resultIconText: {
+    fontSize: 52,
+    fontWeight: '900',
+    color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 3,
+    lineHeight: 52,
+    letterSpacing: -1,
   },
   resultTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#fff',
     textAlign: 'center',
+    marginTop: 15,
     marginBottom: 8,
+    paddingTop: 5,
   },
   resultSubtitle: {
     fontSize: 16,
@@ -249,6 +313,27 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: '#DE8389',
+  },
+  paymentMethodContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  paymentMethodIcon: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#fff',
+    backgroundColor: '#DE8389',
+    paddingHorizontal: 6,
+    paddingVertical: 3,
+    borderRadius: 4,
+    minWidth: 40,
+    textAlign: 'center',
+  },
+  paymentMethodText: {
+    fontSize: 16,
+    color: '#333',
+    fontWeight: '500',
   },
   messageSection: {
     backgroundColor: 'rgba(255, 255, 255, 0.9)',

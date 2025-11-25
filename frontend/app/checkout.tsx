@@ -110,8 +110,8 @@ export default function CheckoutScreen() {
       pathname: '/payment-method',
       params: {
         orderId: 'LBS' + Date.now(),
-        productName: productData.name,
-        quantity: quantity.toString(),
+        productName: isCartCheckout ? `${cartData.itemCount} items dari keranjang` : productData.name,
+        quantity: isCartCheckout ? cartData.itemCount.toString() : quantity.toString(),
         total: total.toString(),
       }
     });

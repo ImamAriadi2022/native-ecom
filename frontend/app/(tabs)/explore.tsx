@@ -148,7 +148,7 @@ export default function TabTwoScreen() {
           {/* Hero Promo Section */}
           <View style={styles.heroPromoSection}>
             <LinearGradient
-              colors={promoData[currentPromoIndex].gradient}
+              colors={promoData[currentPromoIndex].gradient as [string, string]}
               style={styles.promoSlide}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 1 }}
@@ -205,19 +205,23 @@ export default function TabTwoScreen() {
                   <View key={`row-${index}`} style={styles.productRow}>
                     <View style={styles.cardWrapper}>
                       <ProductCard
+                        id={product.id}
                         image={product.image}
                         judul={product.judul}
                         desc={product.desc}
                         harga={product.harga}
+                        kategori={product.kategori}
                       />
                     </View>
                     {filteredProducts[index + 1] && (
                       <View style={styles.cardWrapper}>
                         <ProductCard
+                          id={filteredProducts[index + 1].id}
                           image={filteredProducts[index + 1].image}
                           judul={filteredProducts[index + 1].judul}
                           desc={filteredProducts[index + 1].desc}
                           harga={filteredProducts[index + 1].harga}
+                          kategori={filteredProducts[index + 1].kategori}
                         />
                       </View>
                     )}
@@ -226,44 +230,6 @@ export default function TabTwoScreen() {
               }
               return null;
             })}
-            </View>
-
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan2.jpg')}
-                judul="Amber Pop"
-                desc="Enak dan manis"
-                harga={299000}
-              />
-            </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan3.jpg')}
-                judul="Mist Blue"
-                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-                harga={299000}
-              />
-            </View>
-          </View>
-
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan4.jpg')}
-                judul="Cotton Pink"
-                desc="Enak dan manis"
-                harga={299000}
-              />
-            </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan5.jpg')}
-                judul="Milky Cloud"
-                desc="Enak dan manis"
-                harga={299000}
-              />
-            </View>
           </View>
         </View>
     
