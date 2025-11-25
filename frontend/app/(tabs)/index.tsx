@@ -5,6 +5,7 @@ import { ActivityIndicator, Alert, Image, Pressable, StyleSheet, TextInput, View
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -13,6 +14,14 @@ export default function LoginScreen() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [imageError, setImageError] = useState(false);
   const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
+
+  // Redirect if already authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/(tabs)/explore');
+    }
+  }, [isAuthenticated]);
 
   useEffect(() => {
     // Auto fetch profile saat component mount
@@ -77,7 +86,9 @@ export default function LoginScreen() {
 
     try {
       if (email === 'devi@gmail.com' && password === '123456') {
-        // Tunggu sebentar sebelum navigasi
+        // Set authenticated state
+        login();
+        // Tunggu sebentar sebelum navigasi  
         await new Promise(resolve => setTimeout(resolve, 500));
         router.replace('/(tabs)/explore');
       } else {

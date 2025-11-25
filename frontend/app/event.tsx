@@ -1,7 +1,7 @@
+import React from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+
 import { ThemedText } from '@/components/ThemedText';
-import { router } from 'expo-router';
-import React, { useState } from 'react';
-import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function EventScreen() {
   const [selectedProducts, setSelectedProducts] = useState<{[eventId: string]: {[productId: string]: number}}>({});
