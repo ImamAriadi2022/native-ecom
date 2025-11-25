@@ -18,6 +18,57 @@ export default function TabTwoScreen() {
 
   const filterOptions = ['Semua', 'Tumbler', 'Bottle', 'Aksesoris'];
 
+  const productData = [
+    {
+      id: 1,
+      image: require('@/assets/images/tumbler oren.jpg'),
+      judul: 'Blush Aura',
+      desc: 'Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi.',
+      harga: 299000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 2,
+      image: require('@/assets/images/tumbler ungu.jpg'),
+      judul: 'Luna Frost',
+      desc: 'Tumbler dengan warna lilac lembut dengan aksen ungu pastel, memberi kesan tenang dan elegan.',
+      harga: 249000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 3,
+      image: require('@/assets/images/tumbler pink1.jpg'),
+      judul: 'Pink Reverie',
+      desc: 'Paduan warna pastel yang menggambarkan impian dan kelembutan, teman setia momen manis harimu.',
+      harga: 299000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 4,
+      image: require('@/assets/images/tumbler hijau2.jpg'),
+      judul: 'Sage Calm',
+      desc: 'Desain simple dan bernuansa alami, cocok untuk kamu yang menyukai kesegaran dan ketenangan.',
+      harga: 279000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 5,
+      image: require('@/assets/images/tumbler khaki.jpg'),
+      judul: 'Dusk Mocha',
+      desc: 'Hangat dan netral, dusk mocha hadir dengan warna kopi susu yang elegan.',
+      harga: 279000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 6,
+      image: require('@/assets/images/gantungan1.jpg'),
+      judul: 'Rose Glow',
+      desc: 'Aksesoris gantungan tumbler yang cantik dan fungsional.',
+      harga: 89000,
+      kategori: 'Aksesoris'
+    }
+  ];
+
   const promoData = [
     {
       id: 1,
@@ -62,6 +113,15 @@ export default function TabTwoScreen() {
     setSelectedFilter(filter);
   };
 
+  const getFilteredProducts = () => {
+    if (selectedFilter === 'Semua') {
+      return productData;
+    }
+    return productData.filter(product => product.kategori === selectedFilter);
+  };
+
+  const filteredProducts = getFilteredProducts();
+
   const toggleFloatingButtons = () => {
     const toValue = isFloatingExpanded ? 0 : 1;
     setIsFloatingExpanded(!isFloatingExpanded);
@@ -76,52 +136,53 @@ export default function TabTwoScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
-        {/* Header Section */}
-        <View style={styles.headerSection}>
-          <ThemedText type="title" style={styles.brandTitle}>Lyana Bottle Studio</ThemedText>
-          <ThemedText style={styles.brandSubtitle}>Temani Harimu, Setiap Tegukan Penuh Cerita</ThemedText>
-        </View>
+      {/* Fixed Header Section */}
+      <View style={styles.headerSection}>
+        <ThemedText type="title" style={styles.brandTitle}>Lyana Bottle Studio</ThemedText>
+        <ThemedText style={styles.brandSubtitle}>Temani Harimu, Setiap Tegukan Penuh Cerita</ThemedText>
+      </View>
 
-        {/* Hero Promo Section */}
-        <View style={styles.heroPromoSection}>
-          <LinearGradient
-            colors={promoData[currentPromoIndex].gradient}
-            style={styles.promoSlide}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-          >
-            <Text style={styles.promoIcon}>{promoData[currentPromoIndex].icon}</Text>
-            <ThemedText style={styles.promoTitle}>{promoData[currentPromoIndex].title}</ThemedText>
-            <ThemedText style={styles.promoSubtitle}>{promoData[currentPromoIndex].subtitle}</ThemedText>
-            <Pressable 
-              style={styles.promoButton}
-              onPress={() => navigateTo('/promo')}
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        {/* Content Wrapper */}
+        <View style={styles.contentWrapper}>
+          {/* Hero Promo Section */}
+          <View style={styles.heroPromoSection}>
+            <LinearGradient
+              colors={promoData[currentPromoIndex].gradient}
+              style={styles.promoSlide}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
             >
-              <Text style={styles.promoButtonText}>Lihat Promo</Text>
-            </Pressable>
-          </LinearGradient>
-          
-          {/* Promo Indicators */}
-          <View style={styles.promoIndicators}>
-            {promoData.map((_, index) => (
-              <View
-                key={index}
-                style={[
-                  styles.promoIndicator,
-                  currentPromoIndex === index && styles.promoIndicatorActive
-                ]}
-              />
-            ))}
+              <Text style={styles.promoIcon}>{promoData[currentPromoIndex].icon}</Text>
+              <ThemedText style={styles.promoTitle}>{promoData[currentPromoIndex].title}</ThemedText>
+              <ThemedText style={styles.promoSubtitle}>{promoData[currentPromoIndex].subtitle}</ThemedText>
+              <Pressable 
+                style={styles.promoButton}
+                onPress={() => navigateTo('/promo')}
+              >
+                <Text style={styles.promoButtonText}>Lihat Promo</Text>
+              </Pressable>
+            </LinearGradient>
+            
+            {/* Promo Indicators */}
+            <View style={styles.promoIndicators}>
+              {promoData.map((_, index) => (
+                <View
+                  key={index}
+                  style={[
+                    styles.promoIndicator,
+                    currentPromoIndex === index && styles.promoIndicatorActive
+                  ]}
+                />
+              ))}
+            </View>
           </View>
-        </View>
 
-        {/* Main Content Container */}
-        <View style={styles.mainContent}>
-
-          {/* Product Filter */}
-          <View style={styles.filterSection}>
-            <ThemedText style={styles.filterTitle}>Filter Produk</ThemedText>
+          {/* Combined Product Section with Filter */}
+          <View style={styles.productContainer}>
+            <ThemedText style={styles.productHeading}>PRODUK TERBARU</ThemedText>
+            
+            {/* Product Filter */}
             <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
               {filterOptions.map((filter) => (
                 <Pressable 
@@ -135,90 +196,37 @@ export default function TabTwoScreen() {
                 </Pressable>
               ))}
             </ScrollView>
-          </View>
-        </View>
-
-
-        {/* Produk E-Commerce */}
-        <Text style={styles.productHeading}>Temani Harimu, Setiap Tegukan Penuh Cerita</Text>
-        <Text style={styles.productHeading}>PRODUCT</Text>
-        <View style={styles.productContainer}>
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler oren.jpg')}
-                judul="Blush Aura"
-                desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
-                harga={299000}
-              />
+            
+            {/* Filtered Products Grid */}
+            <View style={styles.productsGrid}>
+            {filteredProducts.map((product, index) => {
+              if (index % 2 === 0) {
+                return (
+                  <View key={`row-${index}`} style={styles.productRow}>
+                    <View style={styles.cardWrapper}>
+                      <ProductCard
+                        image={product.image}
+                        judul={product.judul}
+                        desc={product.desc}
+                        harga={product.harga}
+                      />
+                    </View>
+                    {filteredProducts[index + 1] && (
+                      <View style={styles.cardWrapper}>
+                        <ProductCard
+                          image={filteredProducts[index + 1].image}
+                          judul={filteredProducts[index + 1].judul}
+                          desc={filteredProducts[index + 1].desc}
+                          harga={filteredProducts[index + 1].harga}
+                        />
+                      </View>
+                    )}
+                  </View>
+                );
+              }
+              return null;
+            })}
             </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler oren.jpg')}
-                judul="Blush Aura"
-                desc="Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi."
-                harga={299000}
-              />
-            </View>
-          </View>
-
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler ungu.jpg')}
-                judul="Luna Frost"
-                desc="Tumbler deangan warna lilac lembut dengan aksen ungu pastel, memberi kesan tenang dan elegan. Ccock untuk gaya hidup simple"
-                harga={249000}
-              />
-            </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler pink1.jpg')}
-                judul="Pink Reverie"
-                desc="paduan warna pastel yang menggambarkan impian dan kelembutan, Teman setia momen manis harimu dan jauh lebih berwarna."
-                harga={299000}
-              />
-            </View>
-          </View>
-
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler hijau2.jpg')}
-                judul="Sage Calm"
-                desc="Desain simple dan bernuansa alami, cocok untuk kamu yang menyukai kesegaran dan ketenangan dalam setiap aktivitas"
-                harga={279000}
-              />
-            </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/tumbler khaki.jpg')}
-                judul="Dusk Mocha"
-                desc="Hangat dan netral, dusk mocha hadir dengan warna kopi susu yang elegan. Teman sempurna untuk hari-hari produktifmu"
-                harga={279000}
-              />
-            </View>
-          </View>
-        </View>
-        <View style={styles.productContainer}>
-          <View style={styles.productRow}>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan1.jpg')}
-                judul="Rose Glow"
-                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-                harga={299000}
-              />
-            </View>
-            <View style={styles.cardWrapper}>
-              <ProductCard
-                image={require('@/assets/images/gantungan1.jpg')}
-                judul="Rose Glow"
-                desc="Ganteng, manis, cocok untuk cemilan sehari-hari."
-                harga={299000}
-              />
-            </View>
-          </View>
 
           <View style={styles.productRow}>
             <View style={styles.cardWrapper}>
@@ -320,7 +328,7 @@ export default function TabTwoScreen() {
             <ThemedText style={styles.reviewAuthor}>- Mia R. ⭐⭐⭐⭐⭐</ThemedText>
           </View>
         </View>
-
+        </View>
 
       </ScrollView>
 
@@ -406,17 +414,29 @@ export default function TabTwoScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  headerSection: {
     backgroundColor: '#DE8389',
+    paddingTop: 50,
+    paddingBottom: 25,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    zIndex: 1000,
   },
   scrollContainer: {
     flex: 1,
+    backgroundColor: '#f8f9fa',
   },
-  headerSection: {
-    paddingTop: 60,
-    paddingBottom: 30,
+  contentWrapper: {
     paddingHorizontal: 20,
-    alignItems: 'center',
-    backgroundColor: '#DE8389',
+    paddingTop: 20,
+    paddingBottom: 120, // Space for floating buttons
   },
   brandTitle: {
     fontSize: 26,
@@ -431,11 +451,8 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontStyle: 'italic',
   },
-  mainContent: {
-    backgroundColor: '#f8f9fa',
-    flex: 1,
-    paddingTop: 20,
-    paddingBottom: 100, // Space for floating buttons
+  productsGrid: {
+    marginTop: 20,
   },
   quickActionsCard: {
     backgroundColor: '#fff',
@@ -486,15 +503,11 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.8)',
     textAlign: 'center',
   },
-  filterSection: {
-    paddingHorizontal: 20,
-    marginBottom: 20,
-  },
   filterTitle: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#333',
-    marginBottom: 12,
+    marginBottom: 15,
   },
   filterScroll: {
     flexDirection: 'row',
@@ -614,9 +627,14 @@ const styles = StyleSheet.create({
     gap: 10, // untuk React Native >= 0.71
   },
   productContainer: {
-    paddingHorizontal: 16,
-    marginTop: 10,
-    marginBottom: 20,
+    backgroundColor: '#fff',
+    borderRadius: 15,
+    padding: 20,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
   },
   productRow: {
     flexDirection: 'row',
@@ -631,9 +649,10 @@ const styles = StyleSheet.create({
 
   productHeading: {
     fontSize: 20,
-    fontWeight: '700',
-    marginBottom: 16,
-    paddingTop:12,
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   storeInfoSection: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -713,8 +732,6 @@ const styles = StyleSheet.create({
   // Hero Promo Section
   heroPromoSection: {
     height: 180,
-    marginTop: -20,
-    marginHorizontal: 20,
     borderRadius: 20,
     overflow: 'hidden',
     elevation: 5,
@@ -722,8 +739,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    marginBottom: 30,
-    position: 'relative',
+    marginBottom: 25,
   },
   promoSlide: {
     flex: 1,
@@ -781,39 +797,7 @@ const styles = StyleSheet.create({
     width: 20,
   },
 
-  // Hero Promo Section styles
-  promoIcon: {
-    fontSize: 40,
-    marginBottom: 10,
-  },
-  promoButton: {
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 25,
-    marginTop: 10,
-  },
-  promoButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: '600',
-  },
-  promoIndicators: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 15,
-    gap: 8,
-  },
-  promoIndicator: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: 'rgba(255, 255, 255, 0.3)',
-  },
-  promoIndicatorActive: {
-    backgroundColor: '#fff',
-    width: 24,
-  },
+
 
   // Floating Action Buttons
   floatingButtons: {
