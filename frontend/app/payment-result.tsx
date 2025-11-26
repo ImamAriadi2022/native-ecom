@@ -310,7 +310,11 @@ const styles = StyleSheet.create({
   resultSection: {
     alignItems: 'center',
     marginBottom: 30,
-    paddingTop: 60,
+    paddingTop: 30,
+    paddingVertical: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 20,
+    marginHorizontal: 10,
   },
   resultIconContainer: {
     width: 80,
@@ -344,7 +348,7 @@ const styles = StyleSheet.create({
   resultTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#333',
     textAlign: 'center',
     marginTop: 15,
     marginBottom: 8,
@@ -352,7 +356,7 @@ const styles = StyleSheet.create({
   },
   resultSubtitle: {
     fontSize: 16,
-    color: '#f0f0f0',
+    color: '#666',
     textAlign: 'center',
   },
   detailsSection: {
@@ -361,9 +365,14 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#fff',
+    color: '#333',
     marginBottom: 15,
     textAlign: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.9)',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 20,
+    alignSelf: 'center',
   },
   detailCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -464,9 +473,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   secondaryButton: {
-    backgroundColor: 'transparent',
+    backgroundColor: 'rgba(222, 131, 137, 0.1)',
     borderWidth: 2,
-    borderColor: '#fff',
+    borderColor: '#DE8389',
   },
   primaryButtonText: {
     color: '#333',
@@ -474,13 +483,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   secondaryButtonText: {
-    color: '#fff',
+    color: '#DE8389',
     fontSize: 16,
     fontWeight: 'bold',
   },
   footer: {
     alignItems: 'center',
     marginTop: 'auto',
+    backgroundColor: '#DE8389',
+    borderRadius: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
   },
   footerText: {
     color: '#fff',
@@ -489,7 +502,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   footerSubtext: {
-    color: '#f0f0f0',
+    color: 'rgba(255, 255, 255, 0.9)',
     fontSize: 12,
     fontStyle: 'italic',
   },

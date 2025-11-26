@@ -338,11 +338,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
   },
   introText: {
     fontSize: 14,
-    color: '#6c757d',
+    color: '#555',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -358,7 +358,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
   },
   shippingZone: {
     backgroundColor: '#f8f9fa',
@@ -380,6 +380,7 @@ const styles = StyleSheet.create({
   zoneName: {
     fontSize: 15,
     fontWeight: '600',
+    color: '#333',
   },
   zoneDetails: {
     marginLeft: 30,
@@ -387,12 +388,12 @@ const styles = StyleSheet.create({
   zoneTime: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#DE8389',
     marginBottom: 4,
   },
   zoneDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
   },
   freeShippingCard: {
     backgroundColor: '#e8f5e8',
@@ -431,6 +432,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 12,
+    color: '#333',
   },
   rateItem: {
     flexDirection: 'row',
@@ -442,12 +444,12 @@ const styles = StyleSheet.create({
   },
   rateZone: {
     fontSize: 13,
-    color: '#495057',
+    color: '#333',
   },
   ratePrice: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#DE8389',
   },
   courierGrid: {
     flexDirection: 'row',
@@ -469,10 +471,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   courierDesc: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
     textAlign: 'center',
   },
   expressSection: {
@@ -522,10 +525,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   stepDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 18,
   },
   specialTerms: {
@@ -550,15 +554,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   termDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 16,
   },
   forceText: {
     fontSize: 14,
-    color: '#495057',
+    color: '#333',
     marginBottom: 12,
     lineHeight: 20,
   },
@@ -567,13 +572,13 @@ const styles = StyleSheet.create({
   },
   forceItem: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     marginBottom: 6,
     lineHeight: 18,
   },
   forceNote: {
     fontSize: 12,
-    color: '#495057',
+    color: '#333',
     fontStyle: 'italic',
     lineHeight: 18,
   },
@@ -588,7 +593,7 @@ const styles = StyleSheet.create({
   trackingTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#333',
     marginBottom: 15,
   },
   trackingSteps: {
@@ -596,7 +601,7 @@ const styles = StyleSheet.create({
   },
   trackingStep: {
     fontSize: 13,
-    color: '#0d47a1',
+    color: '#333',
     marginBottom: 8,
     lineHeight: 18,
   },
@@ -610,12 +615,12 @@ const styles = StyleSheet.create({
   contactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#333',
     marginBottom: 10,
   },
   contactDesc: {
     fontSize: 14,
-    color: '#495057',
+    color: '#333',
     marginBottom: 15,
     lineHeight: 20,
   },
@@ -624,7 +629,7 @@ const styles = StyleSheet.create({
   },
   contactItem: {
     fontSize: 13,
-    color: '#495057',
+    color: '#555',
     marginBottom: 8,
     lineHeight: 18,
   },

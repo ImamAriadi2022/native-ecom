@@ -223,11 +223,12 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 16,
-    color: '#007bff',
+    color: '#DE8389',
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
+    color: '#333',
   },
   content: {
     flex: 1,
@@ -245,17 +246,17 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
   },
   introText: {
     fontSize: 14,
-    color: '#495057',
+    color: '#555',
     lineHeight: 22,
     marginBottom: 15,
   },
   lastUpdated: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#777',
     fontStyle: 'italic',
   },
   section: {
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
   },
   subsection: {
     marginBottom: 15,
@@ -279,11 +280,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 8,
-    color: '#495057',
+    color: '#333',
   },
   text: {
     fontSize: 13,
-    color: '#495057',
+    color: '#555',
     lineHeight: 20,
   },
   contactSection: {
@@ -298,11 +299,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 10,
-    color: '#007bff',
+    color: '#333',
   },
   contactText: {
     fontSize: 14,
-    color: '#495057',
+    color: '#333',
     marginBottom: 15,
     lineHeight: 20,
   },
@@ -311,7 +312,7 @@ const styles = StyleSheet.create({
   },
   contactItem: {
     fontSize: 13,
-    color: '#495057',
+    color: '#555',
     marginBottom: 8,
     lineHeight: 18,
   },
@@ -327,11 +328,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 10,
-    color: '#856404',
+    color: '#333',
   },
   agreementText: {
     fontSize: 14,
-    color: '#856404',
+    color: '#555',
     lineHeight: 22,
     fontWeight: '500',
   },

@@ -112,9 +112,9 @@ export default function CustomTumblerScreen() {
                 ]}
                 onPress={() => setSelectedSize(size.id)}
               >
-                <ThemedText style={styles.optionName}>{size.name}</ThemedText>
-                <Text style={styles.optionDesc}>{size.description}</Text>
-                <Text style={styles.optionPrice}>
+                <ThemedText style={selectedSize === size.id ? styles.selectedOptionName : styles.optionName}>{size.name}</ThemedText>
+                <Text style={[styles.optionDesc, selectedSize === size.id && { color: '#fff', fontWeight: '600' }]}>{size.description}</Text>
+                <Text style={[styles.optionPrice, selectedSize === size.id && { color: '#fff', fontWeight: 'bold' }]}>
                   {size.price === 0 ? 'Gratis' : `+Rp ${size.price.toLocaleString('id-ID')}`}
                 </Text>
               </TouchableOpacity>
@@ -135,9 +135,9 @@ export default function CustomTumblerScreen() {
                 onPress={() => setSelectedColor(color.id)}
               >
                 <View 
-                  style={[styles.colorCircle, { backgroundColor: color.hex }]}
+                  style={[styles.colorCircle, { backgroundColor: color.hex }, selectedColor === color.id && { borderColor: '#fff', borderWidth: 3 }]}
                 />
-                <Text style={styles.colorName}>{color.name}</Text>
+                <Text style={selectedColor === color.id ? styles.selectedColorName : styles.colorName}>{color.name}</Text>
               </TouchableOpacity>
             ))}
           </View>
@@ -155,9 +155,9 @@ export default function CustomTumblerScreen() {
                 ]}
                 onPress={() => setSelectedDesign(design.id)}
               >
-                <ThemedText style={styles.optionName}>{design.name}</ThemedText>
-                <Text style={styles.optionDesc}>{design.description}</Text>
-                <Text style={styles.optionPrice}>
+                <ThemedText style={selectedDesign === design.id ? styles.selectedOptionName : styles.optionName}>{design.name}</ThemedText>
+                <Text style={[styles.optionDesc, selectedDesign === design.id && { color: '#fff', fontWeight: '600' }]}>{design.description}</Text>
+                <Text style={[styles.optionPrice, selectedDesign === design.id && { color: '#fff', fontWeight: 'bold' }]}>
                   {design.price === 0 ? 'Gratis' : `+Rp ${design.price.toLocaleString('id-ID')}`}
                 </Text>
               </TouchableOpacity>
@@ -192,10 +192,13 @@ export default function CustomTumblerScreen() {
                     ]}
                     onPress={() => setSelectedFont(font.id)}
                   >
-                    <Text style={[styles.fontPreview, { fontWeight: font.style === 'bold' ? 'bold' : 'normal' }]}>
+                    <Text style={[
+                      selectedFont === font.id ? styles.selectedFontPreview : styles.fontPreview, 
+                      { fontWeight: font.style === 'bold' ? 'bold' : 'normal' }
+                    ]}>
                       {font.preview}
                     </Text>
-                    <Text style={styles.fontName}>{font.name}</Text>
+                    <Text style={selectedFont === font.id ? styles.selectedFontName : styles.fontName}>{font.name}</Text>
                   </TouchableOpacity>
                 ))}
               </View>
@@ -335,16 +338,26 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
     marginBottom: 15,
     color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   previewContainer: {
-    backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    borderRadius: 15,
-    padding: 20,
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
+    borderRadius: 20,
+    padding: 25,
     alignItems: 'center',
     position: 'relative',
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(222, 131, 137, 0.2)',
   },
   previewImage: {
     width: 120,
@@ -387,23 +400,39 @@ const styles = StyleSheet.create({
   },
   optionCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
-    borderRadius: 10,
-    padding: 10,
+    borderRadius: 12,
+    padding: 15,
     flex: 1,
     minWidth: '30%',
     maxWidth: '32%',
     alignItems: 'center',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    marginBottom: 8,
   },
   selectedOption: {
-    backgroundColor: 'rgba(222, 131, 137, 0.8)',
+    backgroundColor: '#4CAF50',
     borderWidth: 2,
-    borderColor: '#DE8389',
+    borderColor: '#fff',
+    transform: [{ scale: 1.05 }],
+    elevation: 4,
+    shadowOpacity: 0.3,
+    shadowColor: '#4CAF50',
   },
   optionName: {
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 5,
     color: '#333',
+  },
+  selectedOptionName: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#fff',
   },
   optionDesc: {
     fontSize: 11,
@@ -419,8 +448,12 @@ const styles = StyleSheet.create({
   colorGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
-    justifyContent: 'center',
+    gap: 12,
+    justifyContent: 'space-around',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 10,
   },
   colorOption: {
     alignItems: 'center',
@@ -428,10 +461,16 @@ const styles = StyleSheet.create({
     minWidth: 65,
   },
   selectedColor: {
-    backgroundColor: 'rgba(222, 131, 137, 0.8)',
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: '#DE8389',
+    backgroundColor: '#4CAF50',
+    borderRadius: 12,
+    borderWidth: 3,
+    borderColor: '#fff',
+    transform: [{ scale: 1.15 }],
+    elevation: 4,
+    shadowColor: '#4CAF50',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.4,
+    shadowRadius: 6,
   },
   colorCircle: {
     width: 40,
@@ -443,13 +482,35 @@ const styles = StyleSheet.create({
   },
   colorName: {
     fontSize: 12,
-    color: '#333',
+    color: '#fff',
+    fontWeight: '600',
+    textAlign: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 8,
+    marginTop: 4,
+  },
+  selectedColorName: {
+    fontSize: 12,
+    color: '#fff',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 10,
+    marginTop: 4,
   },
   customTextDesc: {
     fontSize: 14,
-    color: '#555',
+    color: '#fff',
     marginBottom: 10,
     lineHeight: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 8,
   },
   textInput: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -460,15 +521,23 @@ const styles = StyleSheet.create({
   },
   charCount: {
     fontSize: 12,
-    color: '#555',
+    color: '#fff',
     textAlign: 'right',
     marginBottom: 15,
+    backgroundColor: 'rgba(0, 0, 0, 0.2)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 6,
+    alignSelf: 'flex-end',
   },
   fontTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: 'bold',
     marginBottom: 10,
-    color: '#333',
+    color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   fontGrid: {
     flexDirection: 'row',
@@ -484,18 +553,35 @@ const styles = StyleSheet.create({
     minWidth: 80,
   },
   selectedFont: {
-    backgroundColor: 'rgba(222, 131, 137, 0.8)',
+    backgroundColor: '#4CAF50',
     borderWidth: 2,
-    borderColor: '#DE8389',
+    borderColor: '#fff',
+    transform: [{ scale: 1.08 }],
+    elevation: 3,
+    shadowColor: '#4CAF50',
+    shadowOpacity: 0.3,
   },
   fontPreview: {
     fontSize: 20,
     marginBottom: 5,
+    color: '#333',
+  },
+  selectedFontPreview: {
+    fontSize: 22,
+    marginBottom: 5,
+    color: '#fff',
+    fontWeight: 'bold',
   },
   fontName: {
     fontSize: 10,
     color: '#555',
     textAlign: 'center',
+  },
+  selectedFontName: {
+    fontSize: 11,
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
   customTextPrice: {
     fontSize: 12,

@@ -390,9 +390,12 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '600',
+    fontWeight: 'bold',
     marginBottom: 15,
     color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.3)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   bundleCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -642,9 +645,14 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
   benefitsCard: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.98)',
     borderRadius: 15,
     padding: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
     borderWidth: 1,
     borderColor: '#e9ecef',
   },
@@ -664,6 +672,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 2,
+    color: '#333',
   },
   benefitDesc: {
     fontSize: 12,

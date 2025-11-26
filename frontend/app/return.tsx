@@ -343,11 +343,12 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 16,
-    color: '#007bff',
+    color: '#DE8389',
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
+    color: '#333',
   },
   content: {
     flex: 1,
@@ -370,12 +371,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '700',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
     textAlign: 'center',
   },
   introText: {
     fontSize: 14,
-    color: '#6c757d',
+    color: '#555',
     textAlign: 'center',
     lineHeight: 22,
   },
@@ -391,7 +392,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 15,
-    color: '#007bff',
+    color: '#333',
   },
   conditionCard: {
     flexDirection: 'row',
@@ -413,13 +414,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 10,
+    color: '#333',
   },
   conditionList: {
     marginTop: 5,
   },
   conditionItem: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     marginBottom: 6,
     lineHeight: 18,
   },
@@ -444,10 +446,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 5,
+    color: '#333',
   },
   periodDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 18,
   },
   processSteps: {
@@ -462,7 +465,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
     borderRadius: 15,
-    backgroundColor: '#007bff',
+    backgroundColor: '#DE8389',
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 15,
@@ -479,10 +482,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   stepDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 18,
   },
   solutionCard: {
@@ -505,10 +509,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   solutionDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 16,
   },
   timelineCard: {
@@ -525,7 +530,7 @@ const styles = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#007bff',
+    backgroundColor: '#DE8389',
     marginRight: 15,
     marginTop: 4,
   },
@@ -536,15 +541,16 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 2,
+    color: '#333',
   },
   timelineDesc: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
     marginBottom: 2,
   },
   timelineTime: {
     fontSize: 10,
-    color: '#007bff',
+    color: '#DE8389',
     fontWeight: '600',
   },
   feeCard: {
@@ -568,10 +574,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   feeDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 16,
   },
   specialTerms: {
@@ -596,10 +603,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   specialDesc: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 16,
   },
   tipsSection: {
@@ -613,7 +621,7 @@ const styles = StyleSheet.create({
   tipsTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#856404',
+    color: '#333',
     marginBottom: 15,
   },
   tipsCard: {
@@ -632,7 +640,7 @@ const styles = StyleSheet.create({
   },
   tipItem: {
     fontSize: 12,
-    color: '#856404',
+    color: '#555',
     marginBottom: 6,
     lineHeight: 18,
   },
@@ -646,12 +654,12 @@ const styles = StyleSheet.create({
   contactTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#333',
     marginBottom: 10,
   },
   contactDesc: {
     fontSize: 14,
-    color: '#0d47a1',
+    color: '#333',
     marginBottom: 15,
     lineHeight: 20,
   },
@@ -660,7 +668,7 @@ const styles = StyleSheet.create({
   },
   contactItem: {
     fontSize: 13,
-    color: '#0d47a1',
+    color: '#555',
     marginBottom: 8,
     lineHeight: 18,
   },

@@ -349,10 +349,18 @@ const styles = StyleSheet.create({
   securityInfo: {
     alignItems: 'center',
     marginBottom: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+    borderRadius: 15,
+    paddingVertical: 15,
+    paddingHorizontal: 20,
   },
   securityText: {
-    color: '#fff',
+    color: '#666',
     fontSize: 14,
     textAlign: 'center',
+    backgroundColor: 'rgba(222, 131, 137, 0.1)',
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 15,
   },
 });

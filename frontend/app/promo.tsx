@@ -210,12 +210,14 @@ export default function PromoScreen() {
           <ThemedText style={styles.sectionTitle}>Promo Mendatang</ThemedText>
           {upcomingPromos.map((promo, index) => (
             <View key={index} style={styles.upcomingCard}>
-              <View style={styles.upcomingInfo}>
+              <View style={styles.upcomingHeader}>
                 <ThemedText style={styles.upcomingTitle}>{promo.title}</ThemedText>
-                <Text style={styles.upcomingDesc}>{promo.description}</Text>
                 <Text style={styles.upcomingDate}>Mulai: {promo.startDate}</Text>
               </View>
-              <Text style={styles.upcomingTeaser}>{promo.teaser}</Text>
+              <Text style={styles.upcomingDesc}>{promo.description}</Text>
+              <View style={styles.upcomingFooter}>
+                <Text style={styles.upcomingTeaser}>{promo.teaser}</Text>
+              </View>
             </View>
           ))}
         </View>
@@ -465,32 +467,58 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     padding: 20,
     marginBottom: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
     borderLeftWidth: 4,
     borderLeftColor: '#DE8389',
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
   },
-  upcomingInfo: {
-    flex: 1,
+  upcomingHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+  },
+  upcomingFooter: {
+    alignItems: 'center',
+    marginTop: 15,
   },
   upcomingTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 5,
+    fontWeight: 'bold',
     color: '#333',
+    flex: 1,
+    marginRight: 10,
   },
   upcomingDesc: {
     fontSize: 14,
     color: '#555',
+    lineHeight: 20,
     marginBottom: 5,
   },
   upcomingDate: {
     fontSize: 12,
-    color: '#ffc107',
-    fontWeight: '500',
+    color: '#DE8389',
+    fontWeight: '600',
+    backgroundColor: 'rgba(222, 131, 137, 0.15)',
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    borderRadius: 10,
+    textAlign: 'center',
+    minWidth: 80,
   },
   upcomingTeaser: {
-    fontSize: 24,
+    fontSize: 16,
+    textAlign: 'center',
+    backgroundColor: 'rgba(222, 131, 137, 0.1)',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    color: '#DE8389',
+    fontWeight: '600',
+    overflow: 'hidden',
   },
   tipsCard: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',

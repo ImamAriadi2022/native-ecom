@@ -16,14 +16,14 @@ export default function TabTwoScreen() {
   const screenWidth = Dimensions.get('window').width;
   const expandAnimation = useRef(new Animated.Value(0)).current;
 
-  const filterOptions = ['Semua', 'Tumbler', 'Bottle', 'Aksesoris'];
+  const filterOptions = ['Semua', 'Tumbler', 'Gantungan Kunci'];
 
   const productData = [
     {
       id: 1,
       image: require('@/assets/images/tumbler oren.jpg'),
       judul: 'Blush Aura',
-      desc: 'Sentuhan manis warna blush yang memancarkan kehangatan dan keceriaan, cocok untuk hari penuh energi.',
+      desc: 'Tumbler dengan warna coral hangat yang memancarkan energi positif sepanjang hari.',
       harga: 299000,
       kategori: 'Tumbler'
     },
@@ -31,7 +31,7 @@ export default function TabTwoScreen() {
       id: 2,
       image: require('@/assets/images/tumbler ungu.jpg'),
       judul: 'Luna Frost',
-      desc: 'Tumbler dengan warna lilac lembut dengan aksen ungu pastel, memberi kesan tenang dan elegan.',
+      desc: 'Tumbler dengan warna lilac lembut yang memberikan kesan tenang dan elegan.',
       harga: 249000,
       kategori: 'Tumbler'
     },
@@ -39,7 +39,7 @@ export default function TabTwoScreen() {
       id: 3,
       image: require('@/assets/images/tumbler pink1.jpg'),
       judul: 'Pink Reverie',
-      desc: 'Paduan warna pastel yang menggambarkan impian dan kelembutan, teman setia momen manis harimu.',
+      desc: 'Tumbler pink pastel yang menawan, cocok untuk gaya hidup yang feminin dan stylish.',
       harga: 299000,
       kategori: 'Tumbler'
     },
@@ -47,7 +47,7 @@ export default function TabTwoScreen() {
       id: 4,
       image: require('@/assets/images/tumbler hijau2.jpg'),
       judul: 'Sage Calm',
-      desc: 'Desain simple dan bernuansa alami, cocok untuk kamu yang menyukai kesegaran dan ketenangan.',
+      desc: 'Tumbler hijau sage yang menenangkan, sempurna untuk pecinta alam dan minimalisme.',
       harga: 279000,
       kategori: 'Tumbler'
     },
@@ -55,17 +55,105 @@ export default function TabTwoScreen() {
       id: 5,
       image: require('@/assets/images/tumbler khaki.jpg'),
       judul: 'Dusk Mocha',
-      desc: 'Hangat dan netral, dusk mocha hadir dengan warna kopi susu yang elegan.',
+      desc: 'Tumbler warna earth tone yang elegan, cocok untuk gaya kasual dan profesional.',
       harga: 279000,
       kategori: 'Tumbler'
     },
     {
       id: 6,
+      image: require('@/assets/images/tumbler biru tua.jpeg'),
+      judul: 'Ocean Deep',
+      desc: 'Tumbler biru navy yang classic, memberikan kesan profesional dan sophisticated.',
+      harga: 289000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 7,
+      image: require('@/assets/images/tumbler cream.jpg'),
+      judul: 'Vanilla Cream',
+      desc: 'Tumbler warna cream yang lembut dan timeless, cocok untuk semua ocasion.',
+      harga: 269000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 8,
+      image: require('@/assets/images/tumbler ungu pink.jpeg'),
+      judul: 'Sunset Gradient',
+      desc: 'Tumbler dengan gradasi warna sunset yang memukau dan Instagram-worthy.',
+      harga: 319000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 9,
       image: require('@/assets/images/gantungan1.jpg'),
-      judul: 'Rose Glow',
-      desc: 'Aksesoris gantungan tumbler yang cantik dan fungsional.',
-      harga: 89000,
-      kategori: 'Aksesoris'
+      judul: 'Rose Gold Bottle',
+      desc: 'Bottle dengan desain rose gold yang elegan dan premium untuk gaya hidup aktif.',
+      harga: 189000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 10,
+      image: require('@/assets/images/gantungan2.jpg'),
+      judul: 'Crystal Clear Bottle',
+      desc: 'Bottle transparan dengan aksen crystal yang mewah dan modern.',
+      harga: 195000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 11,
+      image: require('@/assets/images/gantungan3.jpg'),
+      judul: 'Nature Bottle',
+      desc: 'Bottle dengan sentuhan natural dan eco-friendly untuk pecinta alam.',
+      harga: 179000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 12,
+      image: require('@/assets/images/gantungan4.jpg'),
+      judul: 'Star Edition Bottle',
+      desc: 'Bottle dengan desain bintang yang playful dan trendy untuk anak muda.',
+      harga: 185000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 13,
+      image: require('@/assets/images/gantungan5.jpg'),
+      judul: 'Heart Series Bottle',
+      desc: 'Bottle dengan motif hati yang cute dan romantis untuk hadiah spesial.',
+      harga: 192000,
+      kategori: 'Tumbler'
+    },
+    {
+      id: 14,
+      image: require('@/assets/images/jerapah.png'),
+      judul: 'Gantungan Jerapah',
+      desc: 'Gantungan kunci karakter jerapah yang lucu dan menggemaskan untuk tas atau tumbler.',
+      harga: 45000,
+      kategori: 'Gantungan Kunci'
+    },
+    {
+      id: 15,
+      image: require('@/assets/images/kupu.png'),
+      judul: 'Gantungan Kupu-kupu',
+      desc: 'Gantungan kunci kupu-kupu yang cantik dan colorful, perfect untuk aksesoris.',
+      harga: 42000,
+      kategori: 'Gantungan Kunci'
+    },
+    {
+      id: 16,
+      image: require('@/assets/images/meong.png'),
+      judul: 'Gantungan Kucing',
+      desc: 'Gantungan kunci kucing yang super cute dan fluffy, favorit cat lovers.',
+      harga: 48000,
+      kategori: 'Gantungan Kunci'
+    },
+    {
+      id: 17,
+      image: require('@/assets/images/monyet.png'),
+      judul: 'Gantungan Monyet',
+      desc: 'Gantungan kunci monyet yang playful dan fun, bikin hari kamu ceria.',
+      harga: 46000,
+      kategori: 'Gantungan Kunci'
     }
   ];
 
@@ -202,38 +290,38 @@ export default function TabTwoScreen() {
             
             {/* Filtered Products Grid */}
             <View style={styles.productsGrid}>
-            {filteredProducts.map((product, index) => {
-              if (index % 2 === 0) {
-                return (
-                  <View key={`row-${index}`} style={styles.productRow}>
-                    <View style={styles.cardWrapper}>
-                      <ProductCard
-                        id={product.id}
-                        image={product.image}
-                        judul={product.judul}
-                        desc={product.desc}
-                        harga={product.harga}
-                        kategori={product.kategori}
-                      />
-                    </View>
-                    {filteredProducts[index + 1] && (
+              {filteredProducts.map((product, index) => {
+                if (index % 2 === 0) {
+                  return (
+                    <View key={`row-${index}`} style={styles.productRow}>
                       <View style={styles.cardWrapper}>
                         <ProductCard
-                          id={filteredProducts[index + 1].id}
-                          image={filteredProducts[index + 1].image}
-                          judul={filteredProducts[index + 1].judul}
-                          desc={filteredProducts[index + 1].desc}
-                          harga={filteredProducts[index + 1].harga}
-                          kategori={filteredProducts[index + 1].kategori}
+                          id={product.id}
+                          image={product.image}
+                          judul={product.judul}
+                          desc={product.desc}
+                          harga={product.harga}
+                          kategori={product.kategori}
                         />
                       </View>
-                    )}
-                  </View>
-                );
-              }
-              return null;
-            })}
-          </View>
+                      {filteredProducts[index + 1] && (
+                        <View style={styles.cardWrapper}>
+                          <ProductCard
+                            id={filteredProducts[index + 1].id}
+                            image={filteredProducts[index + 1].image}
+                            judul={filteredProducts[index + 1].judul}
+                            desc={filteredProducts[index + 1].desc}
+                            harga={filteredProducts[index + 1].harga}
+                            kategori={filteredProducts[index + 1].kategori}
+                          />
+                        </View>
+                      )}
+                    </View>
+                  );
+                }
+                return null;
+              })}
+            </View>
         </View>
     
 
@@ -609,11 +697,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 15,
-    gap: 10,
+    gap: 8,
   },
   cardWrapper: {
     flex: 1,
-    maxWidth: '48%',
+    width: '49%',
   },
 
   productHeading: {

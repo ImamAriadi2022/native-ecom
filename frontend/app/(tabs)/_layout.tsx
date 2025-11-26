@@ -86,7 +86,7 @@ export default function TabLayout() {
         options={{
           title: 'Login',
           tabBarIcon: ({ color }) => <IconSymbol size={26} name="house.fill" color={color} />,
-          href: isAuthenticated ? null : '/index', // Hide when authenticated
+          href: isAuthenticated ? null : undefined, // Hide when authenticated
         }}
       />
       <Tabs.Screen
@@ -102,7 +102,7 @@ export default function TabLayout() {
         options={{
           title: 'Cart',
           tabBarIcon: ({ color }) => <CartIcon color={color} />,
-          href: isAuthenticated ? '/cart' : null, // Show only when authenticated
+          href: isAuthenticated ? undefined : null, // Show only when authenticated
         }}
       />
       <Tabs.Screen
@@ -110,7 +110,7 @@ export default function TabLayout() {
         options={{
           title: 'Event',
           tabBarIcon: ({ color }) => <IconSymbol size={26} name="star.fill" color={color} />,
-          href: '/(tabs)/event', // Always accessible
+          href: isAuthenticated ? '/(tabs)/event' : null, // Show only when authenticated
         }}
       />
       <Tabs.Screen

@@ -296,18 +296,19 @@ const styles = StyleSheet.create({
   },
   backText: {
     fontSize: 16,
-    color: '#007bff',
+    color: '#DE8389',
   },
   title: {
     fontSize: 18,
     fontWeight: '600',
+    color: '#333',
   },
   content: {
     flex: 1,
     padding: 20,
   },
   heroSection: {
-    backgroundColor: '#007bff',
+    backgroundColor: '#DE8389',
     borderRadius: 15,
     padding: 30,
     alignItems: 'center',
@@ -326,7 +327,7 @@ const styles = StyleSheet.create({
   },
   heroDesc: {
     fontSize: 14,
-    color: '#e3f2fd',
+    color: 'rgba(255, 255, 255, 0.9)',
     textAlign: 'center',
     lineHeight: 20,
   },
@@ -337,6 +338,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '600',
     marginBottom: 15,
+    color: '#333',
   },
   contactCard: {
     backgroundColor: '#fff',
@@ -361,25 +363,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   contactDetail: {
     fontSize: 14,
-    color: '#007bff',
+    color: '#DE8389',
     fontWeight: '500',
     marginBottom: 4,
   },
   contactDesc: {
     fontSize: 12,
-    color: '#6c757d',
+    color: '#555',
     marginBottom: 4,
   },
   contactStatus: {
     fontSize: 11,
-    color: '#28a745',
+    color: '#4CAF50',
   },
   contactArrow: {
     fontSize: 18,
-    color: '#6c757d',
+    color: '#999',
   },
   socialCard: {
     backgroundColor: '#fff',
@@ -404,20 +407,21 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     marginBottom: 2,
+    color: '#333',
   },
   socialHandle: {
     fontSize: 13,
-    color: '#007bff',
+    color: '#DE8389',
     fontWeight: '500',
     marginBottom: 4,
   },
   socialDesc: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
   },
   socialArrow: {
     fontSize: 16,
-    color: '#6c757d',
+    color: '#999',
   },
   addressCard: {
     backgroundColor: '#fff',
@@ -438,10 +442,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginBottom: 10,
+    color: '#333',
   },
   addressDetail: {
     fontSize: 14,
-    color: '#495057',
+    color: '#555',
     lineHeight: 22,
     marginBottom: 15,
   },
@@ -454,10 +459,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     marginBottom: 6,
+    color: '#333',
   },
   noteText: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
     lineHeight: 16,
   },
   specialContactCard: {
@@ -481,15 +487,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginBottom: 4,
+    color: '#333',
   },
   specialDesc: {
     fontSize: 11,
-    color: '#6c757d',
+    color: '#555',
     marginBottom: 4,
   },
   specialDetail: {
     fontSize: 12,
-    color: '#007bff',
+    color: '#DE8389',
     fontWeight: '500',
   },
   scheduleCard: {
@@ -511,6 +518,7 @@ const styles = StyleSheet.create({
   scheduleTitle: {
     fontSize: 16,
     fontWeight: '600',
+    color: '#333',
   },
   scheduleList: {
     marginBottom: 15,
@@ -525,16 +533,16 @@ const styles = StyleSheet.create({
   },
   scheduleDay: {
     fontSize: 14,
-    color: '#495057',
+    color: '#333',
   },
   scheduleTime: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#007bff',
+    color: '#DE8389',
   },
   scheduleNote: {
     fontSize: 12,
-    color: '#28a745',
+    color: '#4CAF50',
     fontStyle: 'italic',
     textAlign: 'center',
   },
@@ -555,11 +563,11 @@ const styles = StyleSheet.create({
     fontSize: 13,
     fontWeight: '600',
     marginBottom: 6,
-    color: '#007bff',
+    color: '#333',
   },
   faqAnswer: {
     fontSize: 12,
-    color: '#495057',
+    color: '#555',
     lineHeight: 18,
   },
   quickActionSection: {
@@ -574,6 +582,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginBottom: 15,
     textAlign: 'center',
+    color: '#333',
   },
   quickActionGrid: {
     flexDirection: 'row',
@@ -595,7 +604,7 @@ const styles = StyleSheet.create({
   quickActionText: {
     fontSize: 11,
     fontWeight: '600',
-    color: '#495057',
+    color: '#333',
   },
   bottomSpace: {
     height: 50,
