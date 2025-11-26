@@ -1,19 +1,23 @@
 import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 import { router } from 'expo-router';
 import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function ShippingScreen() {
   return (
-    <View style={[styles.container, styles.gradientBackground]}>
+    <ThemedView style={styles.container}>
+      {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-          <Text style={styles.backText}>← Kembali</Text>
-        </TouchableOpacity>
-        <ThemedText style={styles.title}>Kebijakan Pengiriman</ThemedText>
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <IconSymbol name="arrow.left" size={24} color="#fff" />
+        </Pressable>
+        <ThemedText style={styles.headerTitle}>Kebijakan Pengiriman</ThemedText>
+        <View style={styles.headerSpacer} />
       </View>
 
-      <ScrollView style={styles.content}>
+      <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         <View style={styles.introSection}>
           <Text style={styles.introEmoji}>📦</Text>
           <ThemedText style={styles.introTitle}>Kebijakan Pengiriman</ThemedText>
@@ -273,7 +277,7 @@ export default function ShippingScreen() {
 
         <View style={styles.bottomSpace} />
       </ScrollView>
-    </View>
+    </ThemedView>
   );
 }
 
@@ -282,25 +286,32 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#f8f9fa',
   },
-  gradientBackground: {
-    backgroundColor: '#DE8389',
-  },
   header: {
+    backgroundColor: '#DE8389',
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 15,
-    backgroundColor: '#fff',
-    borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
+    justifyContent: 'space-between',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
   },
   backButton: {
-    marginRight: 15,
     padding: 8,
   },
-  backText: {
-    fontSize: 16,
-    color: '#007bff',
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    flex: 1,
+    textAlign: 'center',
+  },
+  headerSpacer: {
+    width: 40,
   },
   title: {
     fontSize: 18,

@@ -1,17 +1,21 @@
 import { useCart } from '@/app/CartContext';
+import { useProfile } from '@/app/ProfileContext';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect } from 'react';
-import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function PaymentResultScreen() {
   const router = useRouter();
   const params = useLocalSearchParams();
   const { clearCart } = useCart();
+  const { addOrderHistory, addNotification } = useProfile();
+  const [hasProcessed, setHasProcessed] = useState(false);
 
   const isSuccess = params.isSuccess === 'true';
-  const orderData = {
+  
+  const orderData = useMemo(() => ({
     orderId: params.orderId as string || 'LBS' + Date.now(),
     productName: params.productName as string || 'Produk',
     quantity: parseInt(params.quantity as string) || 1,
@@ -19,34 +23,95 @@ export default function PaymentResultScreen() {
     paymentMethod: params.paymentMethod as string || 'Transfer Bank',
     paymentIcon: params.paymentIcon as string || 'BANK',
     transactionTime: params.transactionTime as string || new Date().toLocaleString('id-ID')
-  };
+  }), [params.orderId, params.productName, params.quantity, params.total, params.paymentMethod, params.paymentIcon, params.transactionTime]);
 
-  // Clear cart when payment is successful
+  // Clear cart and save order when payment is successful (ONLY ONCE)
   useEffect(() => {
-    if (isSuccess) {
+    console.log('PaymentResult useEffect triggered:', { isSuccess, hasProcessed });
+    if (isSuccess && !hasProcessed) {
+      console.log('Processing successful payment for order:', orderData.orderId);
+      setHasProcessed(true);
       clearCart();
+      
+      // Get proper image name based on product name
+      const getProductImage = (productName: string) => {
+        if (productName.includes('Cream') || productName.includes('Premium')) return 'tumbler cream.jpg';
+        if (productName.includes('Pink')) return 'tumbler pink1.jpg';
+        if (productName.includes('Hijau') || productName.includes('Green')) return 'tumbler hijau2.jpg';
+        if (productName.includes('Ungu') || productName.includes('Purple')) return 'tumbler ungu.jpg';
+        if (productName.includes('Orange') || productName.includes('Oren')) return 'tumbler oren.jpg';
+        if (productName.includes('Khaki')) return 'tumbler khaki.jpg';
+        if (productName.includes('Masseto')) return 'masseto.jpg';
+        if (productName.includes('Gantungan')) return 'gantungan1.jpg';
+        if (productName.includes('Bundle') || productName.includes('Bundling')) return 'bundling1.jpg';
+        return 'tumbler cream.jpg'; // default
+      };
+
+      // Save order to history (ONLY ONCE)
+      const newOrder = {
+        orderId: orderData.orderId,
+        date: orderData.transactionTime,
+        items: [{
+          id: 1,
+          name: orderData.productName,
+          image: getProductImage(orderData.productName),
+          price: Math.floor(orderData.total / orderData.quantity),
+          quantity: orderData.quantity,
+        }],
+        total: orderData.total,
+        status: 'paid' as const,
+        paymentMethod: orderData.paymentMethod,
+        shippingAddress: {
+          id: 'temp',
+          label: 'Alamat Utama',
+          name: 'User',
+          phone: '081234567890',
+          address: 'Jakarta, Indonesia',
+          city: 'Jakarta',
+          postalCode: '12345',
+          isDefault: true,
+        },
+        trackingNumber: `TRK${Date.now()}`,
+      };
+      addOrderHistory(newOrder);
+      
+      // Add only one notification for successful payment
+      addNotification({
+        title: 'Pembayaran Berhasil! 🎉',
+        message: `Pesanan ${orderData.orderId} telah berhasil dibayar dan sedang diproses.`,
+        type: 'payment',
+        date: new Date().toISOString(),
+        isRead: false,
+        orderId: orderData.orderId,
+      });
     }
-  }, [isSuccess, clearCart]);
+  }, [isSuccess, hasProcessed]); // Removed orderData from dependencies
 
   const handleBackToHome = () => {
     router.replace('/(tabs)/explore');
   };
 
   const handleViewOrder = () => {
-    // Simulasi halaman pesanan
-    alert('Fitur riwayat pesanan akan segera hadir!');
+    router.push('/order-history');
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
-      <View style={[styles.container, styles.gradientBackground]}>
-        <ScrollView 
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-        >
-          <ThemedView style={styles.content}>
+    <ThemedView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.headerSpacer} />
+        <ThemedText style={styles.headerTitle}>
+          Hasil Pembayaran
+        </ThemedText>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.content}>
         {/* Result Icon & Status */}
         <View style={styles.resultSection}>
           <View style={[
@@ -191,16 +256,40 @@ export default function PaymentResultScreen() {
             Temani Harimu, Setiap Tegukan Penuh Cerita
           </ThemedText>
         </View>
-          </ThemedView>
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+        </View>
+      </ScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f8f9fa',
+  },
+  header: {
+    backgroundColor: '#DE8389',
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    flex: 1,
+    textAlign: 'center',
+  },
+  headerSpacer: {
+    width: 40,
   },
   gradientBackground: {
     backgroundColor: '#DE8389',

@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { CartProvider } from '@/app/CartContext';
+import { ProfileProvider } from '@/app/ProfileContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -31,8 +32,9 @@ export default function RootLayout() {
 
   return (
     <AuthProvider>
-      <CartProvider>
-        <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      <ProfileProvider>
+        <CartProvider>
+          <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
@@ -60,10 +62,19 @@ export default function RootLayout() {
           <Stack.Screen name="support" options={{ headerShown: false }} />
           <Stack.Screen name="terms" options={{ headerShown: false }} />
           <Stack.Screen name="test-build" options={{ headerShown: false }} />
-        </Stack>
-        <StatusBar style="auto" />
-        </ThemeProvider>
-      </CartProvider>
+          <Stack.Screen name="profile-edit" options={{ headerShown: false }} />
+          <Stack.Screen name="order-history" options={{ headerShown: false }} />
+          <Stack.Screen name="order-detail" options={{ headerShown: false }} />
+          <Stack.Screen name="addresses" options={{ headerShown: false }} />
+          <Stack.Screen name="address-form" options={{ headerShown: false }} />
+          <Stack.Screen name="payment-methods" options={{ headerShown: false }} />
+          <Stack.Screen name="payment-method-form" options={{ headerShown: false }} />
+          <Stack.Screen name="notifications" options={{ headerShown: false }} />
+          </Stack>
+          <StatusBar style="light" />
+          </ThemeProvider>
+        </CartProvider>
+      </ProfileProvider>
     </AuthProvider>
   );
 }

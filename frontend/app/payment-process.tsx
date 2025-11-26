@@ -2,7 +2,7 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { ActivityIndicator, Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { ActivityIndicator, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function PaymentProcessScreen() {
   const router = useRouter();
@@ -44,22 +44,22 @@ export default function PaymentProcessScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
-      <View style={[styles.container, styles.gradientBackground]}>
-        <ScrollView 
-          style={styles.scrollContainer}
-          contentContainerStyle={styles.scrollContent}
+    <ThemedView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <View style={styles.headerSpacer} />
+        <ThemedText style={styles.headerTitle}>
+          Konfirmasi Pembayaran
+        </ThemedText>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      <ScrollView 
+        style={styles.scrollContainer}
+        contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
       >
-        <ThemedView style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <ThemedText type="title" style={styles.title}>
-              Konfirmasi Pembayaran
-            </ThemedText>
-          </View>
-
+        <View style={styles.content}>
           {/* Payment Info */}
           <View style={styles.section}>
             <ThemedText style={styles.sectionTitle}>Detail Pembayaran</ThemedText>
@@ -169,19 +169,40 @@ export default function PaymentProcessScreen() {
               Batalkan Transaksi
             </ThemedText>
           </Pressable>
-        </ThemedView>
+        </View>
       </ScrollView>
-    </View>
-    </SafeAreaView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f8f9fa',
   },
-  gradientBackground: {
+  header: {
     backgroundColor: '#DE8389',
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    flex: 1,
+    textAlign: 'center',
+  },
+  headerSpacer: {
+    width: 40,
   },
   scrollContainer: {
     flex: 1,
@@ -196,17 +217,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     paddingTop: 20,
     minHeight: '100%',
-  },
-  header: {
-    alignItems: 'center',
-    marginBottom: 20,
-    paddingTop: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#fff',
-    textAlign: 'center',
   },
   section: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',

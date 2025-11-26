@@ -1,8 +1,9 @@
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
-import { Pressable, SafeAreaView, ScrollView, StatusBar, StyleSheet, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 type PaymentMethod = {
   id: string;
@@ -79,21 +80,20 @@ export default function PaymentMethodScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#DE8389" />
-      <View style={[styles.container, styles.gradientBackground]}>
-        <ScrollView style={styles.scrollContainer}>
-          <ThemedView style={styles.content}>
-          {/* Header */}
-          <View style={styles.header}>
-            <Pressable onPress={() => router.back()} style={styles.backButton}>
-              <ThemedText style={styles.backText}>← Kembali</ThemedText>
-            </Pressable>
-            <ThemedText type="title" style={styles.title}>
-              Metode Pembayaran
-            </ThemedText>
-            <View style={styles.headerSpacer} />
-          </View>
+    <ThemedView style={styles.container}>
+      {/* Header */}
+      <View style={styles.header}>
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <IconSymbol name="arrow.left" size={24} color="#fff" />
+        </Pressable>
+        <ThemedText style={styles.headerTitle}>
+          Metode Pembayaran
+        </ThemedText>
+        <View style={styles.headerSpacer} />
+      </View>
+
+      <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+        <View style={styles.content}>
 
           {/* Order Summary */}
           <View style={styles.summarySection}>
@@ -176,55 +176,49 @@ export default function PaymentMethodScreen() {
               🔒 Transaksi Anda aman dan terlindungi
             </ThemedText>
           </View>
-        </ThemedView>
+        </View>
       </ScrollView>
-    </View>
-    </SafeAreaView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f8f9fa',
   },
-  gradientBackground: {
+  header: {
     backgroundColor: '#DE8389',
+    paddingTop: 60,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 8,
   },
   scrollContainer: {
     flex: 1,
   },
   content: {
     padding: 20,
-    backgroundColor: 'transparent',
-    paddingTop: 20,
-    minHeight: '100%',
   },
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 20,
-    paddingTop: 20,
-  },
-  backButton: {
-    padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  },
-  headerSpacer: {
-    width: 80, // Same width as back button area for centering
-  },
-  title: {
-    fontSize: 24,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
     flex: 1,
     textAlign: 'center',
   },
-  backText: {
-    color: '#fff',
-    fontSize: 16,
-    fontWeight: '600',
+  headerSpacer: {
+    width: 40,
+  },
+  backButton: {
+    padding: 8,
   },
   summarySection: {
     backgroundColor: 'rgba(255, 255, 255, 0.95)',

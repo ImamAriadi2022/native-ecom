@@ -1,7 +1,8 @@
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React from 'react';
 import { Alert, Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
+import { useProfile } from '@/app/ProfileContext';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -10,14 +11,18 @@ import { useAuth } from '@/contexts/AuthContext';
 export default function ProfileScreen() {
   const router = useRouter();
   const { logout } = useAuth();
-  const [userInfo] = useState({
-    name: 'Juliana Permata Devi',
-    email: 'devi@gmail.com',
-    phone: '+62 812-3456-7890',
-    joinDate: 'November 2024',
-    totalOrders: 12,
-    points: 2450
-  });
+  const { userProfile, orderHistory, notifications } = useProfile();
+  
+  const unreadNotifications = notifications.filter(n => !n.isRead).length;
+  
+  const userInfo = {
+    name: userProfile?.name || 'Juliana Permata Devi',
+    email: userProfile?.email || 'devi@gmail.com',
+    phone: userProfile?.phone || '+62 812-3456-7890',
+    joinDate: userProfile?.joinDate || 'November 2024',
+    totalOrders: orderHistory.length || 0,
+    points: userProfile?.points || 0
+  };
 
   const handleLogout = () => {
     Alert.alert(
@@ -38,7 +43,7 @@ export default function ProfileScreen() {
     { id: 2, title: 'Riwayat Pesanan', icon: 'clock.fill', route: '/order-history' },
     { id: 3, title: 'Alamat Pengiriman', icon: 'location.fill', route: '/addresses' },
     { id: 4, title: 'Metode Pembayaran', icon: 'creditcard.fill', route: '/payment-methods' },
-    { id: 5, title: 'Notifikasi', icon: 'bell.fill', route: '/notifications' },
+    { id: 5, title: 'Notifikasi', icon: 'bell.fill', route: '/notifications', badge: unreadNotifications },
   ];
 
   const serviceMenuItems = [
@@ -61,7 +66,11 @@ export default function ProfileScreen() {
         <View style={styles.headerSection}>
           <View style={styles.profileImageContainer}>
             <Image 
-              source={require('@/assets/images/meong.png')} 
+              source={
+                userProfile?.avatar 
+                  ? { uri: userProfile.avatar }
+                  : require('@/assets/images/meong.png')
+              } 
               style={styles.profileImage}
             />
             <View style={styles.editIconContainer}>
@@ -105,6 +114,13 @@ export default function ProfileScreen() {
                     <IconSymbol name={item.icon} size={20} color="#DE8389" />
                   </View>
                   <ThemedText style={styles.menuItemText}>{item.title}</ThemedText>
+                  {item.badge && item.badge > 0 && (
+                    <View style={styles.badge}>
+                      <ThemedText style={styles.badgeText}>
+                        {item.badge > 99 ? '99+' : item.badge}
+                      </ThemedText>
+                    </View>
+                  )}
                 </View>
                 <IconSymbol name="chevron.right" size={16} color="#ccc" />
               </Pressable>
@@ -345,5 +361,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     marginLeft: 8,
+  },
+  badge: {
+    backgroundColor: '#ff4757',
+    borderRadius: 10,
+    minWidth: 20,
+    height: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+    paddingHorizontal: 6,
+  },
+  badgeText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
 });
