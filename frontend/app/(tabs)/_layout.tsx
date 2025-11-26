@@ -1,5 +1,4 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
 import { Platform } from 'react-native';
 
 import { useCart } from '@/app/CartContext';
@@ -10,8 +9,15 @@ import { useAuth } from '@/contexts/AuthContext';
 import { StyleSheet, Text, View } from 'react-native';
 
 const CartIcon = ({ color }: { color: string }) => {
-  const { getTotalItems } = useCart();
-  const totalItems = getTotalItems();
+  let totalItems = 0;
+  
+  try {
+    const { getTotalItems } = useCart();
+    totalItems = getTotalItems() || 0;
+  } catch (error) {
+    console.error('Error getting cart items:', error);
+    totalItems = 0;
+  }
 
   return (
     <View style={styles.cartIconContainer}>

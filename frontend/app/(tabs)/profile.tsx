@@ -8,35 +8,106 @@ import { ThemedView } from '@/components/ThemedView';
 import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useAuth } from '@/contexts/AuthContext';
 
-export default function ProfileScreen() {
+// Error boundary wrapper component
+class ProfileErrorBoundary extends React.Component<
+  { children: React.ReactNode; router: any },
+  { hasError: boolean }
+> {
+  constructor(props: any) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    console.error('Profile screen error:', error, errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <ThemedView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+          <ThemedText style={{ fontSize: 18, marginBottom: 20, textAlign: 'center' }}>
+            Terjadi kesalahan saat memuat profil
+          </ThemedText>
+          <Pressable 
+            style={{ backgroundColor: '#DE8389', padding: 15, borderRadius: 8 }}
+            onPress={() => {
+              this.setState({ hasError: false });
+              this.props.router.replace('/(tabs)/');
+            }}
+          >
+            <ThemedText style={{ color: '#fff' }}>Kembali ke Beranda</ThemedText>
+          </Pressable>
+        </ThemedView>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+function ProfileScreenContent() {
   const router = useRouter();
   const { logout } = useAuth();
   const { userProfile, orderHistory, notifications } = useProfile();
   
-  const unreadNotifications = notifications.filter(n => !n.isRead).length;
+  // Safe array operations with fallbacks
+  const unreadNotifications = React.useMemo(() => {
+    try {
+      return Array.isArray(notifications) ? notifications.filter(n => n && !n.isRead).length : 0;
+    } catch (error) {
+      console.error('Error filtering notifications:', error);
+      return 0;
+    }
+  }, [notifications]);
   
-  const userInfo = {
+  const userInfo = React.useMemo(() => ({
     name: userProfile?.name || 'Juliana Permata Devi',
     email: userProfile?.email || 'devi@gmail.com',
     phone: userProfile?.phone || '+62 812-3456-7890',
     joinDate: userProfile?.joinDate || 'November 2024',
-    totalOrders: orderHistory.length || 0,
+    totalOrders: Array.isArray(orderHistory) ? orderHistory.length : 0,
     points: userProfile?.points || 0
-  };
+  }), [userProfile, orderHistory]);
 
-  const handleLogout = () => {
-    Alert.alert(
-      'Logout', 
-      'Apakah Anda yakin ingin keluar?',
-      [
-        { text: 'Batal', style: 'cancel' },
-        { text: 'Logout', style: 'destructive', onPress: () => {
-          logout();
-          router.replace('/(tabs)/');
-        }}
-      ]
-    );
-  };
+  const handleLogout = React.useCallback(() => {
+    try {
+      Alert.alert(
+        'Logout', 
+        'Apakah Anda yakin ingin keluar?',
+        [
+          { text: 'Batal', style: 'cancel' },
+          { text: 'Logout', style: 'destructive', onPress: async () => {
+            try {
+              await logout();
+              router.replace('/(tabs)/');
+            } catch (error) {
+              console.error('Logout error:', error);
+              // Force navigation even if logout fails
+              router.replace('/(tabs)/');
+            }
+          }}
+        ]
+      );
+    } catch (error) {
+      console.error('Alert error:', error);
+      // Direct logout if Alert fails
+      logout();
+      router.replace('/(tabs)/');
+    }
+  }, [logout, router]);
+
+  const handleNavigation = React.useCallback((route: string) => {
+    try {
+      router.push(route);
+    } catch (error) {
+      console.error('Navigation error to', route, ':', error);
+    }
+  }, [router]);
 
   const accountMenuItems = [
     { id: 1, title: 'Edit Profile', icon: 'person.circle.fill', route: '/profile-edit' },
@@ -67,11 +138,15 @@ export default function ProfileScreen() {
           <View style={styles.profileImageContainer}>
             <Image 
               source={
-                userProfile?.avatar 
+                userProfile?.avatar && typeof userProfile.avatar === 'string'
                   ? { uri: userProfile.avatar }
                   : require('@/assets/images/meong.png')
               } 
               style={styles.profileImage}
+              onError={(error) => {
+                console.warn('Profile image load error:', error);
+              }}
+              defaultSource={require('@/assets/images/meong.png')}
             />
             <View style={styles.editIconContainer}>
               <IconSymbol name="camera.fill" size={16} color="#fff" />
@@ -107,7 +182,7 @@ export default function ProfileScreen() {
               <Pressable 
                 key={item.id} 
                 style={styles.menuItem}
-                onPress={() => router.push(item.route)}
+                onPress={() => handleNavigation(item.route)}
               >
                 <View style={styles.menuItemLeft}>
                   <View style={styles.iconContainer}>
@@ -132,12 +207,20 @@ export default function ProfileScreen() {
         <View style={styles.sectionContainer}>
           <ThemedText style={styles.sectionTitle}>Layanan Pelanggan</ThemedText>
           <View style={styles.menuSection}>
-            {serviceMenuItems.map((item) => (
-              <Pressable 
-                key={item.id} 
-                style={styles.menuItem}
-                onPress={() => router.push(item.route)}
-              >
+            {serviceMenuItems.map((item) => {
+              if (!item || !item.route) return null;
+              return (
+                <Pressable 
+                  key={item.id} 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    try {
+                      router.push(item.route);
+                    } catch (error) {
+                      console.error('Navigation error:', error);
+                    }
+                  }}
+                >
                 <View style={styles.menuItemLeft}>
                   <View style={styles.iconContainer}>
                     <IconSymbol name={item.icon} size={20} color="#4ECDC4" />
@@ -154,12 +237,20 @@ export default function ProfileScreen() {
         <View style={styles.sectionContainer}>
           <ThemedText style={styles.sectionTitle}>Informasi</ThemedText>
           <View style={styles.menuSection}>
-            {infoMenuItems.map((item) => (
-              <Pressable 
-                key={item.id} 
-                style={styles.menuItem}
-                onPress={() => router.push(item.route)}
-              >
+            {infoMenuItems.map((item) => {
+              if (!item || !item.route) return null;
+              return (
+                <Pressable 
+                  key={item.id} 
+                  style={styles.menuItem}
+                  onPress={() => {
+                    try {
+                      router.push(item.route);
+                    } catch (error) {
+                      console.error('Navigation error:', error);
+                    }
+                  }}
+                >
                 <View style={styles.menuItemLeft}>
                   <View style={styles.iconContainer}>
                     <IconSymbol name={item.icon} size={20} color="#45B7D1" />
@@ -378,3 +469,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
+
+// Main export function with error boundary
+export default function ProfileScreen() {
+  const router = useRouter();
+  
+  return (
+    <ProfileErrorBoundary router={router}>
+      <ProfileScreenContent />
+    </ProfileErrorBoundary>
+  );
+}

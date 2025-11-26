@@ -119,27 +119,70 @@ export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children })
 
   // Load data on mount
   useEffect(() => {
-    loadAllData();
-    initializeDefaultData();
+    const initializeData = async () => {
+      try {
+        await loadAllData();
+        await initializeDefaultData();
+      } catch (error) {
+        console.error('Error initializing profile data:', error);
+      }
+    };
+    
+    initializeData();
   }, []);
 
   const loadAllData = async () => {
     try {
       const [profileData, addressData, paymentData, historyData, notificationData] = await Promise.all([
-        AsyncStorage.getItem(PROFILE_STORAGE_KEY),
-        AsyncStorage.getItem(ADDRESSES_STORAGE_KEY),
-        AsyncStorage.getItem(PAYMENT_METHODS_STORAGE_KEY),
-        AsyncStorage.getItem(ORDER_HISTORY_STORAGE_KEY),
-        AsyncStorage.getItem(NOTIFICATIONS_STORAGE_KEY),
+        AsyncStorage.getItem(PROFILE_STORAGE_KEY).catch(() => null),
+        AsyncStorage.getItem(ADDRESSES_STORAGE_KEY).catch(() => null),
+        AsyncStorage.getItem(PAYMENT_METHODS_STORAGE_KEY).catch(() => null),
+        AsyncStorage.getItem(ORDER_HISTORY_STORAGE_KEY).catch(() => null),
+        AsyncStorage.getItem(NOTIFICATIONS_STORAGE_KEY).catch(() => null),
       ]);
 
-      if (profileData) setUserProfile(JSON.parse(profileData));
-      if (addressData) setAddresses(JSON.parse(addressData));
-      if (paymentData) setPaymentMethods(JSON.parse(paymentData));
-      if (historyData) setOrderHistory(JSON.parse(historyData));
-      if (notificationData) setNotifications(JSON.parse(notificationData));
+      try {
+        if (profileData) setUserProfile(JSON.parse(profileData));
+      } catch (e) {
+        console.error('Error parsing profile data:', e);
+        setUserProfile(null);
+      }
+
+      try {
+        if (addressData) setAddresses(JSON.parse(addressData));
+      } catch (e) {
+        console.error('Error parsing address data:', e);
+        setAddresses([]);
+      }
+
+      try {
+        if (paymentData) setPaymentMethods(JSON.parse(paymentData));
+      } catch (e) {
+        console.error('Error parsing payment data:', e);
+        setPaymentMethods([]);
+      }
+
+      try {
+        if (historyData) setOrderHistory(JSON.parse(historyData));
+      } catch (e) {
+        console.error('Error parsing history data:', e);
+        setOrderHistory([]);
+      }
+
+      try {
+        if (notificationData) setNotifications(JSON.parse(notificationData));
+      } catch (e) {
+        console.error('Error parsing notification data:', e);
+        setNotifications([]);
+      }
     } catch (error) {
       console.error('Error loading profile data:', error);
+      // Set safe defaults
+      setUserProfile(null);
+      setAddresses([]);
+      setPaymentMethods([]);
+      setOrderHistory([]);
+      setNotifications([]);
     }
   };
 
@@ -171,6 +214,7 @@ export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children })
       await AsyncStorage.setItem(PROFILE_STORAGE_KEY, JSON.stringify(updatedProfile));
     } catch (error) {
       console.error('Error updating profile:', error);
+      // Don't throw, just log the error to prevent crashes
     }
   };
 
@@ -449,7 +493,32 @@ export const ProfileProvider: React.FC<{ children: ReactNode }> = ({ children })
 export const useProfile = (): ProfileContextType => {
   const context = useContext(ProfileContext);
   if (!context) {
-    throw new Error('useProfile must be used within a ProfileProvider');
+    console.error('useProfile must be used within a ProfileProvider');
+    // Return a safe default instead of throwing
+    return {
+      userProfile: null,
+      updateProfile: async () => {},
+      addresses: [],
+      addAddress: async () => {},
+      updateAddress: async () => {},
+      deleteAddress: async () => {},
+      setDefaultAddress: async () => {},
+      paymentMethods: [],
+      addPaymentMethod: async () => {},
+      updatePaymentMethod: async () => {},
+      deletePaymentMethod: async () => {},
+      setDefaultPaymentMethod: async () => {},
+      orderHistory: [],
+      addOrderHistory: async () => {},
+      updateOrderStatus: async () => {},
+      clearOrderHistory: async () => {},
+      restartSimulation: async () => {},
+      notifications: [],
+      addNotification: async () => {},
+      markNotificationAsRead: async () => {},
+      markAllNotificationsAsRead: async () => {},
+      clearAllNotifications: async () => {},
+    };
   }
   return context;
 };

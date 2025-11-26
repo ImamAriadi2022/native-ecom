@@ -18,7 +18,8 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.imam33.lyanabottlestudio",
-      "newArchEnabled": true
+      "buildNumber": "1",
+      "newArchEnabled": false
     },
     "android": {
       "adaptiveIcon": {
@@ -26,8 +27,15 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.imam33.lyanabottlestudio",
-      "permissions": [],
-      "newArchEnabled": true
+      "permissions": [
+        "android.permission.INTERNET",
+        "android.permission.ACCESS_NETWORK_STATE"
+      ],
+      "versionCode": 1,
+      "compileSdkVersion": 34,
+      "targetSdkVersion": 34,
+      "buildToolsVersion": "34.0.0",
+      "newArchEnabled": false
     },
     "web": {
       "bundler": "metro",
