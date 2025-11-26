@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -39,7 +39,7 @@ export default function LoginScreen() {
       setImageError(false); // Reset error state
 
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
+      const timeoutId = setTimeout(() => controller.abort(), 5000); // Reduced timeout
 
       const response = await fetch(
         `https://cloud-jalurlangitv2.ikraf.or.id/api/applms/tarik_data?password=${kelas}&nim=${nim}`,
@@ -47,6 +47,7 @@ export default function LoginScreen() {
           method: 'GET',
           headers: {
             Authorization: 'Basic ' + btoa('adminx:adminx123'),
+            'Content-Type': 'application/json',
           },
           signal: controller.signal,
         }
@@ -63,14 +64,20 @@ export default function LoginScreen() {
 
       if (json.status && json.foto) {
         console.log('Foto URL ditemukan:', json.foto);
-        setAvatarUrl(json.foto);
+        // Validate if the image URL is accessible
+        const imageResponse = await fetch(json.foto, { method: 'HEAD' });
+        if (imageResponse.ok) {
+          setAvatarUrl(json.foto);
+          setImageError(false);
+        } else {
+          throw new Error('Image URL not accessible');
+        }
       } else {
-        console.warn('Tidak ada foto ditemukan dalam response');
-        setAvatarUrl(null);
-        setImageError(true);
+        throw new Error('No photo found in response');
       }
     } catch (error) {
-      console.error('Gagal ambil foto:', error);
+      console.error('Failed to fetch profile photo:', error);
+      console.log('Using fallback image: masseto.jpg');
       setAvatarUrl(null);
       setImageError(true);
     }
@@ -106,9 +113,9 @@ export default function LoginScreen() {
     if (!avatarUrl || imageError) {
       return (
         <Image 
-          source={require('@/assets/images/kupu.png')} 
+          source={require('@/assets/images/masseto.jpg')} 
           style={styles.headerImage}
-          defaultSource={require('@/assets/images/kupu.png')}
+          defaultSource={require('@/assets/images/masseto.jpg')}
         />
       );
     }
@@ -117,9 +124,9 @@ export default function LoginScreen() {
       <Image 
         source={{ uri: avatarUrl }} 
         style={styles.headerImage}
-        defaultSource={require('@/assets/images/kupu.png')}
+        defaultSource={require('@/assets/images/masseto.jpg')}
         onError={() => {
-          console.log('Error loading profile image');
+          console.log('Error loading profile image, switching to fallback');
           setImageError(true);
         }}
       />
