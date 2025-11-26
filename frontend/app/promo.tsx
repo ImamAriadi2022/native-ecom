@@ -1,9 +1,37 @@
 import { ThemedText } from '@/components/ThemedText';
 import { router } from 'expo-router';
 import React from 'react';
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function PromoScreen() {
+  console.log('PromoScreen loaded successfully');
+  
+  const handleCopyCode = (code: string) => {
+    Alert.alert(
+      'Kode Promo',
+      `Kode: ${code}\n\nSalin kode ini untuk mendapatkan diskon!`,
+      [
+        { text: 'OK', style: 'default' }
+      ]
+    );
+  };
+
+  const handleJoinLoyalty = () => {
+    Alert.alert(
+      'Join Loyalty Program',
+      'Bergabung dengan program loyalitas untuk mendapatkan benefit eksklusif?',
+      [
+        { text: 'Batal', style: 'cancel' },
+        {
+          text: 'Join Sekarang',
+          onPress: () => {
+            Alert.alert('Welcome!', 'Selamat! Anda sekarang adalah member loyalty Lyana Bottle Studio');
+          }
+        }
+      ]
+    );
+  };
+
   // Image mapping untuk static imports
   const getImageSource = (imageName: string) => {
     const imageMap: { [key: string]: any } = {
@@ -34,68 +62,74 @@ export default function PromoScreen() {
   const promos = [
     {
       id: '1',
-      title: 'Flash Sale Weekend',
-      description: 'Diskon hingga 50% untuk semua tumbler premium!',
-      discount: '50%',
-      validUntil: '31 Juli 2025',
-      code: 'WEEKEND50',
-      image: 'tumbler cream.jpg', // Tumbler premium untuk flash sale
-      terms: ['Berlaku untuk semua produk tumbler', 'Minimal pembelian Rp 100.000', 'Tidak dapat digabung dengan promo lain']
+      title: 'Disney Collection 25% OFF',
+      description: 'Diskon 25% untuk semua tumbler Disney Collection!',
+      discount: '25%',
+      validUntil: '31 Maret 2025',
+      code: 'DISNEY25',
+      image: 'tumbler pink1.jpg', // Tumbler Disney untuk promo
+      terms: ['Berlaku untuk semua produk Disney', 'Minimal pembelian Rp 150.000', 'Tidak dapat digabung dengan promo lain']
     },
     {
       id: '2',
-      title: 'Buy 2 Get 1 Free',
-      description: 'Beli 2 gantungan kunci, gratis 1 gantungan kunci pilihan!',
-      discount: 'B2G1',
-      validUntil: '15 Agustus 2025',
-      code: 'BUY2GET1',
-      image: 'gantungan5.jpg', // Set gantungan kunci untuk promo B2G1
-      terms: ['Berlaku untuk semua gantungan kunci', 'Produk gratis sesuai stok tersedia', 'Promo terbatas']
+      title: 'Hot Wheels Super Promo',
+      description: 'Diskon 30% untuk koleksi Hot Wheels Racing!',
+      discount: '30%',
+      validUntil: '30 April 2025',
+      code: 'HOTWHEELS30',
+      image: 'tumbler oren.jpg', // Tumbler Hot Wheels untuk promo
+      terms: ['Berlaku untuk semua produk Hot Wheels', 'Produk limited edition', 'Stok terbatas']
     },
     {
       id: '3',
-      title: 'Bundling Hemat',
-      description: 'Paket 3 tumbler + 2 gantungan kunci cuma Rp 199.000!',
-      discount: 'Rp 199K',
-      validUntil: '30 September 2025',
-      code: 'BUNDLE199',
-      image: 'bundling1.jpg', // Gambar bundling yang menunjukkan paket produk
-      terms: ['Hemat hingga Rp 50.000', 'Warna dan motif sesuai ketersediaan', 'Gratis ongkir Jabodetabek']
+      title: 'Disney Spring Bundle',
+      description: 'Paket 2 tumbler Disney Spring + 1 gantungan kunci cuma Rp 299.000!',
+      discount: 'Rp 299K',
+      validUntil: '30 Juni 2025',
+      code: 'SPRINGBUNDLE',
+      image: 'bundling1.jpg', // Gambar bundling Disney Spring
+      terms: ['Hemat hingga Rp 80.000', 'Karakter Disney sesuai ketersediaan', 'Gratis ongkir seluruh Indonesia']
     },
     {
       id: '4',
-      title: 'New Member Special',
-      description: 'Diskon 30% untuk pembelian pertama member baru!',
-      discount: '30%',
-      validUntil: '31 Oktober 2025',
-      code: 'NEWBIE30',
-      image: 'tumbler pink1.jpg', // Tumbler cantik untuk member baru
-      terms: ['Khusus member baru', 'Berlaku untuk semua produk', 'Maksimal diskon Rp 75.000']
+      title: 'Collector Special Deal',
+      description: 'Beli 3 tumbler karakter berbeda, gratis 1 tumbler pilihan!',
+      discount: 'B3G1',
+      validUntil: '31 Mei 2025',
+      code: 'COLLECTOR4',
+      image: 'tumbler ungu.jpg', // Tumbler collector edition
+      terms: ['Berlaku untuk Disney & Hot Wheels', 'Karakter berbeda wajib', 'Gratis tumbler sesuai stok']
     },
     {
       id: '5',
-      title: 'Custom Tumbler Promo',
-      description: 'Gratis custom nama untuk pembelian tumbler premium!',
+      title: 'Character Custom FREE',
+      description: 'Gratis custom nama karakter untuk tumbler premium!',
       discount: 'GRATIS',
-      validUntil: '30 November 2025',
-      code: 'CUSTOMFREE',
-      image: 'tumbler khaki.jpg', // Tumbler warna khaki untuk variasi custom
-      terms: ['Berlaku untuk tumbler premium', 'Maksimal 10 karakter', 'Design sesuai template tersedia']
+      validUntil: '31 Juli 2025',
+      code: 'CUSTOMCHAR',
+      image: 'tumbler khaki.jpg', // Tumbler custom karakter
+      terms: ['Berlaku untuk tumbler Disney & Hot Wheels', 'Maksimal 12 karakter', 'Design premium tersedia']
     }
   ];
 
   const upcomingPromos = [
     {
-      title: 'Back to School',
-      description: 'Promo spesial tumbler untuk pelajar dan mahasiswa',
-      startDate: '1 Agustus 2025',
-      teaser: 'Coming Soon! 🎒'
+      title: 'Disney Summer Special',
+      description: 'Koleksi musim panas dengan karakter Disney terbaru',
+      startDate: '1 Juli 2025',
+      teaser: 'Frozen, Moana coming! ❄️🌊'
     },
     {
-      title: 'Independence Day Sale',
-      description: 'Diskon kemerdekaan untuk semua produk lokal',
-      startDate: '17 Agustus 2025',
-      teaser: 'Stay Tuned! 🇮�'
+      title: 'Hot Wheels Championship',
+      description: 'Event balap Hot Wheels dengan tumbler edisi championship',
+      startDate: '1 Agustus 2025',
+      teaser: 'Formula 1 & NASCAR! 🏁'
+    },
+    {
+      title: 'Disney Halloween Magic',
+      description: 'Koleksi Halloween dengan tema Disney Villains',
+      startDate: '15 Oktober 2025',
+      teaser: 'Villains collection! 🎃'
     }
   ];
 
@@ -111,8 +145,16 @@ export default function PromoScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.heroSection}>
           <Text style={styles.heroEmoji}>🎉</Text>
-          <ThemedText style={styles.heroTitle}>Promo Menarik Hari Ini!</ThemedText>
-          <Text style={styles.heroDesc}>Jangan sampai terlewat penawaran terbaik dari Lyana Bottle Studio</Text>
+          <ThemedText style={styles.heroTitle}>Disney & Hot Wheels Promo!</ThemedText>
+          <Text style={styles.heroDesc}>Koleksi eksklusif dengan penawaran terbaik untuk karakter favoritmu</Text>
+          <View style={styles.heroTags}>
+            <View style={styles.heroTag}>
+              <Text style={styles.heroTagText}>🏰 Disney Magic</Text>
+            </View>
+            <View style={styles.heroTag}>
+              <Text style={styles.heroTagText}>🏎️ Speed Racing</Text>
+            </View>
+          </View>
         </View>
 
         <View style={styles.section}>
@@ -138,7 +180,10 @@ export default function PromoScreen() {
                 <Text style={styles.codeLabel}>Kode Promo:</Text>
                 <View style={styles.codeBox}>
                   <Text style={styles.codeText}>{promo.code}</Text>
-                  <TouchableOpacity style={styles.copyButton}>
+                  <TouchableOpacity 
+                    style={styles.copyButton}
+                    onPress={() => handleCopyCode(promo.code)}
+                  >
                     <Text style={styles.copyText}>Salin</Text>
                   </TouchableOpacity>
                 </View>
@@ -206,7 +251,10 @@ export default function PromoScreen() {
                 <Text style={styles.benefitItem}>📦 Priority shipping</Text>
                 <Text style={styles.benefitItem}>🔔 Early access promo</Text>
               </View>
-              <TouchableOpacity style={styles.joinButton}>
+              <TouchableOpacity 
+                style={styles.joinButton}
+                onPress={handleJoinLoyalty}
+              >
                 <Text style={styles.joinButtonText}>Join Sekarang</Text>
               </TouchableOpacity>
             </View>
@@ -258,6 +306,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     marginBottom: 25,
+    marginTop: 20,
   },
   heroEmoji: {
     fontSize: 48,
@@ -275,6 +324,23 @@ const styles = StyleSheet.create({
     color: '#555',
     textAlign: 'center',
     lineHeight: 20,
+    marginBottom: 20,
+  },
+  heroTags: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 12,
+  },
+  heroTag: {
+    backgroundColor: '#DE8389',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderRadius: 20,
+  },
+  heroTagText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: 'bold',
   },
   section: {
     marginBottom: 30,

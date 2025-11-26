@@ -110,7 +110,7 @@ export default function TabLayout() {
         options={{
           title: 'Event',
           tabBarIcon: ({ color }) => <IconSymbol size={26} name="star.fill" color={color} />,
-          href: isAuthenticated ? '/(tabs)/event' : null, // Show only when authenticated
+          href: '/(tabs)/event', // Always accessible
         }}
       />
       <Tabs.Screen

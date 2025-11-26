@@ -158,7 +158,10 @@ export default function TabTwoScreen() {
               <ThemedText style={styles.promoSubtitle}>{promoData[currentPromoIndex].subtitle}</ThemedText>
               <Pressable 
                 style={styles.promoButton}
-                onPress={() => navigateTo('/promo')}
+                onPress={() => {
+                  console.log('Navigating to promo');
+                  navigateTo('/promo');
+                }}
               >
                 <Text style={styles.promoButtonText}>Lihat Promo</Text>
               </Pressable>

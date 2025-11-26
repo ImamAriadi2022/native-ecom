@@ -1,9 +1,12 @@
-import React from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { useRouter } from 'expo-router';
+import React, { useState } from 'react';
+import { Alert, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 
 export default function EventScreen() {
+  console.log('EventScreen loaded successfully');
+  const router = useRouter();
   const [selectedProducts, setSelectedProducts] = useState<{[eventId: string]: {[productId: string]: number}}>({});
 
   // Image mapping untuk static imports
@@ -16,6 +19,12 @@ export default function EventScreen() {
       'disney5.jpeg': require('../assets/images/disney5.jpeg'),
       'disney6.jpeg': require('../assets/images/disney6.jpeg'),
       'react-logo.png': require('../assets/images/react-logo.png'),
+      // Hot Wheels images using existing tumbler images
+      'tumbler-biru-tua.jpeg': require('../assets/images/tumbler biru tua.jpeg'),
+      'tumbler-ungu.jpg': require('../assets/images/tumbler ungu.jpg'),
+      'tumbler-oren.jpg': require('../assets/images/tumbler oren.jpg'),
+      'tumbler-khaki.jpg': require('../assets/images/tumbler khaki.jpg'),
+      'tumbler-pink.jpg': require('../assets/images/tumbler pink1.jpg'),
     };
     return imageMap[imageName] || imageMap['react-logo.png'];
   };
@@ -56,6 +65,25 @@ export default function EventScreen() {
         { id: 'moana', name: 'Tumbler Moana Ocean', price: 94000, image: 'disney5.jpeg' }
       ],
       badge: 'NEW'
+    },
+    {
+      id: '7',
+      title: 'Hot Wheels Racing Collection',
+      subtitle: 'Koleksi Tumbler Hot Wheels Speed',
+      description: 'Rasakan sensasi kecepatan dengan tumbler Hot Wheels! Desain eksklusif dengan tema mobil balap dan trek legendaris.',
+      image: 'tumbler-biru-tua.jpeg',
+      startDate: '1 Februari 2025',
+      endDate: '30 April 2025',
+      status: 'active',
+      discount: '30%',
+      products: [
+        { id: 'flame', name: 'Tumbler Hot Wheels Flame', price: 92000, image: 'tumbler-oren.jpg' },
+        { id: 'speed', name: 'Tumbler Speed Racer', price: 89000, image: 'tumbler-biru-tua.jpeg' },
+        { id: 'turbo', name: 'Tumbler Turbo Charge', price: 95000, image: 'tumbler-ungu.jpg' },
+        { id: 'drift', name: 'Tumbler Drift King', price: 88000, image: 'tumbler-khaki.jpg' },
+        { id: 'classic', name: 'Tumbler Classic Cars', price: 91000, image: 'tumbler-pink.jpg' }
+      ],
+      badge: 'LIMITED'
     }
   ];
 
@@ -75,6 +103,14 @@ export default function EventScreen() {
       startDate: '15 Oktober 2025',
       teaser: 'Villains collection dan karakter spooky!',
       image: 'disney6.jpeg'
+    },
+    {
+      id: '8',
+      title: 'Hot Wheels Championship',
+      description: 'Event balap Hot Wheels dengan tumbler edisi championship',
+      startDate: '1 Agustus 2025',
+      teaser: 'Formula 1, NASCAR, dan mobil balap legendaris!',
+      image: 'tumbler-ungu.jpg'
     }
   ];
 
@@ -93,6 +129,14 @@ export default function EventScreen() {
       description: 'Tumbler Disney bertema cinta dan valentine',
       endDate: '14 Februari 2025',
       image: 'disney3.jpeg',
+      status: 'completed'
+    },
+    {
+      id: '9',
+      title: 'Hot Wheels New Year 2025',
+      description: 'Koleksi tahun baru Hot Wheels dengan tema futuristik',
+      endDate: '31 Januari 2025',
+      image: 'tumbler-khaki.jpg',
       status: 'completed'
     }
   ];
@@ -161,10 +205,18 @@ export default function EventScreen() {
       <ScrollView style={styles.content}>
         <View style={styles.heroSection}>
           <Text style={styles.heroEmoji}>🎉</Text>
-          <ThemedText style={styles.heroTitle}>Event Koleksi Disney</ThemedText>
+          <ThemedText style={styles.heroTitle}>Event Koleksi Eksklusif</ThemedText>
           <Text style={styles.heroDesc}>
-            Dapatkan tumbler limited edition Disney dengan karakter favorit dan tema-tema eksklusif sepanjang tahun
+            Dapatkan tumbler limited edition Disney & Hot Wheels dengan karakter favorit dan tema-tema eksklusif sepanjang tahun
           </Text>
+          <View style={styles.heroTags}>
+            <View style={styles.heroTag}>
+              <Text style={styles.heroTagText}>🏰 Disney</Text>
+            </View>
+            <View style={styles.heroTag}>
+              <Text style={styles.heroTagText}>🏎️ Hot Wheels</Text>
+            </View>
+          </View>
         </View>
 
         {/* Current Events */}
@@ -179,7 +231,10 @@ export default function EventScreen() {
                 />
                 <View style={styles.eventInfo}>
                   <View style={styles.badgeContainer}>
-                    <View style={[styles.badge, event.badge === 'TRENDING' ? styles.trendingBadge : styles.newBadge]}>
+                    <View style={[styles.badge, 
+                      event.badge === 'TRENDING' ? styles.trendingBadge : 
+                      event.badge === 'LIMITED' ? styles.limitedBadge : 
+                      styles.newBadge]}>
                       <Text style={styles.badgeText}>{event.badge}</Text>
                     </View>
                     <View style={styles.discountBadge}>
@@ -347,6 +402,23 @@ const styles = StyleSheet.create({
     color: '#666',
     textAlign: 'center',
     lineHeight: 20,
+    marginBottom: 15,
+  },
+  heroTags: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  heroTag: {
+    backgroundColor: '#DE8389',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 15,
+  },
+  heroTagText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
   },
   section: {
     marginBottom: 20,
@@ -394,6 +466,9 @@ const styles = StyleSheet.create({
   },
   newBadge: {
     backgroundColor: '#4ecdc4',
+  },
+  limitedBadge: {
+    backgroundColor: '#9c27b0',
   },
   badgeText: {
     color: '#fff',

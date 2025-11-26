@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Alert, Dimensions, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -11,33 +11,68 @@ export default function EventScreen() {
   const [currentEventIndex, setCurrentEventIndex] = useState(0);
   const screenWidth = Dimensions.get('window').width;
 
+  const handleEventDetail = (event: any) => {
+    // Navigasi ke halaman detail event yang mandiri
+    let eventId = 'disney'; // default
+    
+    if (event.title.includes('Disney Collection')) {
+      eventId = 'disney';
+    } else if (event.title.includes('Hot Wheels')) {
+      eventId = 'hotwheels';
+    } else if (event.title.includes('Spring')) {
+      eventId = 'spring';
+    }
+    
+    router.push(`/event-detail?id=${eventId}`);
+  };
+
+  const handleNewsletterSignup = () => {
+    // Implementasi newsletter signup dengan konfirmasi
+    Alert.alert(
+      'Newsletter Signup',
+      'Daftar untuk mendapatkan update event Disney & Hot Wheels terbaru?',
+      [
+        {
+          text: 'Batal',
+          style: 'cancel'
+        },
+        {
+          text: 'Daftar',
+          onPress: () => {
+            Alert.alert('Berhasil!', 'Terima kasih! Anda akan mendapatkan update event terbaru via email.');
+          }
+        }
+      ]
+    );
+  };
+
   const events = [
     {
       id: 1,
-      title: 'Flash Sale Weekend',
-      date: '25-27 November 2024',
-      description: 'Diskon hingga 70% untuk semua produk tumbler favorit',
+      title: 'Disney Collection Launch',
+      date: '1 Januari - 31 Maret 2025',
+      description: 'Koleksi tumbler Disney eksklusif dengan karakter favorit Mickey, Princess, Frozen',
       status: 'Berlangsung',
-      color: '#FF6B6B',
-      icon: '🎉'
+      color: '#DE8389',
+      icon: '🏰'
     },
     {
       id: 2,
-      title: 'Custom Design Contest',
-      date: '1-15 Desember 2024', 
-      description: 'Menangkan tumbler custom gratis dengan desain terbaik',
-      status: 'Segera',
-      color: '#4ECDC4',
-      icon: '🏆'
+      title: 'Hot Wheels Racing Collection',
+      date: '1 Februari - 30 April 2025', 
+      description: 'Rasakan sensasi kecepatan dengan tumbler Hot Wheels tema balap dan trek legendaris',
+      status: 'Berlangsung',
+      color: '#FF6347',
+      icon: '🏎️'
     },
     {
       id: 3,
-      title: 'Holiday Bundle Special',
-      date: '20-31 Desember 2024',
-      description: 'Paket bundling spesial untuk hadiah liburan',
-      status: 'Segera', 
-      color: '#45B7D1',
-      icon: '🎁'
+      title: 'Disney Spring Festival',
+      date: '15 Maret - 30 Juni 2025',
+      description: 'Koleksi musim semi Disney dengan tema bunga dan alam yang eksklusif',
+      status: 'Berlangsung', 
+      color: '#4ECDC4',
+      icon: '🌸'
     }
   ];
 
@@ -53,8 +88,8 @@ export default function EventScreen() {
     <ThemedView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <ThemedText style={styles.headerTitle}>Event & Promo</ThemedText>
-        <ThemedText style={styles.headerSubtitle}>Jangan lewatkan kesempatan emas!</ThemedText>
+        <ThemedText style={styles.headerTitle}>Disney & Hot Wheels Event</ThemedText>
+        <ThemedText style={styles.headerSubtitle}>Koleksi eksklusif tumbler limited edition!</ThemedText>
       </View>
 
       <ScrollView style={styles.scrollContainer} showsVerticalScrollIndicator={false}>
@@ -67,7 +102,10 @@ export default function EventScreen() {
               <ThemedText style={styles.heroDate}>📅 {events[currentEventIndex].date}</ThemedText>
               <ThemedText style={styles.heroDescription}>{events[currentEventIndex].description}</ThemedText>
               
-              <Pressable style={styles.heroButton}>
+              <Pressable 
+                style={styles.heroButton}
+                onPress={() => handleEventDetail(events[currentEventIndex])}
+              >
                 <ThemedText style={styles.heroButtonText}>Lihat Detail</ThemedText>
                 <IconSymbol name="chevron.right" size={16} color="#fff" />
               </Pressable>
@@ -112,7 +150,10 @@ export default function EventScreen() {
               
               <ThemedText style={styles.eventDescription}>{event.description}</ThemedText>
               
-              <Pressable style={[styles.eventButton, { borderColor: event.color }]}>
+              <Pressable 
+                style={[styles.eventButton, { borderColor: event.color }]}
+                onPress={() => handleEventDetail(event)}
+              >
                 <ThemedText style={[styles.eventButtonText, { color: event.color }]}>
                   Lihat Detail
                 </ThemedText>
@@ -127,7 +168,10 @@ export default function EventScreen() {
           <ThemedText style={styles.newsletterSubtitle}>
             Jadilah yang pertama tahu tentang event dan promo terbaru dari Lyana Bottle Studio
           </ThemedText>
-          <Pressable style={styles.newsletterButton}>
+          <Pressable 
+            style={styles.newsletterButton}
+            onPress={handleNewsletterSignup}
+          >
             <ThemedText style={styles.newsletterButtonText}>Daftar Newsletter</ThemedText>
           </Pressable>
         </View>
@@ -163,12 +207,12 @@ const styles = StyleSheet.create({
   },
   heroSection: {
     padding: 20,
-    paddingTop: 0,
+    paddingTop: 30,
   },
   heroCard: {
     borderRadius: 20,
     padding: 25,
-    marginTop: -30,
+    marginTop: 10,
     elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 3 },
